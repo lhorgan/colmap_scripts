@@ -1,0 +1,1 @@
+sh sparse_recon_222.sh /home/luke/Documents/pamir_reconstructions/feb22/baby2 Pamir1kf

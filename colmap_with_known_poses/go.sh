@@ -1,0 +1,1 @@
+sh glomap.sh /home/luke/Documents/svin_database_test Pamir1kf svin_Pamir1.txt

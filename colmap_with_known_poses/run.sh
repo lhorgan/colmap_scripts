@@ -1,0 +1,1 @@
+sh just_the_mapper.sh /home/luke/Documents/pamir_reconstructions/feb18/baby_map_2 Pamir1kf svin_Pamir1.txt

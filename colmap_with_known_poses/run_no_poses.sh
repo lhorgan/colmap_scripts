@@ -1,0 +1,1 @@
+sh sparse_recon_no_poses.sh /home/luke/Documents/pamir_reconstructions/feb18/baby_map_no_poses Pamir1kf

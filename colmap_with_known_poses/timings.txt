@@ -1,0 +1,4 @@
+For everything except the mapper:
+real	851m55.016s
+user	943m8.304s
+sys	5m29.991s
