@@ -1,0 +1,1 @@
+sh sparse_recon_224.sh /home/luke/Documents/pamir_reconstructions/feb22/small_poses_triangulator Pamir1kf
