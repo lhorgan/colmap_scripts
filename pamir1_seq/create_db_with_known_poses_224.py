@@ -38,12 +38,11 @@ def gen_poses_file_from_svin(input_path, output_path):
     with open(input_path) as f:
         lines = f.readlines()
     
-    comment = lines[0]
-
     with open(output_path, "w+") as f:
-        f.write(comment)
         
         for line in lines[1:]:
+            if line[0] == "#":
+                f.write(line)
             timestamp = line.split(" ")[0]
             img_name = f'{timestamp.replace(".", "")}.png'
             pose = [float(x) for x in (line.split(" ")[1:])]
