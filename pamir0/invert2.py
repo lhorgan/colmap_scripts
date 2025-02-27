@@ -46,3 +46,4 @@ input_svin_path = sys.argv[1]
 base, extension = os.path.splitext(input_svin_path)
 output_svin_path = base + "_inv" + extension
 invert(input_svin_path, output_svin_path)
+print(output_svin_path) # added for use in the bash script
