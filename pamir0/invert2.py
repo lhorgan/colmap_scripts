@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.spatial.transform import Rotation
+import sys
+import os
 
 def create_pose_matrix(tx, ty, tz, qx, qy, qz, qw):
     """Create 4x4 pose matrix from translation and quaternion"""
@@ -38,4 +40,9 @@ def invert(input_path, output_path):
         
             f.write(f"{timestamp} {T[0]:.10f} {T[1]:.10f} {T[2]:.10f} {q[0]:.10f} {q[1]:.10f} {q[2]:.10f} {q[3]:.10f}\n")
 
-invert("/home/luke/Documents/pamir/underwater_data/pamir/svin_Pamir1_revised.txt", "/home/luke/Documents/pamir/underwater_data/pamir/svin_Pamir1_revised_inv.txt")
+# e.g.,
+# python invert2.py "/home/luke/Documents/pamir/underwater_data/pamir/svin_Pamir1_revised.txt" 
+input_svin_path = sys.argv[1]
+base, extension = os.path.splitext(input_svin_path)
+output_svin_path = base + "_inv" + extension
+invert(input_svin_path, output_svin_path)
