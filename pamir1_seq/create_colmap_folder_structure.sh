@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 #
+# Description: Create structure for colmap scripts.
+# Author: Alberto Quattrini Li (alberto.quattrini.li@dartmouth.edu)
+#
 #e.g., 
 # bash create_colmap_folder_structure.sh ~/colmap/pamir/ Pamir1kf_One_Target ~/data/Pamir1kf_One_Target ~/data/Pamir1kf_One_Target_svin.txt
 DATA_PATH=$1
