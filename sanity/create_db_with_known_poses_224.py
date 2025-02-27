@@ -34,7 +34,7 @@ def get_cam_params(h, w):
 
     return cam_params
 
-def gen_poses_file(input_path, output_path):
+def gen_poses_file_from_svin(input_path, output_path):
     with open(input_path) as f:
         lines = f.readlines()
     
@@ -52,6 +52,31 @@ def gen_poses_file(input_path, output_path):
             tz=pose[2]
         
             f.write(f"{img_name} {tx} {ty} {tz}\n")
+
+def gen_poses_file_from_colmap_output(input_path, output_path):
+    with open(input_path) as f:
+        lines = f.readlines()
+    
+    with open(output_path, "w+") as f:
+        should_skip = False
+        for line in lines:
+            if line[0] == "#":
+                continue
+
+            if should_skip:
+                should_skip = False
+            else:
+                # IMAGE_ID, QW, QX, QY, QZ, TX, TY, TZ, CAMERA_ID, NAME
+                line_parts = line.strip().split(" ")
+                tx = float(line_parts[5])
+                ty = float(line_parts[6])
+                tz = float(line_parts[7])
+                img_name = line_parts[9]
+                #print(line)
+
+                f.write(f"{img_name} {tx} {ty} {tz}\n")
+                
+                should_skip = True
 
 def gen_database(database_file, cam_params, height, width, image_files, model=1):
     # Open the database.
@@ -91,7 +116,16 @@ def main(args):
     
     cam_params = get_cam_params(height, width)
 
-    gen_poses_file(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    cam_poses_type = args.cam_poses_type
+
+    if cam_poses_type == "svin":
+        print("Generating cam poses from SVIN file")
+        gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    elif cam_poses_type == "colmap":
+        print("Generating cam poses from COLMAP file")
+        gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    else:
+        print(f"ERROR: cam_poses type must be either svin or colmap")
     
     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
@@ -101,6 +135,7 @@ if __name__ == '__main__':
     parser.add_argument("--cam_poses", default="", help="path to the cam poses that will be used for initialization")
     parser.add_argument("--images_path", default="", help="path to the images that will be used by colmap for sparse reconstruction")
     parser.add_argument('--out_path', default="", help="path to the folder where colmap will search for imgs.txt and cams.txt")
+    parser.add_argument('--cam_poses_type', default="svin", help="one of svin or colmap")
     
     args = parser.parse_args()
     main(args)
