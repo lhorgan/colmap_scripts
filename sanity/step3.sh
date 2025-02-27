@@ -1,4 +1,4 @@
-DATA_PATH=/home/luke/Documents/pamir_reconstructions/gps/gps_small_std_dev_3
+DATA_PATH=/home/luke/Documents/pamir_stuff/targets_separated/Pamir1kf_recombined_test
 SCENE=Pamir1kf
 
 colmap feature_extractor \

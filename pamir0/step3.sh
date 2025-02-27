@@ -1,15 +1,15 @@
-DATA_PATH=/home/luke/Documents/pamir_reconstructions/feb24/full
-SCENE=Pamir0kf
+DATA_PATH=/media/landa/pamir/recombined_full
+SCENE=Pamir1kf
 
-colmap feature_extractor \
+time colmap feature_extractor \
     --database_path $DATA_PATH/$SCENE/output/database.db  \
     --image_path ${DATA_PATH}/${SCENE}/Images
 
-# Alternative for larger datasets: spatial_matcher
-colmap exhaustive_matcher \
+# Alternative for larger  datasets: spatial_matcher
+time colmap sequential_matcher \
     --database_path $DATA_PATH/$SCENE/output/database.db 
 
-colmap mapper \
+time colmap mapper \
     --database_path $DATA_PATH/$SCENE/output/database.db  \
     --image_path ${DATA_PATH}/${SCENE}/Images \
     --output_path $DATA_PATH/$SCENE/output/sparse \

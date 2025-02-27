@@ -29,7 +29,7 @@ def get_cam_params(h, w):
     cam_str += "# CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]\n"
     cam_str += "# Number of cameras: 1\n"
     #cam_str += "1 SIMPLE_RADIAL 960 540 590.34818954980267 480 270 0.013510657866250657"
-    cam_str += f"1 SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n"
+    cam_str += f"1 SIMPLE_RADIAL {w} {h} {params['f']} {params['cx']} {params['cy']} {params['k']}\n"
     cam_params = np.asarray([params["f"], params["cx"], params["cy"], params["k"]])
 
     return cam_params
@@ -45,7 +45,7 @@ def gen_poses_file(input_path, output_path):
         
         for line in lines[1:]:
             timestamp = line.split(" ")[0]
-            img_name = f"{timestamp.replace(".", "")}.png"
+            img_name = f'{timestamp.replace(".", "")}.png'
             pose = [float(x) for x in (line.split(" ")[1:])]
             tx=pose[0]
             ty=pose[1]

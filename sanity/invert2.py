@@ -9,7 +9,7 @@ def create_pose_matrix(tx, ty, tz, qx, qy, qz, qw):
     #P[:3,:3] = Rotation.from_quat([qx, qy, qz, qw])
     r = Rotation.from_quat([qx, qy, qz, qw]).as_matrix()
     #print(r)
-    P[:3,:3] = r 
+    P[:3,:3] = r
     
     # Set translation part (3x1)
     P[:3,3] = [tx, ty, tz]
