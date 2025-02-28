@@ -117,14 +117,15 @@ def main(args):
 
     cam_poses_type = args.cam_poses_type
 
-    if cam_poses_type == "svin":
-        print("Generating cam poses from SVIN file")
-        gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    elif cam_poses_type == "colmap":
-        print("Generating cam poses from COLMAP file")
-        gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    else:
-        print(f"ERROR: cam_poses type must be either svin or colmap")
+    if args.cam_poses:
+        if cam_poses_type == "svin":
+            print("Generating cam poses from SVIN file")
+            gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+        elif cam_poses_type == "colmap":
+            print("Generating cam poses from COLMAP file")
+            gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+        else:
+            print(f"ERROR: cam_poses type must be either svin or colmap")
     
     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
