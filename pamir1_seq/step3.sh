@@ -6,7 +6,7 @@ time colmap feature_extractor \
     --image_path ${DATA_PATH}/${SCENE}/Images
 
 # Alternative for larger datasets: spatial_matcher
-time colmap sequential_matcher \
+time colmap exhaustive_matcher \
     --database_path $DATA_PATH/$SCENE/output/database.db 
 
 time colmap pose_prior_mapper \
