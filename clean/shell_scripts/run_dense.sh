@@ -1,5 +1,5 @@
-DATA_PATH="<oath to data>"
-SCENE="<scene name>"
+DATA_PATH=$1
+SCENE=$2
 
 # python3 delay.py
 

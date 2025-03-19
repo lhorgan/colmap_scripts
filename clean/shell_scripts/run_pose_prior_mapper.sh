@@ -1,7 +1,7 @@
-DATA_PATH=/home/luke/Documents/pamir_reconstructions/small
-SCENE=Pamir1kf
+DATA_PATH=$1
+SCENE=$2
 
-time glomap mapper \
+colmap pose_prior_mapper \
     --database_path $DATA_PATH/$SCENE/output/database.db  \
     --image_path ${DATA_PATH}/${SCENE}/Images \
     --output_path $DATA_PATH/$SCENE/output/sparse \
