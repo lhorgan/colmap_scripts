@@ -85,12 +85,15 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
     db.create_tables()
 
     # add camera
+    id = 1
     for directory in image_files:
         camera_id = db.add_camera(model, width, height, cam_params)
         
         # Create dummy images.
-        for i,img in enumerate(directory):
-            _ = db.add_image(name=img, camera_id=camera_id, image_id=int(i+1))
+        for img in directory:
+            print(f"adding image {img} with id {id+1}")
+            _ = db.add_image(name=img, camera_id=camera_id, image_id=int(id))
+            id += 1
 
     # Commit the data to the file.
     db.commit()
@@ -106,17 +109,20 @@ def main(args):
     database_file_path = os.path.join(colmap_save_path, 'database.db')
     
     contents = os.listdir(image_path)
-    if os.path.isdir(contents[0]):
+    if os.path.isdir(os.path.join(image_path, contents[0])):
         image_files = []
         for directory_name in contents:
             directory_path = os.path.join(image_path, directory_name)
-            image_files.append(os.listdir(directory_path))
+            image_names = os.listdir(directory_path)
+            image_names = [f"{directory_name}/{image_name}" for image_name in image_names]
+            image_files.append(image_names)
     else:
         image_files = [contents]
 
     for directory in image_files:
         directory = [img for img in directory if img[-3:] == "png"]
         directory.sort()
+
 
     img = cv2.imread(os.path.join(image_path,image_files[0][0]))
     height, width, _ = img.shape
