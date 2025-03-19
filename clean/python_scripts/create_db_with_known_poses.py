@@ -29,7 +29,7 @@ def get_cam_params(h, w):
     cam_str += "# CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]\n"
     cam_str += "# Number of cameras: 1\n"
     #cam_str += "1 SIMPLE_RADIAL 960 540 590.34818954980267 480 270 0.013510657866250657"
-    cam_str += f'1 SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n'
+    cam_str += f"1 SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n"
     cam_params = np.asarray([params["f"], params["cx"], params["cy"], params["k"]])
 
     return cam_params
@@ -38,13 +38,14 @@ def gen_poses_file_from_svin(input_path, output_path):
     with open(input_path) as f:
         lines = f.readlines()
     
+    comment = lines[0]
+
     with open(output_path, "w+") as f:
+        f.write(comment)
         
         for line in lines[1:]:
-            if line[0] == "#":
-                f.write(line)
             timestamp = line.split(" ")[0]
-            img_name = f'{timestamp.replace(".", "")}.png'
+            img_name = f"{timestamp.replace(".", "")}.png"
             pose = [float(x) for x in (line.split(" ")[1:])]
             tx=pose[0]
             ty=pose[1]
@@ -85,12 +86,11 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
     db.create_tables()
 
     # add camera
-    for directory in image_files:
-        camera_id = db.add_camera(model, width, height, cam_params)
-        
-        # Create dummy images.
-        for i,img in enumerate(directory):
-            _ = db.add_image(name=img, camera_id=camera_id, image_id=int(i+1))
+    camera_id = db.add_camera(model, width, height, cam_params)
+
+    # Create dummy images.
+    for i,img in enumerate(image_files):
+        _ = db.add_image(name=img, camera_id=camera_id, image_id=int(i+1))
 
     # Commit the data to the file.
     db.commit()
@@ -105,31 +105,37 @@ def main(args):
     
     database_file_path = os.path.join(colmap_save_path, 'database.db')
     
-    contents = os.listdir(image_path)
-    if os.path.isdir(contents[0]):
-        image_files = []
-        for directory_name in contents:
-            directory_path = os.path.join(image_path, directory_name)
-            image_files.append(os.listdir(directory_path))
-    else:
-        image_files = [contents]
+    image_files = os.listdir(image_path)
+    image_files = [img for img in image_files if img[-3:] == "png"]
+    image_files.sort()
+    ts = [img.split(".")[0] for img in image_files]
+    ts = [t[:10]+'.'+t[10:] for t in ts]
 
-    for directory in image_files:
-        directory = [img for img in directory if img[-3:] == "png"]
-        directory.sort()
-
-    img = cv2.imread(os.path.join(image_path,image_files[0][0]))
+    img = cv2.imread(os.path.join(image_path,image_files[0]))
     height, width, _ = img.shape
     
     cam_params = get_cam_params(height, width)
+
+    cam_poses_type = args.cam_poses_type
+
+    if cam_poses_type == "svin":
+        print("Generating cam poses from SVIN file")
+        gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    elif cam_poses_type == "colmap":
+        print("Generating cam poses from COLMAP file")
+        gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    else:
+        print(f"ERROR: cam_poses type must be either svin or colmap")
     
     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument("--cam_poses", default="", help="path to the cam poses that will be used for initialization")
     parser.add_argument("--images_path", default="", help="path to the images that will be used by colmap for sparse reconstruction")
     parser.add_argument('--out_path', default="", help="path to the folder where colmap will search for imgs.txt and cams.txt")
+    parser.add_argument('--cam_poses_type', default="svin", help="one of svin or colmap")
     
     args = parser.parse_args()
     main(args)

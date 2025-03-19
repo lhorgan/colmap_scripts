@@ -1,5 +1,5 @@
-DATA_PATH=/home/luke/Documents/pamir_stuff/gps/gps_small_with_svin_poses_cartesian
-SCENE=Pamir1kf
+DATA_PATH=$1
+SCENE=$2
 
 python3 python_scripts/write_pose_priors_to_database.py \
     --database_path $DATA_PATH/$SCENE/output/database.db \
