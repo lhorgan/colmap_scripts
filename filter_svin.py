@@ -25,6 +25,6 @@ def filter_svin(input_path, output_path, images_path):
     
     print("Added", count)
 
-filter_svin(input_path="/media/landa/pamir/all_images_with_poses/Pamir1kf/svin.txt", \
-            output_path="/media/landa/pamir/recombined_full_with_poses/Pamir1kf/svin.txt", \
-            images_path="/media/landa/pamir/recombined_full_with_poses/Pamir1kf/Images")
+filter_svin(input_path="/home/luke/Documents/camera_plotter/svin_Pamir1_full.txt", \
+            output_path="/home/luke/Documents/pamir_reconstructions/feb28/full/Pamir1kf/svin.txt", \
+            images_path="/home/luke/Documents/pamir_reconstructions/feb28/full/Pamir1kf/Images")
