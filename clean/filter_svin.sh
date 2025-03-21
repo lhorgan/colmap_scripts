@@ -1,0 +1,1 @@
+python3 python_scripts/filter_svin.py --input "/home/luke/Documents/hell/Svin/Left.txt"

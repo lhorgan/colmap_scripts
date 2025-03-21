@@ -1,5 +1,5 @@
-DATA_PATH=/home/luke/Documents/pamir_reconstructions/small_multi_test
-SCENE=Pamir1kf
+DATA_PATH=/home/luke/Documents/hell
+SCENE=First50
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
