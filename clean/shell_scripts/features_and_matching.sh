@@ -6,7 +6,7 @@ time colmap feature_extractor \
     --image_path ${DATA_PATH}/${SCENE}/Images \
     --ImageReader.single_camera_per_folder 1 # Necessary?
 
-# time colmap exhaustive_matcher \
-#     --database_path $DATA_PATH/$SCENE/output/database.db
-time colmap sequential_matcher \
-    --database_path $DATA_PATH/$SCENE/output/database.db 
+time colmap exhaustive_matcher \
+    --database_path $DATA_PATH/$SCENE/output/database.db
+# time colmap sequential_matcher \
+#     --database_path $DATA_PATH/$SCENE/output/database.db 
