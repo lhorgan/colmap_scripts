@@ -37,6 +37,9 @@ def get_cam_params(h, w):
 def gen_poses_file_from_svin(input_path, output_path):
     if os.path.isdir(input_path):
         pass
+
+    with open(input_path) as f:
+        lines = f.readlines()
     
     comment = lines[0]
 
