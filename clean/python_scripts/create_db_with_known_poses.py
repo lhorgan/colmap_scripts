@@ -36,35 +36,19 @@ def get_cam_params(h, w):
 
 def gen_poses_file_from_svin(input_path, output_path):
     if os.path.isdir(input_path):
-        pass
-
-    with open(input_path) as f:
-        lines = f.readlines()
-    
-    comment = lines[0]
-
-    with open(output_path, "w+") as f:
-        f.write(comment)
-        
-        for line in lines[1:]:
-            timestamp = line.split(" ")[0]
-            img_name = f"{timestamp.replace(".", "")}.png"
-            pose = [float(x) for x in (line.split(" ")[1:])]
-            tx=pose[0]
-            ty=pose[1]
-            tz=pose[2]
-        
-            f.write(f"{img_name} {tx} {ty} {tz}\n")
+        dirnames = os.listdir(input_path)
+        for dirname in dirnames:
+            gen_poses_file_from_svin_helper(input_path=os.path.join(input_path, dirname), \
+                                            output_path=output_path, \
+                                            img_name_prefix=f"{dirname}/")
+    else:
+        gen_poses_file_from_svin_helper(input_path, output_path)
 
 def gen_poses_file_from_svin_helper(input_path, output_path, img_name_prefix=""):
     with open(input_path) as f:
         lines = f.readlines()
-    
-    comment = lines[0]
 
-    with open(output_path, "a+") as f:
-        f.write(comment)
-        
+    with open(output_path, "a+") as f:        
         for line in lines[1:]:
             timestamp = line.split(" ")[0]
             img_name = f"{timestamp.replace(".", "")}.png"
