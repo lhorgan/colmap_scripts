@@ -35,8 +35,8 @@ def get_cam_params(h, w):
     return cam_params
 
 def gen_poses_file_from_svin(input_path, output_path):
-    with open(input_path) as f:
-        lines = f.readlines()
+    if os.path.isdir(input_path):
+        pass
     
     comment = lines[0]
 
@@ -52,6 +52,25 @@ def gen_poses_file_from_svin(input_path, output_path):
             tz=pose[2]
         
             f.write(f"{img_name} {tx} {ty} {tz}\n")
+
+def gen_poses_file_from_svin_helper(input_path, output_path, img_name_prefix=""):
+    with open(input_path) as f:
+        lines = f.readlines()
+    
+    comment = lines[0]
+
+    with open(output_path, "a+") as f:
+        f.write(comment)
+        
+        for line in lines[1:]:
+            timestamp = line.split(" ")[0]
+            img_name = f"{timestamp.replace(".", "")}.png"
+            pose = [float(x) for x in (line.split(" ")[1:])]
+            tx=pose[0]
+            ty=pose[1]
+            tz=pose[2]
+        
+            f.write(f"{img_name_prefix}{img_name} {tx} {ty} {tz}\n")
 
 def gen_poses_file_from_colmap_output(input_path, output_path):
     with open(input_path) as f:
