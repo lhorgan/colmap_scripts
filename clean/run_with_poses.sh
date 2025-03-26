@@ -1,24 +1,28 @@
 DATA_PATH=/home/luke/Documents/hell
-SCENE=First50
+SCENE=First500_poses
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
 
-python3 python_scripts/combine_svin.py \
-    --svin_path $DATA_PATH/$SCENE/Svin \
-    --images_path $DATA_PATH/$SCENE/Images \
-    --output_file $DATA_PATH/$SCENE/svin.txt
+# python3 python_scripts/combine_svin.py \
+#     --svin_path $DATA_PATH/$SCENE/Svin \
+#     --images_path $DATA_PATH/$SCENE/Images \
+#     --output_file $DATA_PATH/$SCENE/svin.txt
 
-./shell_scripts/create_db.sh $DATA_PATH $SCENE
+python3 python_scripts/create_db_with_known_poses.py \
+    --cam_poses ${DATA_PATH}/${SCENE}/Svin \
+    --images_path ${DATA_PATH}/${SCENE}/Images \
+    --out_path $DATA_PATH/$SCENE/output \
+    --cam_poses_type svin
 
-# python3 write_pose_priors_to_database.py \
-#     --database_path $DATA_PATH/$SCENE/output/database.db \
-#     --pose_priors_path $DATA_PATH/$SCENE/output/poses.txt \
-#     --coordinate_system 1 \
-#     --prior_position_std_x 1 \
-#     --prior_position_std_y 1 \
-#     --prior_position_std_z 1
+python3 python_scripts/write_pose_priors_to_database.py \
+    --database_path $DATA_PATH/$SCENE/output/database.db \
+    --pose_priors_path $DATA_PATH/$SCENE/output/poses.txt \
+    --coordinate_system 1 \
+    --prior_position_std_x 1 \
+    --prior_position_std_y 1 \
+    --prior_position_std_z 1
 
-# time ./shell_scripts/features_and_matching.sh $DATA_PATH $SCENE
-# time ./shell_scripts/pose_prior_mapper.sh $DATA_PATH $SCENE
-# time ./shell_scripts/run_dense.sh $DATA_PATH $SCENE
+time ./shell_scripts/features_and_matching.sh $DATA_PATH $SCENE
+time ./shell_scripts/run_pose_prior_mapper.sh $DATA_PATH $SCENE
+time ./shell_scripts/run_dense.sh $DATA_PATH $SCENE

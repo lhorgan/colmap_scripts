@@ -36,11 +36,11 @@ def get_cam_params(h, w):
 
 def gen_poses_file_from_svin(input_path, output_path):
     if os.path.isdir(input_path):
-        dirnames = os.listdir(input_path)
-        for dirname in dirnames:
-            gen_poses_file_from_svin_helper(input_path=os.path.join(input_path, dirname), \
+        filenames = os.listdir(input_path)
+        for filename in filenames:
+            gen_poses_file_from_svin_helper(input_path=os.path.join(input_path, filename), \
                                             output_path=output_path, \
-                                            img_name_prefix=f"{dirname}/")
+                                            img_name_prefix=f"{filename.replace(".txt", "")}/")
     else:
         gen_poses_file_from_svin_helper(input_path, output_path)
 
@@ -130,7 +130,7 @@ def main(args):
         directory = [img for img in directory if img[-3:] == "png"]
         directory.sort()
 
-    img = cv2.imread(os.path.join(image_path,image_files[0]))
+    img = cv2.imread(os.path.join(image_path, image_files[0][0]))
     height, width, _ = img.shape
     
     cam_params = get_cam_params(height, width)
