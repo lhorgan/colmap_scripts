@@ -91,7 +91,7 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
         
         # Create dummy images.
         for img in directory:
-            print(f"adding image {img} with id {id+1}")
+            print(f"adding image {img} with id {id}")
             _ = db.add_image(name=img, camera_id=camera_id, image_id=int(id))
             id += 1
 
@@ -119,10 +119,9 @@ def main(args):
     else:
         image_files = [contents]
 
-    for directory in image_files:
-        directory = [img for img in directory if img[-3:] == "png"]
-        directory.sort()
-
+    for i in range(len(image_files)):
+        image_files[i] = [img for img in image_files[i] if img[-3:] == "png"]
+        image_files[i].sort()
 
     img = cv2.imread(os.path.join(image_path,image_files[0][0]))
     height, width, _ = img.shape

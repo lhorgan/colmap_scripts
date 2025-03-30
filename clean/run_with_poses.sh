@@ -4,10 +4,16 @@ SCENE=First500_poses
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
 
-# python3 python_scripts/combine_svin.py \
-#     --svin_path $DATA_PATH/$SCENE/Svin \
-#     --images_path $DATA_PATH/$SCENE/Images \
-#     --output_file $DATA_PATH/$SCENE/svin.txt
+rm -rf "${DATA_PATH}/${SCENE}/output"
+mkdir -p "${DATA_PATH}/${SCENE}/Svin"
+
+positions = ("LEFT" "CENTER" "RIGHT")
+for position in "${positions[@]}"; do
+    python3 python_scripts/filter_svin.py \
+        --input "${DATA_PATH}/Svin/${position}.txt" \
+        --output "${DATA_PATH}/${SCENE}/Svin/${position}.txt" \
+        --images "${DATA_PATH}/${SCENE}/Images/${position}"
+done
 
 python3 python_scripts/create_db_with_known_poses.py \
     --cam_poses ${DATA_PATH}/${SCENE}/Svin \
