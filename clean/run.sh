@@ -1,5 +1,5 @@
 DATA_PATH=/home/luke/Documents/hell
-SCENE=First500
+SCENE=First500_1cam
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
