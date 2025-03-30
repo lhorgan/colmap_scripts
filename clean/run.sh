@@ -1,5 +1,5 @@
-DATA_PATH=/home/luke/Documents/hell
-SCENE=First500
+DATA_PATH=/home/harish/Documents/catacombs_2
+SCENE=catacombs_1_cam_order
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
