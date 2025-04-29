@@ -1,4 +1,4 @@
-DATA_PATH=/home/luke/Documents/pamir_stuff/gps/gps_small_with_svin_poses_cartesian
+DATA_PATH=/home/luke/Documents/pamir_reconstructions/apr23/experiments_2/gps
 SCENE=Pamir1kf
 
 python create_db_with_known_poses_224.py \

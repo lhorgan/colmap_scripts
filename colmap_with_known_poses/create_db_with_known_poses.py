@@ -30,7 +30,7 @@ def gen_cameras_file(h, w, output_path, cam_file="cameras.txt"):
     cam_str += "# CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]\n"
     cam_str += "# Number of cameras: 1\n"
     #cam_str += "1 SIMPLE_RADIAL 960 540 590.34818954980267 480 270 0.013510657866250657"
-    cam_str += f"1 SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n"
+    cam_str += f'1 SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n'
     cam_params = np.asarray([params["f"], params["cx"], params["cy"], params["k"]])
 
     with open(os.path.join(output_path,cam_file),'w') as of:
