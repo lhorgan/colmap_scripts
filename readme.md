@@ -66,8 +66,6 @@ If all of your images are from one camera, then the Images directory should simp
       - Center/
       - Right/
 
-Note that the "Pose Prior Mapper"  only supports the three camera setup.  It would be trivially easy to make it support one camera, but such is the nature of the brittle scripts I have put together thus far!
-
 ### Pose Prior Mapper
 The pose prior mapper is probably misnamed.  We think it probably does bundle adjustment like the normal mapper, without taking the pose priors into account, and then computes a single transformation to line up with the "priors" afterwards.  Oh well.
 
@@ -133,6 +131,6 @@ python invert_svin.py
 ### Filtering out unused poses
 If you want to make sure your SVIN file only has poses for images that actually exist in your Images directory, use the filter_svin.py script.  Open filter_svin.py and change the arguments to the filter_svin function on the last line to suit your configuration.  The arguments are:
 
-1) The path your original SVIN file
+1) The path to your original SVIN file
 2) The path where you'd like a revised SVIN file to be written
 3) The path to the folder of images you'd like the SVIN file to match
