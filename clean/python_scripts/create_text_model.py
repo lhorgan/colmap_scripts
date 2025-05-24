@@ -40,7 +40,7 @@ def gen_imgs_file(gt_data_path, colmap_imgs_path, ts):
     img_str = "# Image list with two lines of data per image:\n"
     img_str += "#   IMAGE_ID, QW, QX, QY, QZ, TX, TY, TZ, CAMERA_ID, NAME\n"
     img_str += "#   POINTS2D[] as (X, Y, POINT3D_ID)\n"
-    with open(gt_data_path, 'r') as file:
+    with open(gt_data_path, "r") as file:
         for line_number, line in enumerate(file, start=1):
             line = line.strip()
             line = line.split(" ")

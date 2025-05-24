@@ -85,7 +85,47 @@ def gen_poses_file_from_colmap_output(input_path, output_path):
                 should_skip = True
 
 def gen_text_model(input_path, output_path):
-    svin_filenames = os.list_dir()
+    print(f"Writing placeholder text file to {output_path} using poses from {input_path}.")
+    svin_filenames = os.listdir(input_path)
+    print(svin_filenames)
+    
+    img_str = "# Image list with two lines of data per image:\n"
+    img_str += "#   IMAGE_ID, QW, QX, QY, QZ, TX, TY, TZ, CAMERA_ID, NAME\n"
+    img_str += "#   POINTS2D[] as (X, Y, POINT3D_ID)\n"
+
+    camera_id = 1
+    count = 0
+    for filename in svin_filenames:
+        with open(os.path.join(input_path, filename), "r") as file:
+            for line_number, line in enumerate(file, start=1):
+                line = line.strip()
+                line = line.split(" ")
+                if line[0][0] == "#":
+                    continue
+                
+                tx = line[1]
+                ty = line[2]
+                tz = line[3]
+                
+                qx = line[4]
+                qy = line[5]
+                qz = line[6]
+                qw = line[7]
+
+                imgs_name_list = line[0].split(".")
+                imgs_name = imgs_name_list[0] + imgs_name_list[1] + ".png"
+                if len(svin_filenames) > 0:
+                    name_prefix = filename.split(".")[0]
+                    imgs_name = name_prefix + "/" + imgs_name
+    
+                img_str += f"{int(count+1)} {qw} {qx} {qy} {qz} {tx} {ty} {tz} {camera_id} {imgs_name}\n\n"
+                count += 1
+        camera_id += 1
+    
+    save_path = os.path.join(output_path, "images.txt")
+    print(f"writing images.txt to {output_path}")
+    with open(save_path,'w') as of:
+        of.write(img_str)
 
 def gen_database(database_file, cam_params, height, width, image_files, model=1):
     # Open the database.
@@ -101,7 +141,7 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
         
         # Create dummy images.
         for img in directory:
-            print(f"adding image {img} with id {id}")
+            #print(f"adding image {img} with id {id}")
             _ = db.add_image(name=img, camera_id=camera_id, image_id=int(id))
             id += 1
 
@@ -113,48 +153,47 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
 
 
 def main(args):
-    # colmap_save_path = args.out_path
-    # image_path = args.images_path
+    colmap_save_path = args.out_path
+    image_path = args.images_path
     
-    # database_file_path = os.path.join(colmap_save_path, 'database.db')
+    database_file_path = os.path.join(colmap_save_path, 'database.db')
     
-    # contents = os.listdir(image_path)
-    # if os.path.isdir(os.path.join(image_path, contents[0])):
-    #     image_files = []
-    #     for directory_name in contents:
-    #         directory_path = os.path.join(image_path, directory_name)
-    #         image_names = os.listdir(directory_path)
-    #         image_names = [f"{directory_name}/{image_name}" for image_name in image_names]
-    #         image_files.append(image_names)
-    # else:
-    #     image_files = [contents]
+    contents = os.listdir(image_path)
+    if os.path.isdir(os.path.join(image_path, contents[0])):
+        image_files = []
+        for directory_name in contents:
+            directory_path = os.path.join(image_path, directory_name)
+            image_names = os.listdir(directory_path)
+            image_names = [f"{directory_name}/{image_name}" for image_name in image_names]
+            image_files.append(image_names)
+    else:
+        image_files = [contents]
 
-    # for i in range(len(image_files)):
-    #     image_files[i] = [img for img in image_files[i] if img[-3:] == "png"]
-    #     image_files[i].sort()
+    for i in range(len(image_files)):
+        image_files[i] = [img for img in image_files[i] if img[-3:] == "png"]
+        image_files[i].sort()
 
-    # img = cv2.imread(os.path.join(image_path, image_files[0][0]))
-    # height, width, _ = img.shape
+    img = cv2.imread(os.path.join(image_path, image_files[0][0]))
+    height, width, _ = img.shape
     
-    # cam_params = get_cam_params(height, width)
+    cam_params = get_cam_params(height, width)
 
-    # cam_poses_type = args.cam_poses_type
+    cam_poses_type = args.cam_poses_type
 
-    # if args.cam_poses is not None:
-    #     if cam_poses_type == "svin":
-    #         print("Generating cam poses from SVIN file")
-    #         gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    #     elif cam_poses_type == "colmap":
-    #         print("Generating cam poses from COLMAP file")
-    #         gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    #     else:
-    #         print(f"ERROR: cam_poses type must be either svin or colmap")
+    if cam_poses_type == "svin":
+        print("Generating cam poses from SVIN file")
+        gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    elif cam_poses_type == "colmap":
+        print("Generating cam poses from COLMAP file")
+        gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    else:
+        print(f"ERROR: cam_poses type must be either svin or colmap")
         
-    #     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
-    #     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
+    # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
+    gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
 
     if args.text_model is not None:
-        gen_text_model(args.text_model, )
+        gen_text_model(args.cam_poses, args.text_model)
 
 
 if __name__ == '__main__':
