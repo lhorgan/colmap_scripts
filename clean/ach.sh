@@ -1,11 +1,11 @@
 DATA_PATH=/home/luke/Documents/hell
-SCENE=First500_poses
+SCENE=First500_poses_inc_ref
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
-mkdir -p "${DATA_PATH}/${SCENE}/output"
-mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
 
-mkdir -p "${DATA_PATH}/${SCENE}/Svin"
+# mkdir -p "${DATA_PATH}/${SCENE}/output"
+# mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
+# mkdir -p "${DATA_PATH}/${SCENE}/Svin"
 
 positions = ("LEFT" "CENTER" "RIGHT")
 for position in "${positions[@]}"; do

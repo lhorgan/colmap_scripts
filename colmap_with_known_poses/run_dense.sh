@@ -1,5 +1,5 @@
 DATA_PATH=/home/luke/Documents/hell/apr29
-SCENE=Right100
+SCENE=Right
 
 echo "Running image undistorter"
 
