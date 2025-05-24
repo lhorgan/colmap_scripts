@@ -84,6 +84,9 @@ def gen_poses_file_from_colmap_output(input_path, output_path):
                 
                 should_skip = True
 
+def gen_text_model(input_path, output_path):
+    svin_filenames = os.list_dir()
+
 def gen_database(database_file, cam_params, height, width, image_files, model=1):
     # Open the database.
     db = COLMAPDatabase.connect(database_file)
@@ -110,48 +113,54 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
 
 
 def main(args):
-    colmap_save_path = args.out_path
-    image_path = args.images_path
+    # colmap_save_path = args.out_path
+    # image_path = args.images_path
     
-    database_file_path = os.path.join(colmap_save_path, 'database.db')
+    # database_file_path = os.path.join(colmap_save_path, 'database.db')
     
-    contents = os.listdir(image_path)
-    if os.path.isdir(os.path.join(image_path, contents[0])):
-        image_files = []
-        for directory_name in contents:
-            directory_path = os.path.join(image_path, directory_name)
-            image_names = os.listdir(directory_path)
-            image_names = [f"{directory_name}/{image_name}" for image_name in image_names]
-            image_files.append(image_names)
-    else:
-        image_files = [contents]
+    # contents = os.listdir(image_path)
+    # if os.path.isdir(os.path.join(image_path, contents[0])):
+    #     image_files = []
+    #     for directory_name in contents:
+    #         directory_path = os.path.join(image_path, directory_name)
+    #         image_names = os.listdir(directory_path)
+    #         image_names = [f"{directory_name}/{image_name}" for image_name in image_names]
+    #         image_files.append(image_names)
+    # else:
+    #     image_files = [contents]
 
-    for i in range(len(image_files)):
-        image_files[i] = [img for img in image_files[i] if img[-3:] == "png"]
-        image_files[i].sort()
+    # for i in range(len(image_files)):
+    #     image_files[i] = [img for img in image_files[i] if img[-3:] == "png"]
+    #     image_files[i].sort()
 
-    img = cv2.imread(os.path.join(image_path, image_files[0][0]))
-    height, width, _ = img.shape
+    # img = cv2.imread(os.path.join(image_path, image_files[0][0]))
+    # height, width, _ = img.shape
     
-    cam_params = get_cam_params(height, width)
+    # cam_params = get_cam_params(height, width)
 
-    cam_poses_type = args.cam_poses_type
+    # cam_poses_type = args.cam_poses_type
 
-    if cam_poses_type == "svin":
-        print("Generating cam poses from SVIN file")
-        gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    elif cam_poses_type == "colmap":
-        print("Generating cam poses from COLMAP file")
-        gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
-    else:
-        print(f"ERROR: cam_poses type must be either svin or colmap")
-    
-    # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
-    gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
+    # if args.cam_poses is not None:
+    #     if cam_poses_type == "svin":
+    #         print("Generating cam poses from SVIN file")
+    #         gen_poses_file_from_svin(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    #     elif cam_poses_type == "colmap":
+    #         print("Generating cam poses from COLMAP file")
+    #         gen_poses_file_from_colmap_output(input_path=args.cam_poses, output_path=os.path.join(colmap_save_path, "poses.txt"))
+    #     else:
+    #         print(f"ERROR: cam_poses type must be either svin or colmap")
+        
+    #     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
+    #     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
+
+    if args.text_model is not None:
+        gen_text_model(args.text_model, )
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--cam_poses", default="", help="path to the cam poses that will be used for initialization")
+    parser.add_argument("--text_model", required=False, help="path to the placeholder text model")
     parser.add_argument("--images_path", default="", help="path to the images that will be used by colmap for sparse reconstruction")
     parser.add_argument('--out_path', default="", help="path to the folder where colmap will search for imgs.txt and cams.txt")
     parser.add_argument('--cam_poses_type', default="svin", help="one of svin or colmap")
