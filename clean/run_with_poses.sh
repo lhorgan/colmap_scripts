@@ -7,7 +7,7 @@ mkdir -p "${DATA_PATH}/${SCENE}/output"
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/Svin"
 
-positions = ("LEFT" "CENTER" "RIGHT")
+positions=("LEFT" "CENTER" "RIGHT")
 for position in "${positions[@]}"; do
     python3 python_scripts/filter_svin.py \
         --input "${DATA_PATH}/Svin/${position}.txt" \
