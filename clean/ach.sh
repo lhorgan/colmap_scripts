@@ -1,13 +1,18 @@
 #!/bin/bash
 
-DATA_PATH=/home/luke/Documents/hell
-SCENE=First100
+DATA_PATH=/home/luke/Documents/hell/may27
+SCENE=First100_point_tri_yes_poses
 
-rm -rf "${DATA_PATH}/${SCENE}/output"
+rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
+mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 
-mkdir -p "${DATA_PATH}/${SCENE}/output"
-mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
+rm -rf "${DATA_PATH}/${SCENE}/sparse/text"
+mkdir -p "${DATA_PATH}/${SCENE}/sparse/text"
+
+rm -rf "${DATA_PATH}/${SCENE}/Svin"
 mkdir -p "${DATA_PATH}/${SCENE}/Svin"
+
+rm "${DATA_PATH}/${SCENE}/database.db"
 
 positions=("Left" "Center" "Right")
 for position in "${positions[@]}"; do
@@ -20,27 +25,40 @@ done
 python3 python_scripts/create_db_with_known_poses.py \
     --cam_poses ${DATA_PATH}/${SCENE}/Svin \
     --images_path ${DATA_PATH}/${SCENE}/Images \
-    --out_path $DATA_PATH/$SCENE/output/sparse \
+    --out_path $DATA_PATH/$SCENE/ \
     --cam_poses_type svin \
-    --text_model $DATA_PATH/${SCENE}/output/sparse/text_placeholder
+    --text_model ${DATA_PATH}/${SCENE}/sparse/text_placeholder
 
 echo "Running feature extractor"
 time colmap feature_extractor \
     --database_path ${DATA_PATH}/${SCENE}/database.db \
     --image_path ${DATA_PATH}/${SCENE}/Images
 
+echo "Running exhaustive"
+time colmap exhaustive_matcher \
+    --database_path ${DATA_PATH}/${SCENE}/database.db
+
 echo "Running point triangulator"
 time colmap point_triangulator \
     --database_path ${DATA_PATH}/${SCENE}/database.db \
     --image_path ${DATA_PATH}/${SCENE}/Images \
-    --output_path ${DATA_PATH}/${SCENE}/output/sparse \
-    --input_path $DATA_PATH/${SCENE}/output/sparse/text_placeholder
+    --output_path ${DATA_PATH}/${SCENE}/sparse \
+    --input_path ${DATA_PATH}/${SCENE}/sparse/text_placeholder
 
-# echo "Running incremental model refiner"
-# time colmap incremental_model_refiner \
-#     --database_path ${DATA_PATH}/${SCENE}/database.db \
-#     --image_path ${DATA_PATH}/${SCENE}/Images \
-#     --output_path ${DATA_PATH}/${SCENE}/output/sparse \
-#     --input_path $DATA_PATH/${SCENE}/output/sparse/text_placeholder
+echo "Running conversion to text"
+time python python_scripts/read_write_model.py \
+    --input_model ${DATA_PATH}/${SCENE}/sparse \
+    --input_format ".bin" \
+    --output_model ${DATA_PATH}/${SCENE}/sparse/text \
+    --output_format ".txt"
 
-#time ./shell_scripts/run_dense.sh $DATA_PATH $SCENE
+echo "Running incremental model refiner"
+time colmap incremental_model_refiner \
+    --database_path ${DATA_PATH}/${SCENE}/database.db \
+    --image_path ${DATA_PATH}/${SCENE}/Images \
+    --output_path ${DATA_PATH}/${SCENE}/sparse \
+    --input_path ${DATA_PATH}/${SCENE}/sparse/text
+
+# rm -rf ${DATA_PATH}/${SCENE}/output/dense
+
+# time ./shell_scripts/run_dense.sh $DATA_PATH $SCENE
