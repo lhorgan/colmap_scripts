@@ -103,7 +103,7 @@ Open run_with_poses.sh and change the first two lines to match your data path an
 Follow the steps for the Pose Prior Mapper, but use the camera center version of the SVIN poses (see SVIN Business for more details).  Instead of run_with_poses.sh, run:
 
 ```
-./ach.sh
+./run_inc_ref.sh
 ```
 
 ### GLOMAP
