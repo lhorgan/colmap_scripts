@@ -1,6 +1,6 @@
 I still need to consoldiate everything so it exists as one pipeline.  For now, different tasks require different scripts and different setups.
 
-# Incremental Model Refiner
+# Incremental Model Refiner (One Camera Version)
 The incremental model refiner is Torsten's new addition which actually allows us to initialize with honest to goodness pose priors.  To use it, you need to check out Torsten's fork of Colmap.
 
 https://github.com/tsattler/colmap.git
@@ -73,7 +73,17 @@ Unlike the Incremental Model Refiner, the pose prior mapper does *not* expect ca
 
 Note that the Pose Prior Mapper  only supports the three camera setup.  It would be easy enough to make it support one camera, but such is the nature of the brittle scripts I have put together thus far!
 
-Add the SVIN files to your data directory inside a folder called SVIN, with one txt file for each camera.  These files must have the same names as their corresponding image folders.
+In a folder called <data_path>/SVIN, create the files Left.txt, Center.txt, and Right.txt.
+
+- <data_path>/
+  - SVIN/
+    - Left.txt
+    - Center.txt
+    - Right.txt
+
+The script will automatically copy only the relevant poses from <data_path>/SVIN to <data_path>/<scene_name>/SVIN using the filter_svin.py script (see Filtering out unused poses.)  This makes it easy to do runs on small sets of images without having to worry about filtering the SVIN files manually.
+
+In your <data_path>/<scene_name> directory, you need to create an Images directory with Left, Center, and Right subdirectories.
 
 - <data_path>/
   - <scene_name>/
@@ -81,15 +91,19 @@ Add the SVIN files to your data directory inside a folder called SVIN, with one 
       - Left/
       - Center/
       - Right/
-    - SVIN/
-      - Left.txt
-      - Center.txt
-      - Right.txt
 
 Open run_with_poses.sh and change the first two lines to match your data path and scene.  Then run:
 
 ```
 ./run_with_poses.sh
+```
+
+### Incremental Model Refiner (Three Camera Version)
+
+Follow the steps for the Pose Prior Mapper, but use the camera center version of the SVIN poses (see SVIN Business for more details).  Instead of run_with_poses.sh, run:
+
+```
+./ach.sh
 ```
 
 ### GLOMAP

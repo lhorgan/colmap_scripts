@@ -25,6 +25,6 @@ def filter_svin(input_path, output_path, images_path):
     
     print("Added", count)
 
-filter_svin(input_path="/home/luke/Documents/hell/apr29/svin_inv.txt", \
-            output_path="/home/luke/Documents/hell/apr29/Right/svin.txt", \
-            images_path="/home/luke/Documents/hell/apr29/Right/Images")
+filter_svin(input_path="/home/luke/Documents/hell/First500_inc_ref/Svin_full/Right.txt", \
+            output_path="/home/luke/Documents/hell/First500_inc_ref/Svin/Right.txt", \
+            images_path="/home/luke/Documents/hell/First500_inc_ref/Images/Right")
