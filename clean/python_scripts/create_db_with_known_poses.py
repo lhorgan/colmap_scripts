@@ -34,6 +34,28 @@ def get_cam_params(h, w):
 
     return cam_params
 
+def gen_cameras_file(h, w, output_path, cam_file="cameras.txt", count=1):
+    # see ~/Documents/colmap/src/colmap/sensor/models.h, line 290
+    # see also ~/Documents/pamir/text_pamir1
+    # https://colmap.github.io/database.html
+    # https://colmap.github.io/cameras.html
+    params = {
+        "f": 590.34818954980267, 
+        "cx": 480, 
+        "cy": 270,
+        "k": 0.013510657866250657
+    }
+    
+    cam_str = "# Camera list with one line of data per camera:\n"
+    cam_str += "# CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]\n"
+    cam_str += "# Number of cameras: 1\n"
+    #cam_str += "1 SIMPLE_RADIAL 960 540 590.34818954980267 480 270 0.013510657866250657"
+    for id in range(1, 4):
+        cam_str += f'{id} SIMPLE_RADIAL {w} {h} {params["f"]} {params["cx"]} {params["cy"]} {params["k"]}\n'
+
+    with open(os.path.join(output_path,cam_file),'w') as of:
+        of.write(cam_str)
+
 def gen_poses_file_from_svin(input_path, output_path):
     if os.path.isdir(input_path):
         filenames = os.listdir(input_path)
@@ -190,10 +212,14 @@ def main(args):
         print(f"ERROR: cam_poses type must be either svin or colmap")
         
     # model=2 for SIMPLE_RADIAL, see ~/Documents/colmap/src/colmap/sensor/models.h line 83
+
     gen_database(database_file_path, cam_params, height, width, image_files, model=2) 
 
     if args.text_model is not None:
         gen_text_model(args.cam_poses, args.text_model)
+        gen_cameras_file(height, width, args.text_model, count=len(image_files))
+        fp = open(os.path.join(args.text_model,"points3D.txt"),'w')
+        fp.close()
 
 
 if __name__ == '__main__':

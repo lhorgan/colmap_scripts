@@ -48,4 +48,6 @@ def invert(input_path, output_path):
 
 # Usage: first arg is the path to the original file
 # Output: first arg is the path where you want the inverted file to  be saved
-invert("/home/luke/Documents/hell/apr29/svin.txt", "/home/luke/Documents/hell/apr29/svin_inv.txt")
+invert("/home/luke/Documents/hell/may27/Svin_non_inv/Center.txt", "/home/luke/Documents/hell/may27/Svin/Center.txt")
+invert("/home/luke/Documents/hell/may27/Svin_non_inv/Left.txt", "/home/luke/Documents/hell/may27/Svin/Left.txt")
+invert("/home/luke/Documents/hell/may27/Svin_non_inv/Right.txt", "/home/luke/Documents/hell/may27/Svin/Right.txt")
