@@ -1,0 +1,23 @@
+# echo "Running Pamir0"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir0 > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir0/log.txt 2>&1
+
+# echo "Running Pamir1"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir1 > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1/log.txt 2>&1
+
+# echo "Running Pamir2"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir2 > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/log.txt 2>&1
+
+# echo "Running Combined"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Combined > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined/log.txt 2>&1
+
+# echo "Running Pamir0_incref"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir0_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir0_incref/log2.txt 2>&1
+
+# echo "Running Pamir1_incref"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir1_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_incref/log2.txt 2>&1
+
+# echo "Running Pamir2_incref"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir2_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2_incref/log2.txt 2>&1
+
+echo "Running Combined with Exhaustive Matcher"
+sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Combined_exhaustive_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref/log3.txt 2>&1

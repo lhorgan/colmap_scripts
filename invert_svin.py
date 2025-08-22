@@ -48,6 +48,10 @@ def invert(input_path, output_path):
 
 # Usage: first arg is the path to the original file
 # Output: first arg is the path where you want the inverted file to  be saved
-invert("/home/luke/Documents/hell/may27/Svin_non_inv/Center.txt", "/home/luke/Documents/hell/may27/Svin/Center.txt")
-invert("/home/luke/Documents/hell/may27/Svin_non_inv/Left.txt", "/home/luke/Documents/hell/may27/Svin/Left.txt")
-invert("/home/luke/Documents/hell/may27/Svin_non_inv/Right.txt", "/home/luke/Documents/hell/may27/Svin/Right.txt")
+#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Center.txt", "/home/luke/Documents/hell/may27/Svin/Center.txt")
+#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Left.txt", "/home/luke/Documents/hell/may27/Svin/Left.txt")
+#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Right.txt", "/home/luke/Documents/hell/may27/Svin/Right.txt")
+
+invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir0/Pamir0_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir0/svin.txt")
+invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir1/Pamir1_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir1/svin.txt")
+invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/svin.txt")

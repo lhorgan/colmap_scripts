@@ -87,10 +87,14 @@ def read_images_file(filepath):
                     try:
                         xs.append(float(part))
                     except:
-                        print("skipped line ", line_index)
+                        print("skipped line (x) ", line_index)
                         continue
                 elif index == 1:
-                    ys.append(float(part))
+                    try:
+                        ys.append(float(part))
+                    except:
+                        print("skipped line (y) ", line_index)
+                        continue
                 
                 index += 1
                 index = index % 3
@@ -213,10 +217,12 @@ def read_points3d_file(filepath):
     
 # read_file_parts()
 
-print("Pamir 2")
+print("Pamir Combined")
 print("\nSVIN.txt")
-read_svin_file("/home/luke/Documents/pamir_stuff/data_test/pamir2/svin.txt")
+BASE_PATH = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref"
+# BASE_PATH = "/home/luke/Documents/pamir_stuff/data_test/pamir2/
+read_svin_file(f"{BASE_PATH}/svin.txt")
 print("\nImages.txt")
-read_images_file("/home/luke/Documents/pamir_stuff/data_test/pamir2/images.txt")
+read_images_file(f"{BASE_PATH}/sparse/text/images.txt")
 print("\nPoints3d.txt")
-read_points3d_file("/home/luke/Documents/pamir_stuff/data_test/pamir2/points3D.txt")
+read_points3d_file(f"{BASE_PATH}/sparse/text/points3D.txt")

@@ -1,0 +1,145 @@
+Pamir Combined
+
+SVIN.txt
+Raw Values:
+tx: -29.5061716564 to 30.1650367378
+ty: -29.3176370456 to 29.1477099172
+tz: -29.6465581792 to 31.1368748458
+qx: -0.7014890649 to 0.9969463341
+qy: -0.702115585 to 0.9989862815
+qz: -0.703010591 to 0.9724803507
+qw: -0.6893399658 to 0.9978798868
+
+Absolute Values:
+tx: 0.0001309931 to 30.1650367378
+ty: 0.0002638814 to 29.3176370456
+tz: 0.0026407394 to 31.1368748458
+qx: 3.5945e-05 to 0.9969463341
+qy: 0.00033657 to 0.9989862815
+qz: 1.4683e-05 to 0.9724803507
+qw: 1.594e-06 to 0.9978798868
+
+Images.txt
+skipped line (x)  48245
+skipped line (x)  48247
+skipped line (x)  48249
+skipped line (x)  48251
+skipped line (x)  48253
+skipped line (x)  48255
+skipped line (x)  48257
+skipped line (x)  48259
+skipped line (x)  48261
+skipped line (x)  48263
+skipped line (x)  48279
+skipped line (x)  48281
+skipped line (x)  48283
+skipped line (x)  48285
+skipped line (x)  48287
+skipped line (x)  48289
+skipped line (x)  48291
+skipped line (x)  48293
+skipped line (x)  48295
+skipped line (x)  48297
+skipped line (x)  48299
+skipped line (x)  48303
+skipped line (x)  48801
+skipped line (x)  49173
+skipped line (x)  49175
+skipped line (x)  49177
+skipped line (x)  49179
+skipped line (x)  49181
+skipped line (x)  49183
+skipped line (x)  49185
+skipped line (x)  49187
+skipped line (x)  49189
+skipped line (x)  49191
+skipped line (x)  49193
+skipped line (x)  49195
+skipped line (x)  49197
+skipped line (x)  49199
+skipped line (x)  49201
+skipped line (x)  49239
+skipped line (x)  49245
+skipped line (x)  49251
+skipped line (x)  49345
+skipped line (x)  49347
+skipped line (x)  49349
+skipped line (x)  49353
+skipped line (x)  49355
+skipped line (x)  49357
+skipped line (x)  49359
+skipped line (x)  49361
+skipped line (x)  49367
+skipped line (x)  49369
+skipped line (x)  49371
+skipped line (x)  49373
+skipped line (x)  49441
+skipped line (x)  49443
+skipped line (x)  49445
+skipped line (x)  49449
+skipped line (x)  49453
+skipped line (x)  49455
+skipped line (x)  49457
+skipped line (x)  49459
+skipped line (x)  49461
+skipped line (x)  49463
+skipped line (x)  49465
+skipped line (x)  49467
+skipped line (x)  49469
+skipped line (x)  49471
+skipped line (x)  49473
+skipped line (x)  49475
+skipped line (x)  49477
+skipped line (x)  49479
+skipped line (x)  49481
+skipped line (x)  49483
+skipped line (x)  49485
+skipped line (x)  49487
+skipped line (x)  49489
+skipped line (x)  49491
+skipped line (x)  49493
+skipped line (x)  49497
+skipped line (x)  49499
+skipped line (x)  49501
+Rotations and Translations
+Raw Values:
+tx: -29.5061716564 to 30.1650367378
+ty: -29.3176370456 to 29.1477099172
+tz: -29.6465581792 to 31.1368748458
+qx: -0.7014890649132298 to 0.9969463340708659
+qy: -0.7021155850031713 to 0.9989862814832708
+qz: -0.7030105909941892 to 0.9724803507312858
+qw: -0.689339965785116 to 0.9978798868442782
+
+Absolute Values:
+tx: 0.0001309931 to 30.1650367378
+ty: 0.0002638814 to 29.3176370456
+tz: 0.0026407394 to 31.1368748458
+qx: 3.594500000050626e-05 to 0.9969463340708659
+qy: 0.0003365700000204144 to 0.9989862814832708
+qz: 1.4682999999388874e-05 to 0.9724803507312858
+qw: 1.594000000005879e-06 to 0.9978798868442782
+
+Sorting 103166624 xs and 103166624 ys
+Image Coordinates
+x: 0.5 to 991.9732055664062
+y: 0.5 to 539.4943237304688
+
+Points3d.txt
+Raw Values
+x: -75.91714797073837 to 192.03048892841431
+y: -162.77180229545414 to 268.3791365465114
+z: -456.94602497199696 to 82.72867538972055
+r: 0.0 to 255.0
+g: 0.0 to 255.0
+b: 0.0 to 255.0
+error: 2.940485005495878e-07 to 255.0
+
+Absolute Values
+x: 0.005044953081268209 to 192.03048892841431
+y: 7.19535751922232e-07 to 268.3791365465114
+z: 1.5008724287159955e-06 to 456.94602497199696
+r: 0.0 to 255.0
+g: 0.0 to 255.0
+b: 0.0 to 255.0
+error: 2.940485005495878e-07 to 255.0

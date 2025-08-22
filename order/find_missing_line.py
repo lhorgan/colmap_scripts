@@ -41,4 +41,4 @@ def print_image_info(filename):
     
     print(f"{len(image_names)} images found")
 
-print_image_info("/home/luke/Documents/pamir_stuff/data_test/pamir2/images.txt")
+print_image_info("/mnt/Data2/luke/pamir/reconstructions/yes_poses/Pamir2NoTargets/sparse/text/images.txt")
