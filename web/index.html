@@ -1,0 +1,71 @@
+<!-- save as index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>COLMAP Points Loader</title>
+</head>
+<body>
+  <h1>Load COLMAP points</h1>
+
+  <form id="form">
+    <label>
+      Directory:
+      <input id="directory" type="text" size="60" placeholder="/path/to/colmap/run" required />
+    </label>
+    <button type="submit">Load</button>
+  </form>
+
+  <p>Status: <span id="status">idle</span></p>
+  <pre id="details"></pre>
+
+  <script>
+    // Change this if your server runs elsewhere
+    const BASE_URL = "http://localhost:8000";
+
+    const statusEl = document.getElementById("status");
+    const detailsEl = document.getElementById("details");
+    const form = document.getElementById("form");
+    const dirInput = document.getElementById("directory");
+
+    let pollTimer = null;
+
+    function setStatus(text, data) {
+      statusEl.textContent = text;
+      detailsEl.textContent = data ? JSON.stringify(data, null, 2) : "";
+    }
+
+    async function ping(directory) {
+      try {
+        const url = `${BASE_URL}/load_points?directory=${encodeURIComponent(directory)}`;
+        const res = await fetch(url, { method: "GET" });
+        const data = await res.json();
+        setStatus(data.status || "unknown", data);
+
+        // Stop polling when finished or errored (keeps polling during "started"/"loading")
+        if (data.status === "ready" || data.status === "error" || data.status === "idle") {
+          if (pollTimer) clearInterval(pollTimer);
+          pollTimer = null;
+        }
+      } catch (err) {
+        setStatus("network-error", { error: String(err) });
+        if (pollTimer) clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const directory = dirInput.value.trim();
+      if (!directory) return;
+
+      // Kick off (this will also trigger the server to start if directory changed)
+      ping(directory);
+
+      // Poll every second until we're done
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(() => ping(directory), 1000);
+    });
+  </script>
+</body>
+</html>
