@@ -1,4 +1,4 @@
-<!-- save as index.html -->
+<!-- Replace your index.html with this minimal full version, or merge the new section if you prefer -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +19,30 @@
   <p>Status: <span id="status">idle</span></p>
   <pre id="details"></pre>
 
-  <script>
-    // Change this if your server runs elsewhere
-    const BASE_URL = "http://localhost:8000";
+  <hr>
 
+  <h2>Annotate by 3D Point ID</h2>
+  <form id="annotate-form">
+    <label>
+      Point ID:
+      <input id="point-id" type="number" step="1" placeholder="e.g., 12345" required />
+    </label>
+    <button type="submit">Annotate</button>
+  </form>
+
+  <p>Annotate status: <span id="annotate-status">idle</span></p>
+  <ul id="annotate-list"></ul>
+  <pre id="annotate-raw"></pre>
+
+  <script>
+    // same-origin
+    const BASE_URL = "";
+
+    // --- loading bits (existing) ---
     const statusEl = document.getElementById("status");
     const detailsEl = document.getElementById("details");
     const form = document.getElementById("form");
     const dirInput = document.getElementById("directory");
-
     let pollTimer = null;
 
     function setStatus(text, data) {
@@ -42,7 +57,6 @@
         const data = await res.json();
         setStatus(data.status || "unknown", data);
 
-        // Stop polling when finished or errored (keeps polling during "started"/"loading")
         if (data.status === "ready" || data.status === "error" || data.status === "idle") {
           if (pollTimer) clearInterval(pollTimer);
           pollTimer = null;
@@ -59,12 +73,53 @@
       const directory = dirInput.value.trim();
       if (!directory) return;
 
-      // Kick off (this will also trigger the server to start if directory changed)
       ping(directory);
-
-      // Poll every second until we're done
       if (pollTimer) clearInterval(pollTimer);
       pollTimer = setInterval(() => ping(directory), 1000);
+    });
+
+    // --- annotate bits (new) ---
+    const annotateForm = document.getElementById("annotate-form");
+    const pointIdInput = document.getElementById("point-id");
+    const annotateStatusEl = document.getElementById("annotate-status");
+    const annotateListEl = document.getElementById("annotate-list");
+    const annotateRawEl = document.getElementById("annotate-raw");
+
+    function setAnnotateStatus(text, data) {
+      annotateStatusEl.textContent = text;
+      annotateRawEl.textContent = data ? JSON.stringify(data, null, 2) : "";
+    }
+
+    function renderOutputs(outputs) {
+      annotateListEl.innerHTML = "";
+      for (const item of outputs) {
+        const li = document.createElement("li");
+        li.textContent = `image_id=${item.image_id}  name=${item.image_name}`;
+        annotateListEl.appendChild(li);
+      }
+    }
+
+    annotateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const pid = pointIdInput.value.trim();
+      if (!pid) return;
+
+      setAnnotateStatus("working...", null);
+      annotateListEl.innerHTML = "";
+
+      try {
+        const url = `${BASE_URL}/annotate_point?pointID=${encodeURIComponent(pid)}`;
+        const res = await fetch(url, { method: "GET" });
+        const data = await res.json();
+
+        setAnnotateStatus(data.status || (data.ok ? "ok" : "error"), data);
+
+        if (data.ok && data.status === "annotated") {
+          renderOutputs(data.outputs || []);
+        }
+      } catch (err) {
+        setAnnotateStatus("network-error", { error: String(err) });
+      }
     });
   </script>
 </body>
