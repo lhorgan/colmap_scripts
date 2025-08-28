@@ -19,5 +19,8 @@
 # echo "Running Pamir2_incref"
 # sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir2_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2_incref/log2.txt 2>&1
 
-echo "Running Combined with Exhaustive Matcher"
-sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Combined_exhaustive_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref/log3.txt 2>&1
+# echo "Running Combined with Exhaustive Matcher"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Combined_exhaustive_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref/log3.txt 2>&1
+
+echo "Running Combined with the Sequential Matcher, no bad images, incremental model refiner"
+sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered/log2.txt 2>&1

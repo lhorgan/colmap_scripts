@@ -28,6 +28,10 @@ def filter_svin(input_path, output_path, images_path):
     
     print("Added", count)
 
-filter_svin(input_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/svin_inv_full.txt", \
-            output_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/svin.txt", \
-            images_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/Images")
+# filter_svin(input_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/svin_inv_full.txt", \
+#             output_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/svin.txt", \
+#             images_path="/mnt/Data2/luke/pamir/oneframe2/Pamir012/PamirCombined/Images")
+
+filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined/svin.txt", \
+            output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref_filtered/svin.txt", \
+            images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref_filtered/Images")

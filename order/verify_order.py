@@ -52,6 +52,8 @@ def read_images_file(filepath):
 
     read_points =  False
 
+    curr_img_name = None
+
     line_index = -1
     for line in lines:
         line_index += 1
@@ -61,6 +63,7 @@ def read_images_file(filepath):
         if not read_points:
             # Read rotation/translation
             image_id, qw, qx, qy, qz, tx, ty, tz, camera_id, name = line.split()
+            curr_img_name = name
             
             qw = float(qw)
             qx = float(qx)
@@ -87,7 +90,7 @@ def read_images_file(filepath):
                     try:
                         xs.append(float(part))
                     except:
-                        print("skipped line (x) ", line_index)
+                        print(f"skipped line (x) {line_index}, image name is {curr_img_name} ")
                         continue
                 elif index == 1:
                     try:

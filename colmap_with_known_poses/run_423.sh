@@ -18,7 +18,7 @@ SCENE=$2
 #     --image_path ${DATA_PATH}/${SCENE}/Images
 
 # echo "Running exhaustive matcher"
-# time colmap exhaustive_matcher \
+# time colmap sequential_matcher \
 #     --database_path ${DATA_PATH}/${SCENE}/database.db
 
 # echo "Running point triangulator"

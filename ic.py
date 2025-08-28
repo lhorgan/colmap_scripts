@@ -1,5 +1,7 @@
 import os
 
+from load_image import load_image
+
 def go(image_name_to_seq):
     with open("/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive/sparse/text/images.txt") as f:
         read = False
@@ -78,6 +80,10 @@ def get_img_name_to_seq(folders):
             img_name_to_seq[image_name] = i
     
     return img_name_to_seq
+
+def plot_points(image, points):
+    for image in points:
+        pass
 
 go(get_img_name_to_seq([
     "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir0/Images",
