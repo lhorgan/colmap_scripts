@@ -7,42 +7,48 @@ from util import load_image, annotate_points_with_crosshairs
 import json, threading, time, os, cv2
 
 def parse_points3D(directory):
-    point3ds = {}
-    image_ids = {}
+    point3ds = {}   # {point3d_id: {image_id: (x, y)}}
+    image_ids = {}  # {image_id: image_name}
 
-    with open(f"{directory}/sparse/text/images.txt") as f:
+    path = os.path.join(directory, "sparse", "text", "images.txt")
+    with open(path, "r") as f:
         data_line = False
         image_name = None
         image_id = None
 
-        image_id_to_3d_points = {}
-
         line_num = -1
-        for line in f:
+        for raw in f:
             line_num += 1
-            if line_num % 1000 == 0: 
-                print("Reading line ", line_num)
+            if line_num % 1000 == 0:
+                print("Reading line", line_num)
 
-            if line[0] == "#":
+            s = raw.strip()
+            if not s or s.startswith("#"):
                 continue
-            
-            if data_line:
-                line = line.split(" ")
-                for ctr in range(0, len(line), 3):
-                    point_x = float(line[ctr])
-                    point_y = float(line[ctr+1])
-                    point3d_id = int(line[ctr+2])
 
-                    if point3d_id != -1:
-                        if point3d_id not in point3ds:
-                            point3ds[point3d_id] = {}
-                        point3ds[point3d_id][image_id] = (point_x, point_y)
-                
-                image_id_to_3d_points[image_id] = {}
-                image_id_to_3d_points[image_id]["name"] = image_name
+            if data_line:
+                parts = s.split()
+                # pairs of x y point3d_id repeating
+                for i in range(0, len(parts), 3):
+                    try:
+                        x = float(parts[i])
+                        y = float(parts[i+1])
+                        pid = int(parts[i+2])
+                    except (IndexError, ValueError):
+                        continue
+                    if pid != -1:
+                        if pid not in point3ds:
+                            point3ds[pid] = {}
+                        point3ds[pid][image_id] = (x, y)  # <-- fixed
             else:
-                image_name = line.strip().split(" ")[-1]
-                image_id = line.strip().split(" ")[0]
+                parts = s.split()
+                # images.txt first line format starts with image_id and ends with image_name
+                try:
+                    image_id = int(parts[0])
+                except ValueError:
+                    # Fall back to raw token if not an int
+                    image_id = parts[0]
+                image_name = parts[-1]
                 image_ids[image_id] = image_name
 
             data_line = not data_line
@@ -209,6 +215,9 @@ class Handler(BaseHTTPRequestHandler):
             return
         elif parsed.path == "/load_points":
             self.load_points(parsed)
+            return
+        elif parsed.path == "/annotate_point":
+            self.annotate_point(parsed)
             return
         else:
             self.send_error(404)

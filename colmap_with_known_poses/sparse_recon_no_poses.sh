@@ -2,8 +2,8 @@
 DATA_PATH=$1
 SCENE=$2
 # point threshold parameters
-MAX_ERROR=2.0
-MIN_TRACK_LEN=3
+# MAX_ERROR=2.0
+# MIN_TRACK_LEN=3
 
 # create sparse model output paths
 if [ ! -d "$DATA_PATH/colmap/${SCENE}/sparse/text" ]; then
@@ -23,7 +23,7 @@ colmap feature_extractor \
 colmap exhaustive_matcher \
     --database_path ${DATA_PATH}/colmap/${SCENE}/database.db
 
-# colmap mapper \
-#     --database_path ${DATA_PATH}/colmap/${SCENE}/database.db \
-#     --image_path ${DATA_PATH}/Images/${SCENE} \
-#     --output_path ${DATA_PATH}/colmap/${SCENE}/sparse
+colmap mapper \
+    --database_path ${DATA_PATH}/colmap/${SCENE}/database.db \
+    --image_path ${DATA_PATH}/Images/${SCENE} \
+    --output_path ${DATA_PATH}/colmap/${SCENE}/sparse

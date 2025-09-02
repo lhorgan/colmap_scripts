@@ -22,5 +22,11 @@
 # echo "Running Combined with Exhaustive Matcher"
 # sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Combined_exhaustive_incref > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref/log3.txt 2>&1
 
-echo "Running Combined with the Sequential Matcher, no bad images, incremental model refiner"
-sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered/log2.txt 2>&1
+# echo "Running Combined with the Sequential Matcher, no bad images, incremental model refiner"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_seq_incref_filtered/log2.txt 2>&1
+
+# echo "Running tiny without poses"
+# sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Tiny_no_poses > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Tiny_no_poses/log.txt 2>&1
+
+echo "Running Pamir1 and Pamir2 with sequential matcher"
+sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered Pamir1_and_Pamir2_ex_inc > /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2_ex_inc/log.txt 2>&1
