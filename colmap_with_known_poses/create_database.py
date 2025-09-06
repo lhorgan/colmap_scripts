@@ -179,6 +179,10 @@ class COLMAPDatabase(sqlite3.Connection):
         )
         return cursor.lastrowid
 
+    def read_images(self):
+        cursor = self.execute("SELECT image_id, name name FROM images")
+        return cursor.fetchall()
+
     def add_image(
         self,
         name,

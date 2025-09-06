@@ -88,9 +88,17 @@ def gen_database(database_file, cam_params, height, width, image_files, model=1)
     # add camera
     camera_id = db.add_camera(model, width, height, cam_params)
 
+    existing_images = db.read_images()
+    existing_image_names = set()
+    for _, image_name in existing_images:
+        existing_image_names.add(image_name)
+
     # Create dummy images.
     for i,img in enumerate(image_files):
-        _ = db.add_image(name=img, camera_id=camera_id, image_id=int(i+1))
+        if img not in existing_image_names:
+            _ = db.add_image(name=img, camera_id=camera_id, image_id=int(i+1))
+        else:
+            print(f"Skipping {img} because it already exists.")
 
     # Commit the data to the file.
     db.commit()
