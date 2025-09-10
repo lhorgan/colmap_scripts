@@ -38,8 +38,9 @@ def read_point_cloud(point_cloud_file: str):
     cloud = o3d.io.read_point_cloud(point_cloud_file)
     return np.array(cloud.points), cloud.colors
 
-def write_point_cloud_np(filename, points):
+def write_point_cloud_np(filename, points, colors=None):
     cloud = o3d.geometry.PointCloud()
     cloud.points = o3d.utility.Vector3dVector(points)
-    #cloud.colors = o3d.utility.Vector3dVector(colors)
+    if colors is not None:
+        cloud.colors = o3d.utility.Vector3dVector(colors)
     o3d.io.write_point_cloud(filename, cloud)

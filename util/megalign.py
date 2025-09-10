@@ -269,24 +269,39 @@ class Pipeline:
         image_name_to_colmap_center = {}
         image_name_to_svin_center = {}
 
-        with open(f"{base_path}/sparse/text/images.txt") as f:
-            data_line = True
+        # with open(f"{base_path}/sparse/text/images.txt") as f:
+        #     data_line = True
 
+        #     for line in f:
+        #         line = line.rstrip()
+        #         if line.startswith("#"):
+        #             continue
+
+        #         if data_line:
+        #             image_id, qw, qx, qy, qz, tx, ty, tz, camera_id, image_name = line.split(" ")
+        #             tx = float(tx)
+        #             ty = float(ty)
+        #             tz = float(tz)
+
+        #             seq = self.get_seq_by_name(image_name)
+        #             image_name_to_colmap_center[image_name] = [tx, ty, tz]
+
+        #         data_line = not data_line
+        with open(f"{base_path}/svin_from_colmap_inv.txt") as f:
             for line in f:
-                line = line.rstrip()
                 if line.startswith("#"):
-                    continue
+                        continue
+                    
+                line = line.rstrip()
+                #timestamp tx ty tz qx qy qz qw
+                timestamp, tx, ty, tz, qx, qy, qz, qw = line.split(" ")
+                image_name = f"{timestamp.replace(".", "", 1)}" # this is messed up because I screwed up making the svin file
+                tx = float(tx)
+                ty = float(ty)
+                tz = float(tz)
 
-                if data_line:
-                    image_id, qw, qx, qy, qz, tx, ty, tz, camera_id, image_name = line.split(" ")
-                    tx = float(tx)
-                    ty = float(ty)
-                    tz = float(tz)
+                image_name_to_colmap_center[image_name] = [tx, ty, tz]
 
-                    seq = self.get_seq_by_name(image_name)
-                    image_name_to_colmap_center[image_name] = [tx, ty, tz]
-
-                data_line = not data_line
         
         with open(f"{base_path}/svin_noninv.txt") as f:
             for line in f:
@@ -507,19 +522,26 @@ def kabsch_umeyama(A, B):
 
     return R, c, t
 
-svin_centers = matched_cameras[2][0]
-colmap_centers = matched_cameras[2][1]
-
 # from homograph_pc import *
 from homograph_pc import *
 
-write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/colmap_centers_orig.ply", colmap_centers)
-write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/svin_centers_orig.ply", svin_centers)
+# RUN THIS CODE TO transform using the method in the blog post
+# svin_centers = matched_cameras[2][0]
+# colmap_centers = matched_cameras[2][1]
+# A = colmap_centers[:]
+# B = svin_centers[:]
+# R, c, t = kabsch_umeyama(A, B)
+# B = np.array([t + c * R @ b for b in B])
 
-A = colmap_centers[:]
-B = svin_centers[:]
-R, c, t = kabsch_umeyama(A, B)
-B = np.array([t + c * R @ b for b in B])
+# write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/colmap_centers.ply", A)
+# write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/svin_centers.ply", B)
+
+# RUN THIS CODE TO TRANSFORM USING A HOMOGRAPHY MATRIX
+# svin_centers = matched_cameras[2][0]
+# colmap_centers = matched_cameras[2][1]
+# A = colmap_centers[:]
+# B = svin_centers[:]
+# R, c, t = kabsch_umeyama(A, B)
 
 # print(R, c, t)
 # M = np.empty((4, 4))
@@ -528,15 +550,42 @@ B = np.array([t + c * R @ b for b in B])
 # M[3, :] = [0, 0, 0, 1]
 # print(M)
 
-write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/colmap_centers.ply", A)
-write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/svin_centers.ply", B)
+# B = apply_homography(B, M)
 
-# # M = np.eye(4) * 1.05
-# # M[3][3] = 1
+# write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/colmap_centers.ply", A)
+# write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/svin_centers.ply", B)
 
-# points, colors = read_point_cloud("/home/luke/pamir/Combined_exhaustive/matched/svin_0.ply")
-# print(points[0])
-# #transformed_points = apply_homography(points, M)
-# transformed_points = np.array([t + c * R @ b for b in points])
+def get_homography_matrix(A, B):
+    R, c, t = kabsch_umeyama(A, B)
+    M = np.empty((4, 4))
+    M[:3, :3] = R*c
+    M[:3, 3] = t
+    M[3, :] = [0, 0, 0, 1]
+    return M
 
-# write_point_cloud_np("/home/luke/pamir/Combined_exhaustive/matched/svin_0_trans.ply", transformed_points, colors)
+def transform_pamirs():
+    plys = ["/home/luke/pamir/Pamir0_incref/pamir0.ply", "/home/luke/pamir/Pamir1_incref/pamir1.ply", "/home/luke/pamir/Pamir2_incref/pamir2.ply"]
+    
+    for i in range(3):
+        print(f"Transforming pamir{i}")
+
+        svin_centers = matched_cameras[i][0]
+        colmap_centers = matched_cameras[i][1]
+
+        A = colmap_centers
+        B = svin_centers
+        
+        M = get_homography_matrix(A, B)
+
+        print(f"M for pamir{i}:\n{M}")
+
+        points, colors = read_point_cloud(plys[i])
+        
+        trans_points = apply_homography(points, M)
+        trans_svin_centers = apply_homography(B, M)
+
+        write_point_cloud_np(f"/home/luke/pamir/transformed_pcs/pamir{i}.ply", trans_points, colors)
+        write_point_cloud_np(f"/home/luke/pamir/transformed_pcs/svin_centers{i}.ply", trans_svin_centers)
+        write_point_cloud_np(f"/home/luke/pamir/transformed_pcs/colmap_centers{i}.ply", colmap_centers)
+
+transform_pamirs()
