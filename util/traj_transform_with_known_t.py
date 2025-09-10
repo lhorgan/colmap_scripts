@@ -282,13 +282,23 @@ def get_transformed_pts(traj_path, T, traj_path_out):
     write_trajectory_txt(traj_path_out, timestamps, C_new, q_new)
 
 
-transform = np.array([[0.999453, -0.018089, 0.027675, 3.413445], 
-                      [0.018029, 0.999835, 0.002422, 0.912243], 
-                      [-0.027714, -0.001922,  0.999614, 0.187898], 
+# transform = np.array([[0.999453, -0.018089, 0.027675, 3.413445], 
+#                       [0.018029, 0.999835, 0.002422, 0.912243], 
+#                       [-0.027714, -0.001922,  0.999614, 0.187898], 
+#                       [0, 0, 0, 1]])
+
+# input_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt"
+# output_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_in_Pamir1.txt"
+
+# get_transformed_pts(input_path, transform, output_path)
+
+transform = np.array([[ 0.999388,  0.009151, -0.033753, -0.384451],
+                      [-0.01022,   0.999447, -0.031629, -0.578503],
+                      [0.033445,  0.031954,  0.99893,  -0.084902],
                       [0, 0, 0, 1]])
 
-input_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt"
-output_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_in_Pamir1.txt"
+input_path = "/mnt/Data3/luke/underwater/reconstructions/Pamir2/svin_orig.txt"
+output_path = "/mnt/Data3/luke/underwater/reconstructions/Pamir2/svin_orig_transformed.txt"
 
 get_transformed_pts(input_path, transform, output_path)
     

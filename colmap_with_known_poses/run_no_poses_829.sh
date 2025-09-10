@@ -1,13 +1,20 @@
 #!/bin/bash
-DATA_PATH=/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered
-SCENE=Tiny_no_poses
+# DATA_PATH=/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered
+# SCENE=Tiny_no_poses
+
+DATA_PATH=/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched
+SCENE=Combined
 
 # rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 # mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 # rm -rf "${DATA_PATH}/${SCENE}/sparse/text"
 # mkdir -p "${DATA_PATH}/${SCENE}/sparse/text"
 
-# touch "${DATA_PATH}/${SCENE}/database.db"
+# echo "Creating initial placeholder text model"
+# time python3 create_db_with_known_poses.py \
+#     --cam_poses ${DATA_PATH}/${SCENE}/svin.txt \
+#     --images_path ${DATA_PATH}/${SCENE}/Images \
+#     --out_path $DATA_PATH/$SCENE/sparse/text_placeholder \
 
 # echo "Running feature extractor"
 # time colmap feature_extractor \

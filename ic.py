@@ -1,10 +1,15 @@
 import os
 
-text_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2_ex_inc/sparse/text/images.txt"
-images_path1 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir0/Images"
-images_path2 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1/Images"
-images_path3 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/Images"
-output_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2_ex_inc/overlap_results"
+# text_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2_ex_inc/sparse/text/images.txt"
+# images_path1 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir0/Images"
+# images_path2 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1/Images"
+# images_path3 = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/Images"
+# output_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2_ex_inc/overlap_results"
+
+text_path = "/mnt/Data3/luke/underwater/reconstructions/Combined/sparse/text/images.txt"
+images_path1 = "/mnt/Data3/luke/underwater/reconstructions/Pamir1/Images"
+images_path2 = "/mnt/Data3/luke/underwater/reconstructions/Pamir2/Images"
+output_path = "/mnt/Data3/luke/underwater/reconstructions/Combined/overlap_results"
 
 def go(image_name_to_seq):
     with open(text_path) as f:
@@ -110,6 +115,5 @@ def plot_points(image, points):
 
 go(get_img_name_to_seq([
     images_path1,
-    images_path2,
-    images_path3
+    images_path2
 ]))

@@ -33,8 +33,8 @@ def main():
                     help="Max correspondence distance (same units as data). If 0, auto-compute (~1%% of target size).")
     ap.add_argument("--voxel", type=float, default=0.0,
                     help="Optional voxel size for downsampling before ICP (0 = no downsampling).")
-    ap.add_argument("--max-iter", type=int, default=50, help="ICP max iterations")
-    ap.add_argument("--method", choices=["p2plane", "p2point"], default="p2plane",
+    ap.add_argument("--max-iter", type=int, default=5000, help="ICP max iterations")
+    ap.add_argument("--method", choices=["p2plane", "p2point"], default="p2point",
                     help="ICP estimation method (default: point-to-plane)")
     args = ap.parse_args()
 
@@ -107,4 +107,10 @@ python align_icp.py \
 python align_icp.py \
 /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/non_incref_point_clouds/pamir0.ply \
 /mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/non_incref_point_clouds/pamir0_transformed.ply
+'''
+
+'''
+python align_icp.py \
+/mnt/Data3/luke/underwater/Results/Pamir1/partial_detection/transformation_only_with_4x2/pointCloud_Pamir1_partial_det_transform_only_with_4x2.ply \
+/mnt/Data3/luke/underwater/Results/Pamir2/partial_detection/transformation_only_with_4x2/pointCloud_Pamir2trim_partial_det_transform_only_with_4x2.ply
 '''

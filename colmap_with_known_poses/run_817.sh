@@ -34,5 +34,8 @@
 # echo "Tiny"
 # sh run_423.sh /mnt/Data2/luke/pamir/reconstructions/oneframe/SmallTests Tiny_1 > /mnt/Data2/luke/pamir/reconstructions/oneframe/SmallTests/Tiny_1/log2.txt 2>&1
 
+# echo "Combined"
+# sh run_423.sh /mnt/Data3/luke/underwater/reconstructions Combined > /mnt/Data3/luke/underwater/reconstructions/Combined/log2.txt 2>&1
+
 echo "Combined"
-sh run_423.sh /mnt/Data3/luke/underwater/reconstructions Combined > /mnt/Data3/luke/underwater/reconstructions/Combined/log1.txt 2>&1
+sh run_423.sh /mnt/Data3/luke/underwater/reconstructions Combined_just_pt > /mnt/Data3/luke/underwater/reconstructions/Combined_just_pt/log.txt 2>&1

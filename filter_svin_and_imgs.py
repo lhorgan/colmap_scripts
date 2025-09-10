@@ -44,6 +44,6 @@ def filter_svin(input_path, output_path, images_path):
     print(f"Removed {removed_img_count} images.  Kept {added_img_count} images.")
     print(f"Set intersection size: {len(both_set)}")
 
-filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/svin.txt", \
-            output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/svin.txt", \
-            images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/images")
+filter_svin(input_path="/mnt/Data3/luke/underwater/reconstructions/Pamir2/svin_orig.txt", \
+            output_path="/mnt/Data3/luke/underwater/reconstructions/Pamir2/svin_orig_filtered.txt", \
+            images_path="/mnt/Data3/luke/underwater/reconstructions/Pamir2/Images")

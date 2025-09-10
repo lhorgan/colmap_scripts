@@ -40,6 +40,14 @@ def filter_svin(input_path, output_path, images_path):
 #             output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid2/svin.txt", \
 #             images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid2/Images")
 
-filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt", \
-            output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/svin_noninv.txt", \
-            images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/Images")
+# filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt", \
+#             output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/svin_noninv.txt", \
+#             images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/Images")
+
+# filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined/svin.txt", \
+#             output_path="/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched/Combined/svin.txt", \
+#             images_path="/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched/Combined/Images")
+
+filter_svin(input_path="/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched/Combined/svin.txt", \
+            output_path="/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched/Just2/svin.txt", \
+            images_path="/mnt/Data3/luke/underwater/matchmania/MatchedSeq/matched/Just2/Images")
