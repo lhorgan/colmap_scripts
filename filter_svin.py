@@ -40,6 +40,10 @@ def filter_svin(input_path, output_path, images_path):
 #             output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid2/svin.txt", \
 #             images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid2/Images")
 
-filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt", \
-            output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/svin_noninv.txt", \
-            images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Mid1/Images")
+# filter_svin(input_path="/home/luke/pamir/Pamir2/Pamir2_transformed.txt", \
+#             output_path="/home/luke/pamir/Combined_exhaustive/matched/svin_2.txt", \
+#             images_path="/home/luke/pamir/Combined_exhaustive/matched/2")
+
+filter_svin(input_path="/home/luke/pamir/Combined_exhaustive/svin_noninv.txt", \
+            output_path="/home/luke/pamir/matchmania/Combined/svin_noninv.txt", \
+            images_path="/home/luke/pamir/matchmania/Combined/Images")
