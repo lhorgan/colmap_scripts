@@ -289,6 +289,3 @@ transform = np.array([[0.999453, -0.018089, 0.027675, 3.413445],
 
 input_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed_backup.txt"
 output_path = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_in_Pamir1.txt"
-
-get_transformed_pts(input_path, transform, output_path)
-    

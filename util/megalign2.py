@@ -477,6 +477,7 @@ pipeline = Pipeline()
 
 from gem import *
 from gem2 import *
+from gem3 import *
 
 def transform_full():
     BACK = 0
@@ -537,8 +538,8 @@ def transform_full():
         final_transforms[i] = pamir_2_to_pamir1
 
     for i in range(len(final_transforms)):
-        trans, quat = matrix_to_quat_trans(final_transforms[i])
-        final_quats[i] = (trans, quat)
+        scale, quat, trans = matrix_to_scale_quat_trans(final_transforms[i])
+        final_quats[i] = (scale, quat, trans)
     
     svin_centers_pamir2_back = matched_cameras[BACK][2][0] # [1] in the last index is the COLMAP centers
     svin_centers_pamir2_front = matched_cameras[FRONT][2][0]
@@ -559,13 +560,23 @@ def transform_full():
     
     pamir2_poses = np.array(pamir2_poses)    
     
-    start_trans, start_quat = final_quats[0]
-    end_trans, end_quat = final_quats[1]
+    start_scale, start_quat, start_trans = final_quats[0]
+    end_scale, end_quat, end_trans = final_quats[1]
+
+    print(start_scale)
+    print(start_quat)
+    print(start_trans)
+
+    print("\n")
+
+    print(end_scale)
+    print(end_quat)
+    print(end_trans)
 
     with open("/home/luke/pamir/Pamir2/Pamir2_in_Pamir1_miraculously.txt", "w+") as f:
         f.write(comment)
         for line in pamir2_poses:
-            pose = [float(x) for x in (line.split(" ")[1:])]
+            pose = np.array([float(x) for x in (line.split(" ")[1:])])
             timestamp = line.split(" ")[0]
 
             point = pose[:3]
@@ -574,10 +585,12 @@ def transform_full():
             point_prime = project_point_onto_line(point, line_start, line_dir)
             t = get_line_parameter(point_prime, line_points[0], line_points[1])
             print("t is", t)
-            curr_trans, curr_quat = interpolate_transform(start_trans, start_quat, end_trans,  end_quat, t)
-            print("trans", curr_trans, "quat", curr_quat.shape)
+            curr_scale, curr_quat, curr_trans = interpolate_similarity_transform(start_scale, start_quat, start_trans, end_scale, end_quat, end_trans, t)
+            print("scale", curr_scale, "quat", curr_quat, "trans", curr_trans)
             #new_point, new_quat = apply_transform_with_matrices(point, quat, np.array([0, 0, 0]), np.array([0, 0, 0, 1]))
-            new_point, new_quat = apply_transform_with_matrices(point, quat, start_trans, start_quat)
+            #new_point, new_quat = apply_similarity_to_rigid_pose(quat, point, start_scale, start_quat, start_trans)
+            new_point, new_quat = apply_similarity_transform(point, quat, curr_scale, curr_quat, curr_trans)
+
             f.write(f"{timestamp} {new_point[0]} {new_point[1]} {new_point[2]} {new_quat[0]} {new_quat[1]} {new_quat[2]} {new_quat[3]}\n")
 
 transform_full()

@@ -44,6 +44,6 @@ def filter_svin(input_path, output_path, images_path):
 #             output_path="/home/luke/pamir/Combined_exhaustive/matched/svin_2.txt", \
 #             images_path="/home/luke/pamir/Combined_exhaustive/matched/2")
 
-filter_svin(input_path="/home/luke/pamir/Combined_exhaustive/svin_noninv.txt", \
-            output_path="/home/luke/pamir/matchmania/Combined/svin_noninv.txt", \
-            images_path="/home/luke/pamir/matchmania/Combined/Images")
+filter_svin(input_path="/home/luke/pamir/Combined_exhaustive/svin.txt", \
+            output_path="/home/luke/Documents/Ship/Back/combo/svin.txt", \
+            images_path="/home/luke/Documents/Ship/Back/combo/Images")

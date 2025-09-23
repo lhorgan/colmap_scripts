@@ -26,7 +26,10 @@ def invert(input_path, output_path):
     with open(output_path, "w+") as f:
         f.write(comment)
         
-        for line in lines[1:]:
+        for line in lines[0:]:
+            if line.startswith("#"):
+                continue
+
             timestamp = line.split(" ")[0]
             pose = [float(x) for x in (line.split(" ")[1:])]
             p = create_pose_matrix(tx=pose[0], ty=pose[1], tz=pose[2], qx=pose[3], qy=pose[4], qz=pose[5], qw=pose[6])
@@ -57,4 +60,4 @@ def invert(input_path, output_path):
 # invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/svin.txt")
 
 # invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin_non_inv.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin.txt")
-invert("/home/luke/pamir/matchmania/Combined/svin_from_colmap.txt", "/home/luke/pamir/matchmania/Combined/svin_from_colmap_inv.txt")
+invert("/home/luke/pamir/Pamir2/Pamir2_in_Pamir1_miraculously.txt", "/home/luke/pamir/Pamir2/Pamir2_in_Pamir1_miraculously_inv.txt")

@@ -1,6 +1,6 @@
 #!/bin/bash
-DATA_PATH=/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered
-SCENE=Tiny_no_poses
+DATA_PATH=/home/luke/Documents/Ship/Back
+SCENE=combo
 
 # rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 # mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"

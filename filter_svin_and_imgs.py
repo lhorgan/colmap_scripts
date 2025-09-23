@@ -11,7 +11,9 @@ def filter_svin(input_path, output_path, images_path):
     with open(input_path, "r") as f:
         lines = f.readlines()
 
-    for line in lines[1:]:
+    for line in lines[0:]:
+        if line.startswith("#"):
+            continue
         img_name = f'{(line.split(" ")[0]).replace(".", "")}.png'
         svin_set.add(img_name)
     
@@ -36,6 +38,7 @@ def filter_svin(input_path, output_path, images_path):
     for img_name in os.listdir(images_path):
         if img_name not in both_set:
             removed_img_count += 1
+            print(f"{img_name} not found")
             #os.remove(f"{images_path}/{img_name}")
         else:
             added_img_count += 1
@@ -44,6 +47,6 @@ def filter_svin(input_path, output_path, images_path):
     print(f"Removed {removed_img_count} images.  Kept {added_img_count} images.")
     print(f"Set intersection size: {len(both_set)}")
 
-filter_svin(input_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/svin.txt", \
-            output_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/svin.txt", \
-            images_path="/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir2/images")
+filter_svin(input_path="/home/luke/Documents/Ship/Front/combo/svin_from_colmap.txt", \
+            output_path="/home/luke/Documents/Ship/Front/combo/svin_from_colmap_filtered.txt", \
+            images_path="/home/luke/Documents/Ship/Front/combo/Images")

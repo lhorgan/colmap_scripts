@@ -1,11 +1,11 @@
-# DATA_PATH=$1
-# SCENE=$2
+DATA_PATH=$1
+SCENE=$2
 
 # echo $DATA_PATH
 # echo $SCENE
 
-DATA_PATH="/home/luke/pamir/matchmania"
-SCENE="Combined_pt"
+# DATA_PATH="/home/luke/Documents/Ship/Back"
+# SCENE="seq0"
 
 rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
@@ -34,12 +34,12 @@ time colmap point_triangulator \
     --output_path ${DATA_PATH}/${SCENE}/sparse \
     --input_path ${DATA_PATH}/${SCENE}/sparse/text_placeholder
 
-# echo "Running conversion to text"
-# time python read_write_model.py \
-#     --input_model ${DATA_PATH}/${SCENE}/sparse \
-#     --input_format ".bin" \
-#     --output_model ${DATA_PATH}/${SCENE}/sparse/text \
-#     --output_format ".txt"
+echo "Running conversion to text"
+time python read_write_model.py \
+    --input_model ${DATA_PATH}/${SCENE}/sparse \
+    --input_format ".bin" \
+    --output_model ${DATA_PATH}/${SCENE}/sparse/text \
+    --output_format ".txt"
 
 # echo "Running incremental model refiner"
 # time colmap incremental_model_refiner \
