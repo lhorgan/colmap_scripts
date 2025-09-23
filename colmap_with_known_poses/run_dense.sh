@@ -1,5 +1,5 @@
-DATA_PATH=/home/luke/Documents/hell/apr29
-SCENE=Right
+DATA_PATH=/mnt/Data3/luke/underwater/onrig
+SCENE=Combined
 
 echo "Running image undistorter"
 

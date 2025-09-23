@@ -19,8 +19,8 @@ def colmap_to_svin(base_path):
 
             data_line = not data_line
     
-    with open(f"{base_path}/svin_from_colmap.txt", "w+") as f:
+    with open(f"{base_path}/svin_from_colmap_incref.txt", "w+") as f:
         for line in svin_lines:
             f.write(line)
 
-colmap_to_svin("/home/luke/pamir/matchmania/Combined")
+colmap_to_svin("/mnt/Data3/luke/underwater/onrig/Combined")

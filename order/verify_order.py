@@ -220,9 +220,9 @@ def read_points3d_file(filepath):
     
 # read_file_parts()
 
-print("Pamir Combined")
+print("Pamir On Rig")
 print("\nSVIN.txt")
-BASE_PATH = "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Combined_exhaustive_incref"
+BASE_PATH = "/mnt/Data3/luke/underwater/onrig/Combined"
 # BASE_PATH = "/home/luke/Documents/pamir_stuff/data_test/pamir2/
 read_svin_file(f"{BASE_PATH}/svin.txt")
 print("\nImages.txt")
