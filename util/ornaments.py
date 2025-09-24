@@ -114,8 +114,10 @@ class Pipeline:
     
     def merge_bins(self, bins, target_size):
         used_bins = set()
+        super_bins = []
 
-        for bin_key in ["bin_72_4_18"]:
+        #for bin_key in ["bin_72_4_18"]:
+        for bin_key in bins:
             if bin_key in used_bins:
                 continue
 
@@ -127,7 +129,7 @@ class Pipeline:
             while len(bin_queue) > 0:
                 curr_bin_key = bin_queue.pop(0)
 
-                print("Examining bin ", curr_bin_key)
+                #print("Examining bin ", curr_bin_key)
 
                 curr_imgs = bins[curr_bin_key]
                 
@@ -140,8 +142,9 @@ class Pipeline:
 
                 x, y, z = self.key_to_inds(curr_bin_key)
                 
+                # n is for neighbors
                 neighbors = [(x-1, y, z),
-                             (x+1, y, z)
+                             (x+1, y, z),
                              (x, y-1, z),
                              (x, y+1, z),
                              (x, y, z-1),
@@ -151,16 +154,25 @@ class Pipeline:
                     if n_key in bins and not n_key in used_bins:
                         bin_queue.append(n_key)
 
-                # n for neighbor
-                # for nx in range(x - 1, x + 2):
-                #     for ny in range(y - 1, y + 2):
-                #         for nz in range(z - 1, z + 2):
-                #             n_key = self.inds_to_key(nx, ny, nz)
-                #             if n_key in bins and not n_key in used_bins:
-                #                 bin_queue.append(n_key)
-
-            print(super_bin)
-            print("total images in bin", super_bin_img_count)
+            super_bins.append(super_bin)
+            #print(super_bin)
+            #print("total images in bin", super_bin_img_count)
+        
+        return super_bins
+    
+    def merge_from_super_bins(self, super_bins, bins):
+        print("super bins", len(super_bins))
+        merged_bins = {}
+        bin_ind = 0
+        for super_bin in super_bins:
+            merged_bin_key = f"bin_{bin_ind}"
+            merged_bins[merged_bin_key] = []
+            for bin_key in super_bin:
+                imgs = bins[bin_key]
+                merged_bins[merged_bin_key] += imgs
+            bin_ind += 1
+        
+        return merged_bins
 
     def key_to_inds(self, key):
         return [int(x) for x in key.split("_")[1:]]
@@ -184,9 +196,9 @@ pipeline.read_svin_file()
 points = pipeline.get_cam_centers()
 binned_imgs = pipeline.bin_points(50000, points)
 #pipeline.make_directories(input_path="/home/luke/Documents/datasets/Combined/Images/", copy_path="/home/luke/Documents/datasets/Cubes", binned_imgs=binned_imgs)
-pipeline.merge_bins(binned_imgs, 200)
-
-#pipeline.make_directories(input_path="/home/luke/Documents/datasets/Combined/Images/", copy_path="/home/luke/Documents/datasets/Cubes", binned_imgs=binned_imgs)'''
+super_bins = pipeline.merge_bins(binned_imgs, 200)
+merged_bins = pipeline.merge_from_super_bins(super_bins, binned_imgs)
+pipeline.make_directories(input_path="/home/luke/Documents/datasets/Combined/Images/", copy_path="/home/luke/Documents/datasets/MergedCubes", binned_imgs=merged_bins)
 
 #print(points)
 
