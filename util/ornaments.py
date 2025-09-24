@@ -1,4 +1,42 @@
 import numpy as np
+import os
+from pathlib import Path
+import shutil
+
+def filter_svin(input_path, output_path, images_path):
+    images_set = set()
+    svin_set = set()
+
+    for img_name in os.listdir(images_path):
+        images_set.add(img_name)
+    print(len(images_set))
+
+    with open(input_path) as f:
+        lines = f.readlines()
+    
+    count = 0
+    with open(output_path, "w+") as f:
+        comment = lines[0]
+        f.write(comment)
+
+        for line in lines[1:]:
+            img_name = f'{(line.split(" ")[0]).replace(".", "")}.png'
+            svin_set.add(img_name)
+            if img_name in images_set:
+                #print(img_name, "is in the set")
+                count += 1
+                f.write(line)
+            else:
+                print(f"Did not find {img_name} in the directory. Removing it from SVIN file.")
+    
+    print("Added", count)
+
+def copy_image(input_path, output_path):
+    source = Path(input_path)
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    new_path = shutil.copy2(source, destination)
+    return Path(new_path)
 
 class Pipeline:
     def __init__(self, svin_path):
@@ -53,28 +91,104 @@ class Pipeline:
         #print(nx, ny, nz)
 
         bins = {}
-        for point in points:
-            x, y, z = point
+        for image_name in self.poses:
+            pose = self.poses[image_name]
+            x, y, z = np.array(pose[:3])
+
             bin_x = int((x - min_x) // lb)
             bin_y = int((y - min_y) // lb)
             bin_z = int((z - min_z) // lb)
             
-            bin_key = f"{bin_x},{bin_y},{bin_z}"
+            bin_key = self.inds_to_key(bin_x, bin_y, bin_z)
             if bin_key not in bins:
                 bins[bin_key] = []
-            bins[bin_key].append((x, y, z))
+            bins[bin_key].append(image_name)
         
+        total_len = 0
         for key in bins:
-            print(len(bins[key]))
+            #print(key, len(bins[key]))
+            total_len += len(bins[key])
+        #print("TOTAL LEN", total_len)
 
+        return bins
+    
+    def merge_bins(self, bins, target_size):
+        used_bins = set()
 
-pipeline = Pipeline("/home/luke/Documents/datasets/svin_LeftOnRig_Depth_introduced.txt")
+        for bin_key in ["bin_72_4_18"]:
+            if bin_key in used_bins:
+                continue
+
+            super_bin = set()
+            super_bin_img_count = 0
+
+            bin_queue = [bin_key]
+
+            while len(bin_queue) > 0:
+                curr_bin_key = bin_queue.pop(0)
+
+                print("Examining bin ", curr_bin_key)
+
+                curr_imgs = bins[curr_bin_key]
+                
+                if super_bin_img_count + len(curr_imgs) > target_size:
+                    break
+                
+                super_bin.add(curr_bin_key)
+                used_bins.add(curr_bin_key)
+                super_bin_img_count += len(curr_imgs)
+
+                x, y, z = self.key_to_inds(curr_bin_key)
+                
+                neighbors = [(x-1, y, z),
+                             (x+1, y, z)
+                             (x, y-1, z),
+                             (x, y+1, z),
+                             (x, y, z-1),
+                             (x, y, z+1)]
+                for nx, ny, nz in neighbors:
+                    n_key = self.inds_to_key(nx, ny, nz)
+                    if n_key in bins and not n_key in used_bins:
+                        bin_queue.append(n_key)
+
+                # n for neighbor
+                # for nx in range(x - 1, x + 2):
+                #     for ny in range(y - 1, y + 2):
+                #         for nz in range(z - 1, z + 2):
+                #             n_key = self.inds_to_key(nx, ny, nz)
+                #             if n_key in bins and not n_key in used_bins:
+                #                 bin_queue.append(n_key)
+
+            print(super_bin)
+            print("total images in bin", super_bin_img_count)
+
+    def key_to_inds(self, key):
+        return [int(x) for x in key.split("_")[1:]]
+
+    def inds_to_key(self, x, y, z):
+        return f"bin_{x}_{y}_{z}"
+
+    def make_directories(self, input_path, copy_path, binned_imgs):
+        total_imgs_copied = set()
+        for bin_key in binned_imgs:
+            imgs = binned_imgs[bin_key]
+            for img in imgs:
+                src_path = os.path.join(input_path, img)
+                dst_path = os.path.join(copy_path, bin_key, "Images", img)
+                total_imgs_copied.add(dst_path)
+                copy_image(src_path, dst_path)
+
+#pipeline = Pipeline("/home/luke/Documents/datasets/Left/svin_LeftOnRig_Depth_introduced.txt")
+pipeline = Pipeline("/home/luke/Documents/datasets/Combined/svin_orig.txt")
 pipeline.read_svin_file()
 points = pipeline.get_cam_centers()
+binned_imgs = pipeline.bin_points(50000, points)
+#pipeline.make_directories(input_path="/home/luke/Documents/datasets/Combined/Images/", copy_path="/home/luke/Documents/datasets/Cubes", binned_imgs=binned_imgs)
+pipeline.merge_bins(binned_imgs, 200)
+
+#pipeline.make_directories(input_path="/home/luke/Documents/datasets/Combined/Images/", copy_path="/home/luke/Documents/datasets/Cubes", binned_imgs=binned_imgs)'''
 
 #print(points)
 
 # bounds = pipeline.get_bounds(points)
 # print(bounds)
-
-pipeline.bin_points(100, points)
