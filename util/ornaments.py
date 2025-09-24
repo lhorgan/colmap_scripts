@@ -37,13 +37,44 @@ class Pipeline:
 
         return [min_x, max_x, min_y, max_y, min_z, max_z]
 
+    def bin_points(self, bin_count, points):
+        n = bin_count
+        min_x, max_x, min_y, max_y, min_z, max_z = self.get_bounds(points)
+        lx = max_x - min_x
+        ly = max_y - min_y
+        lz = max_z - min_z
+
+        nx = ((n * lx**2) / (ly * lz))**(1/3)
+        ny = ((n * ly**2) / (lx * lz))**(1/3)
+        nz = ((n * lz**2) / (lx * ly))**(1/3)
+
+        lb = lx / nx
+
+        #print(nx, ny, nz)
+
+        bins = {}
+        for point in points:
+            x, y, z = point
+            bin_x = int((x - min_x) // lb)
+            bin_y = int((y - min_y) // lb)
+            bin_z = int((z - min_z) // lb)
+            
+            bin_key = f"{bin_x},{bin_y},{bin_z}"
+            if bin_key not in bins:
+                bins[bin_key] = []
+            bins[bin_key].append((x, y, z))
+        
+        for key in bins:
+            print(len(bins[key]))
+
+
 pipeline = Pipeline("/home/luke/Documents/datasets/svin_LeftOnRig_Depth_introduced.txt")
 pipeline.read_svin_file()
 points = pipeline.get_cam_centers()
 
-print(points)
+#print(points)
 
-bounds = pipeline.get_bounds(points)
-print(bounds)
+# bounds = pipeline.get_bounds(points)
+# print(bounds)
 
-
+pipeline.bin_points(100, points)
