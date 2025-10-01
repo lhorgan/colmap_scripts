@@ -23,4 +23,4 @@ def colmap_to_svin(base_path):
         for line in svin_lines:
             f.write(line)
 
-colmap_to_svin("/home/luke/Documents/Ship/Front/combo")
+#colmap_to_svin("/home/luke/Documents/Ship/Front/combo")
