@@ -115,8 +115,87 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     write_point_cloud_np(ship_output_path, trans_ship_points, ship_colors)
     write_point_cloud_np(cam_output_path, trans_colmap_centers)
 
-def hang_models():
-    colmap_to_svin("/home/luke/Documents/datasets/MergedCubes/bin_0")
-    invert("/home/luke/Documents/datasets/MergedCubes/bin_0/svin_from_colmap.txt", "/home/luke/Documents/datasets/MergedCubes/bin_0/svin_from_colmap_inv.txt")
-    svin_centers, colmap_centers = get_corresponding_points("/home/luke/Documents/datasets/Right/svin_RightOnRig_Depth_introduced_par_det_transform_only_7x5.txt", "/home/luke/Documents/datasets/MergedCubes/bin_0/svin_from_colmap_inv.txt")
-    align_point_cloud(svin_centers, colmap_centers, "/home/luke/Documents/datasets/MergedCubes/bin_0/sparse0.ply", "/home/luke/Documents/datasets/AlignedCubes/bin_0.ply", "/home/luke/Documents/datasets/AlignedCubes/bin_0_cams.ply")
+
+from pathlib import Path
+def hang_models(data_path, scene):
+    scaffold_path = "/mnt/Data3/luke/xmas/Right/svin_RightOnRig_Depth_introduced_par_det_transform_only_7x5.txt"
+    aligned_cubes_path = "/mnt/Data3/luke/xmas/AlignedCubes2"
+
+    colmap_to_svin(f"{data_path}/{scene}")
+    invert(f"{data_path}/{scene}/svin_from_colmap.txt", f"{data_path}/{scene}/svin_from_colmap_inv.txt")
+    svin_centers, colmap_centers = get_corresponding_points(scaffold_path, f"{data_path}/{scene}/svin_from_colmap_inv.txt")
+    align_point_cloud(svin_centers, colmap_centers, f"{data_path}/{scene}/sparse0.ply", f"{aligned_cubes_path}/{scene}.ply", f"{aligned_cubes_path}/{scene}_cams.ply")
+
+    print(f"writing {data_path}/{scene}/aligned.txt")
+    Path(f"{data_path}/{scene}/aligned.txt").touch()
+
+def hang_all():
+    data_path = "/mnt/Data3/luke/xmas/MergedCubes"
+    scenes = os.listdir(data_path)
+    for scene in scenes:
+        try:
+            print("Hanging ", scene)
+            hang_models(data_path, scene)
+        except:
+            print("Could not hang ", scene)
+
+import os   
+import time
+
+def check_alignment_status(parent_dir):
+    """
+    Checks subdirectories for alignment status.
+
+    It looks for subdirectories where 'complete.txt' exists but 'aligned.txt' does not.
+
+    Args:
+        parent_dir (str): The path to the main directory containing the subdirectories.
+    """
+    # Check if the parent directory exists to avoid errors.
+    if not os.path.isdir(parent_dir):
+        print(f"Error: Directory '{parent_dir}' not found. Please check the path.")
+        return
+
+    # Iterate over each item in the parent directory.
+    for dir_name in os.listdir(parent_dir):
+        # Construct the full path to the item.
+        item_path = os.path.join(parent_dir, dir_name)
+
+        # Process only if the item is a directory.
+        if os.path.isdir(item_path):
+            # Define the expected paths for the status files.
+            complete_file = os.path.join(item_path, 'complete.txt')
+            aligned_file = os.path.join(item_path, 'aligned.txt')
+
+            # Check if 'complete.txt' exists AND 'aligned.txt' does NOT exist.
+            if os.path.exists(complete_file) and not os.path.exists(aligned_file):
+                print(f"{dir_name} directory needs to be aligned")
+                try:
+                    hang_models(parent_dir, dir_name)
+                except:
+                    print(f"Could not align {dir_name}")
+
+
+hang_all()
+# if __name__ == "__main__":
+#     # --- Configuration ---
+#     # 1. Set the directory you want to monitor.
+#     #    (e.g., 'C:/data/projects' on Windows or '/home/user/projects' on Linux)
+#     DIRECTORY_TO_WATCH = '/mnt/Data3/luke/xmas/MergedCubes'
+    
+#     # 2. Set the check interval in seconds.
+#     CHECK_INTERVAL = 5
+#     # ---------------------
+
+#     print(f"🚀 Starting monitor for '{DIRECTORY_TO_WATCH}'...")
+#     print(f"Checking every {CHECK_INTERVAL} seconds. Press Ctrl+C to stop.")
+
+#     try:
+#         # Create an infinite loop to run the check periodically.
+#         while True:
+#             check_alignment_status(DIRECTORY_TO_WATCH)
+#             # Wait for the specified interval before the next check.
+#             time.sleep(CHECK_INTERVAL)
+#     except KeyboardInterrupt:
+#         # Allows the user to stop the script gracefully with Ctrl+C.
+#         print("\n🛑 Monitoring stopped.")

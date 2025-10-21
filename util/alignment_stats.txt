@@ -1,0 +1,1177 @@
+Computing stats for bin_0
+comp		mean		std
+qx		-0.121		0.6132
+qy		0.440		0.5582
+qz		-0.172		0.2182
+qw		-0.069		0.1513
+tx		0.571		2.7180
+ty		-4.462		2.4037
+tz		-6.063		1.9683
+
+
+Computing stats for bin_1
+comp		mean		std
+qx		0.020		0.6247
+qy		0.431		0.5272
+qz		-0.160		0.3296
+qw		-0.033		0.1030
+tx		0.600		3.1612
+ty		-4.755		2.3768
+tz		-6.218		1.7873
+
+
+Computing stats for bin_2
+comp		mean		std
+qx		0.485		0.5564
+qy		0.225		0.5218
+qz		-0.057		0.3308
+qw		0.050		0.1304
+tx		-1.089		2.3955
+ty		-1.691		2.2351
+tz		-7.385		2.8234
+
+
+Computing stats for bin_3
+comp		mean		std
+qx		0.303		0.5720
+qy		0.243		0.6357
+qz		-0.112		0.3015
+qw		-0.036		0.1147
+tx		-0.232		2.6107
+ty		-6.203		2.6808
+tz		-5.887		1.5213
+
+
+Computing stats for bin_4
+comp		mean		std
+qx		-0.212		0.2611
+qy		0.880		0.0837
+qz		-0.104		0.0620
+qw		-0.301		0.0025
+tx		-5.124		2.5782
+ty		-4.790		1.5593
+tz		-5.359		0.4913
+
+
+Computing stats for bin_5
+comp		mean		std
+qx		0.441		0.4541
+qy		0.373		0.5071
+qz		0.141		0.4277
+qw		-0.012		0.0082
+tx		-3.851		3.0809
+ty		-4.781		3.0516
+tz		-5.660		2.5706
+
+
+Computing stats for bin_6
+comp		mean		std
+qx		0.794		0.0191
+qy		0.546		0.0262
+qz		-0.187		0.0096
+qw		0.188		0.0014
+tx		-3.716		2.6972
+ty		0.206		0.7238
+tz		-10.104		3.6223
+
+
+Computing stats for bin_7
+comp		mean		std
+qx		0.725		0.0000
+qy		0.658		0.0000
+qz		-0.129		0.0000
+qw		0.158		0.0000
+tx		-7.392		0.0000
+ty		3.118		0.0000
+tz		-17.007		0.0000
+
+
+Computing stats for bin_8
+comp		mean		std
+qx		0.725		0.2281
+qy		0.537		0.2856
+qz		-0.154		0.1706
+qw		0.010		0.0021
+tx		-9.081		4.5004
+ty		1.513		2.7904
+tz		-13.212		3.1866
+
+
+Computing stats for bin_9
+comp		mean		std
+qx		0.775		0.2251
+qy		0.415		0.3211
+qz		-0.122		0.2060
+qw		0.099		0.0771
+tx		-5.594		5.7778
+ty		2.297		7.8604
+tz		-13.968		5.5300
+
+
+Computing stats for bin_10
+comp		mean		std
+qx		0.335		0.5133
+qy		0.648		0.2875
+qz		-0.203		0.1722
+qw		0.204		0.0931
+tx		-8.364		5.9755
+ty		1.304		8.5286
+tz		-13.900		7.8114
+
+
+Computing stats for bin_11
+comp		mean		std
+qx		0.781		0.0237
+qy		0.526		0.0354
+qz		-0.221		0.0426
+qw		0.246		0.0009
+tx		-2.924		2.3913
+ty		7.263		1.0174
+tz		-21.512		3.3562
+
+
+Computing stats for bin_12
+comp		mean		std
+qx		0.747		0.1500
+qy		0.093		0.4183
+qz		0.119		0.3609
+qw		0.302		0.0035
+tx		7.207		8.2241
+ty		3.566		8.7802
+tz		-20.055		6.9113
+
+
+Computing stats for bin_13
+comp		mean		std
+qx		0.704		0.2288
+qy		0.408		0.3455
+qz		-0.002		0.2945
+qw		0.283		0.0013
+tx		-3.068		12.0401
+ty		5.399		4.7401
+tz		-23.003		4.1389
+
+
+Computing stats for bin_14
+comp		mean		std
+qx		0.681		0.3163
+qy		0.497		0.2255
+qz		-0.252		0.1176
+qw		0.246		0.0014
+tx		-8.738		7.1362
+ty		1.420		4.6249
+tz		-26.095		8.5469
+
+
+Computing stats for bin_17
+comp		mean		std
+qx		0.497		0.3428
+qy		0.390		0.4318
+qz		0.099		0.5191
+qw		0.131		0.0025
+tx		-8.194		26.4720
+ty		8.594		13.5476
+tz		-21.350		10.9818
+
+
+Computing stats for bin_18
+comp		mean		std
+qx		0.209		0.3935
+qy		0.766		0.1405
+qz		-0.383		0.2002
+qw		-0.093		0.0013
+tx		-37.631		5.3136
+ty		-4.275		15.1238
+tz		-2.631		9.8568
+
+
+Computing stats for bin_19
+comp		mean		std
+qx		-0.098		0.4306
+qy		0.610		0.5070
+qz		-0.345		0.1489
+qw		-0.121		0.1396
+tx		-16.013		14.7221
+ty		-30.865		5.2977
+tz		16.695		4.6545
+
+
+Computing stats for bin_20
+comp		mean		std
+qx		0.167		0.4780
+qy		0.281		0.6174
+qz		-0.251		0.4064
+qw		-0.057		0.2286
+tx		-4.157		18.3113
+ty		-30.791		3.5820
+tz		16.082		6.6859
+
+
+Computing stats for bin_21
+comp		mean		std
+qx		-0.459		0.0454
+qy		0.732		0.0394
+qz		-0.366		0.0479
+qw		-0.336		0.0012
+tx		-6.868		3.1680
+ty		-28.168		2.3498
+tz		22.357		1.5503
+
+
+Computing stats for bin_23
+comp		mean		std
+qx		0.453		0.4806
+qy		-0.033		0.7033
+qz		0.017		0.2459
+qw		0.020		0.0808
+tx		-11.764		6.0185
+ty		-24.150		7.1309
+tz		6.521		10.3835
+
+
+Computing stats for bin_24
+comp		mean		std
+qx		-0.298		0.4044
+qy		0.650		0.3590
+qz		-0.299		0.2938
+qw		-0.084		0.1158
+tx		-0.184		15.1021
+ty		-19.390		10.9758
+tz		-0.051		8.4046
+
+
+Computing stats for bin_25
+comp		mean		std
+qx		-0.068		0.6056
+qy		0.318		0.6286
+qz		-0.185		0.2266
+qw		-0.069		0.2061
+tx		-3.537		5.2914
+ty		-24.402		1.7874
+tz		6.498		3.8690
+
+
+Computing stats for bin_26
+comp		mean		std
+qx		-0.498		0.0781
+qy		0.751		0.0500
+qz		-0.325		0.0519
+qw		-0.267		0.0012
+tx		-5.722		1.9630
+ty		-21.622		1.4462
+tz		5.387		3.4489
+
+
+Computing stats for bin_27
+comp		mean		std
+qx		0.053		0.5472
+qy		0.531		0.4688
+qz		-0.219		0.2791
+qw		-0.161		0.2091
+tx		-4.528		8.2033
+ty		-16.051		7.0397
+tz		-1.026		7.0238
+
+
+Computing stats for bin_28
+comp		mean		std
+qx		0.214		0.5144
+qy		0.312		0.5273
+qz		-0.200		0.2870
+qw		-0.041		0.4364
+tx		3.197		8.4810
+ty		-13.957		5.4271
+tz		-2.545		5.9733
+
+
+Computing stats for bin_29
+comp		mean		std
+qx		0.758		0.3324
+qy		0.033		0.4251
+qz		-0.048		0.2420
+qw		0.200		0.1793
+tx		6.742		9.6892
+ty		-3.429		5.6644
+tz		-11.246		4.4805
+
+
+Computing stats for bin_30
+comp		mean		std
+qx		-0.450		0.2014
+qy		0.782		0.2170
+qz		-0.252		0.1144
+qw		-0.142		0.0430
+tx		-6.641		2.7260
+ty		-16.801		2.9079
+tz		-0.163		2.3476
+
+
+Computing stats for bin_31
+comp		mean		std
+qx		-0.174		0.5950
+qy		0.432		0.5635
+qz		-0.173		0.1746
+qw		-0.106		0.1988
+tx		-3.057		4.4915
+ty		-14.388		1.3360
+tz		-0.999		2.0181
+
+
+Computing stats for bin_32
+comp		mean		std
+qx		-0.279		0.2817
+qy		0.766		0.0647
+qz		-0.369		0.0748
+qw		-0.332		0.0014
+tx		-4.316		2.6029
+ty		-11.046		1.4500
+tz		-2.574		3.2316
+
+
+Computing stats for bin_33
+comp		mean		std
+qx		0.618		0.4213
+qy		0.020		0.6031
+qz		-0.220		0.1643
+qw		-0.009		0.0250
+tx		-2.642		2.3683
+ty		-8.403		5.3384
+tz		-3.861		2.3012
+
+
+Computing stats for bin_34
+comp		mean		std
+qx		0.436		0.5362
+qy		-0.078		0.5100
+qz		0.021		0.3203
+qw		0.165		0.3548
+tx		-0.282		2.6805
+ty		-9.978		1.5019
+tz		-1.165		3.3671
+
+
+Computing stats for bin_35
+comp		mean		std
+qx		0.572		0.5514
+qy		-0.299		0.4460
+qz		0.085		0.1866
+qw		0.131		0.1474
+tx		0.409		2.3096
+ty		-3.831		1.9860
+tz		-6.044		1.9038
+
+
+Computing stats for bin_36
+comp		mean		std
+qx		0.421		0.5157
+qy		0.531		0.4783
+qz		-0.027		0.1855
+qw		0.075		0.0685
+tx		-3.249		3.1555
+ty		1.249		3.1379
+tz		-9.307		3.9037
+
+
+Computing stats for bin_37
+comp		mean		std
+qx		-0.631		0.0000
+qy		0.660		0.0000
+qz		-0.268		0.0000
+qw		-0.307		0.0000
+tx		-0.025		0.0000
+ty		-12.392		0.0000
+tz		0.888		0.0000
+
+
+Computing stats for bin_38
+comp		mean		std
+qx		0.260		0.5258
+qy		0.061		0.6285
+qz		-0.170		0.3240
+qw		0.001		0.3510
+tx		0.984		3.4657
+ty		-10.301		2.3439
+tz		-4.248		2.5924
+
+
+Computing stats for bin_39
+comp		mean		std
+qx		-0.231		0.0000
+qy		0.790		0.0000
+qz		-0.561		0.0000
+qw		0.090		0.0000
+tx		-14.065		0.0000
+ty		-6.153		0.0000
+tz		-5.993		0.0000
+
+
+Computing stats for bin_40
+comp		mean		std
+qx		0.597		0.2915
+qy		0.436		0.3423
+qz		-0.106		0.3833
+qw		0.306		0.0012
+tx		1.413		5.7352
+ty		-2.669		4.6990
+tz		-13.070		3.6550
+
+
+Computing stats for bin_41
+comp		mean		std
+qx		0.424		0.5617
+qy		0.119		0.3983
+qz		0.022		0.4936
+qw		0.261		0.1417
+tx		-0.616		5.6949
+ty		-5.268		8.3519
+tz		-9.830		7.3335
+
+
+Computing stats for bin_42
+comp		mean		std
+qx		-0.041		0.4286
+qy		0.794		0.1804
+qz		-0.334		0.1050
+qw		-0.168		0.0394
+tx		-12.050		3.3471
+ty		-15.833		5.2155
+tz		2.122		5.0224
+
+
+Computing stats for bin_44
+comp		mean		std
+qx		-0.314		0.3731
+qy		0.620		0.4228
+qz		-0.282		0.1739
+qw		-0.232		0.1882
+tx		-3.113		4.8289
+ty		-19.908		1.9619
+tz		5.524		2.5269
+
+
+Computing stats for bin_45
+comp		mean		std
+qx		0.683		0.4240
+qy		-0.199		0.2853
+qz		0.030		0.2639
+qw		0.322		0.2407
+tx		13.708		4.3219
+ty		-13.635		0.9246
+tz		-0.872		5.1646
+
+
+Computing stats for bin_46
+comp		mean		std
+qx		0.884		0.0400
+qy		0.216		0.0642
+qz		-0.192		0.0694
+qw		0.353		0.0008
+tx		6.039		0.7498
+ty		-3.157		1.1504
+tz		-13.211		1.7398
+
+
+Computing stats for bin_47
+comp		mean		std
+qx		0.450		0.2046
+qy		0.792		0.1189
+qz		-0.297		0.0644
+qw		0.147		0.0017
+tx		-21.026		4.8520
+ty		2.972		3.8782
+tz		-20.587		4.0012
+
+
+Computing stats for bin_49
+comp		mean		std
+qx		0.718		0.3259
+qy		0.099		0.3390
+qz		0.077		0.3783
+qw		0.322		0.0031
+tx		15.654		14.6015
+ty		1.507		5.2231
+tz		-17.626		4.5495
+
+
+Computing stats for bin_50
+comp		mean		std
+qx		0.429		0.5730
+qy		0.442		0.3624
+qz		-0.095		0.2687
+qw		0.284		0.0020
+tx		-0.448		19.6475
+ty		8.581		7.4084
+tz		-17.985		6.5015
+
+
+Computing stats for bin_51
+comp		mean		std
+qx		0.250		0.6169
+qy		0.397		0.4743
+qz		-0.107		0.3856
+qw		0.062		0.1028
+tx		-17.073		16.2173
+ty		2.399		23.0876
+tz		-4.071		17.5744
+
+
+Computing stats for bin_52
+comp		mean		std
+qx		-0.338		0.1249
+qy		0.867		0.0224
+qz		-0.312		0.0787
+qw		-0.117		0.0014
+tx		-19.623		6.1200
+ty		-29.634		4.3921
+tz		9.832		1.6037
+
+
+Computing stats for bin_53
+comp		mean		std
+qx		0.280		0.4547
+qy		0.432		0.5607
+qz		-0.196		0.1931
+qw		-0.069		0.3647
+tx		1.011		20.3941
+ty		-25.806		8.5524
+tz		-0.917		9.2482
+
+
+Computing stats for bin_54
+comp		mean		std
+qx		0.316		0.4714
+qy		0.457		0.4874
+qz		-0.287		0.2858
+qw		-0.162		0.2024
+tx		-6.975		18.3169
+ty		-21.798		8.2461
+tz		4.504		8.1373
+
+
+Computing stats for bin_55
+comp		mean		std
+qx		0.948		0.0147
+qy		-0.164		0.0720
+qz		-0.003		0.0561
+qw		0.257		0.0012
+tx		28.132		1.2964
+ty		-9.136		2.8814
+tz		-6.260		4.8709
+
+
+Computing stats for bin_58
+comp		mean		std
+qx		0.368		0.4353
+qy		0.206		0.5132
+qz		-0.139		0.3667
+qw		0.205		0.4163
+tx		-10.445		19.9397
+ty		5.274		6.1354
+tz		-19.946		7.3306
+
+
+Computing stats for bin_61
+comp		mean		std
+qx		0.817		0.0873
+qy		0.520		0.2258
+qz		0.025		0.0424
+qw		0.030		0.0006
+tx		4.351		9.5750
+ty		29.888		9.1347
+tz		-11.775		2.7971
+
+
+Computing stats for bin_62
+comp		mean		std
+qx		0.353		0.6388
+qy		-0.163		0.5494
+qz		-0.002		0.1926
+qw		0.128		0.2916
+tx		15.169		5.2196
+ty		-29.893		5.6583
+tz		17.217		3.9874
+
+
+Computing stats for bin_65
+comp		mean		std
+qx		-0.144		0.4262
+qy		0.578		0.5016
+qz		-0.189		0.3013
+qw		-0.185		0.2256
+tx		-13.118		9.5726
+ty		-34.032		5.7196
+tz		23.603		8.8242
+
+
+Computing stats for bin_67
+comp		mean		std
+qx		-0.267		0.1959
+qy		0.776		0.0961
+qz		-0.367		0.1223
+qw		-0.359		0.0020
+tx		-9.916		7.8052
+ty		-31.905		5.1497
+tz		26.228		7.6931
+
+
+Computing stats for bin_68
+comp		mean		std
+qx		-0.411		0.3684
+qy		0.549		0.4045
+qz		-0.248		0.1860
+qw		-0.289		0.2249
+tx		-1.668		4.2684
+ty		-27.170		3.1233
+tz		17.883		2.5634
+
+
+Computing stats for bin_69
+comp		mean		std
+qx		0.142		0.6434
+qy		-0.096		0.6249
+qz		0.094		0.2542
+qw		0.061		0.2982
+tx		1.632		2.0310
+ty		-28.202		3.4698
+tz		9.478		4.4042
+
+
+Computing stats for bin_70
+comp		mean		std
+qx		-0.551		0.0282
+qy		0.714		0.0164
+qz		-0.314		0.0189
+qw		-0.294		0.0004
+tx		-3.658		2.8998
+ty		-20.895		2.0854
+tz		4.948		0.8119
+
+
+Computing stats for bin_72
+comp		mean		std
+qx		-0.565		0.0394
+qy		0.689		0.0096
+qz		-0.277		0.0536
+qw		-0.354		0.0005
+tx		-6.135		1.3359
+ty		-15.827		2.5953
+tz		2.556		1.7607
+
+
+Computing stats for bin_73
+comp		mean		std
+qx		0.893		0.1991
+qy		0.205		0.2501
+qz		0.163		0.1717
+qw		0.052		0.0072
+tx		-5.296		1.3517
+ty		-4.234		2.9244
+tz		-6.949		2.5944
+
+
+Computing stats for bin_74
+comp		mean		std
+qx		0.510		0.1683
+qy		-0.033		0.6008
+qz		-0.087		0.2772
+qw		0.168		0.4872
+tx		-2.554		0.4561
+ty		-10.120		1.1745
+tz		-0.235		0.1451
+
+
+Computing stats for bin_75
+comp		mean		std
+qx		0.357		0.0000
+qy		0.627		0.0000
+qz		0.339		0.0000
+qw		0.604		0.0000
+tx		-8.139		0.0000
+ty		-6.665		0.0000
+tz		-9.045		0.0000
+
+
+Computing stats for bin_76
+comp		mean		std
+qx		0.377		0.3023
+qy		0.765		0.0842
+qz		-0.338		0.0805
+qw		0.232		0.0020
+tx		-1.015		3.0694
+ty		-7.918		0.4218
+tz		-2.195		2.0206
+
+
+Computing stats for bin_79
+comp		mean		std
+qx		0.577		0.0223
+qy		0.714		0.0160
+qz		-0.213		0.0597
+qw		0.327		0.0018
+tx		3.502		3.3802
+ty		-6.010		1.2263
+tz		-6.303		1.6599
+
+
+Computing stats for bin_80
+comp		mean		std
+qx		0.564		0.0394
+qy		0.479		0.0486
+qz		-0.463		0.0741
+qw		0.473		0.0703
+tx		-3.074		4.7973
+ty		-9.689		0.3629
+tz		-0.654		2.9469
+
+
+Computing stats for bin_83
+comp		mean		std
+qx		0.761		0.0671
+qy		0.558		0.0573
+qz		-0.251		0.1027
+qw		0.169		0.0019
+tx		-3.255		2.7932
+ty		-6.433		2.9327
+tz		-4.960		1.9374
+
+
+Computing stats for bin_87
+comp		mean		std
+qx		0.754		0.0000
+qy		0.583		0.0000
+qz		-0.230		0.0000
+qw		0.198		0.0000
+tx		-8.822		0.0000
+ty		3.326		0.0000
+tz		-13.828		0.0000
+
+
+Computing stats for bin_90
+comp		mean		std
+qx		0.116		0.3860
+qy		0.308		0.5787
+qz		-0.195		0.3990
+qw		-0.159		0.4302
+tx		-0.119		4.0498
+ty		-13.249		2.2745
+tz		0.069		1.7322
+
+
+Computing stats for bin_92
+comp		mean		std
+qx		-0.341		0.4700
+qy		0.446		0.4940
+qz		-0.221		0.4066
+qw		-0.048		0.0541
+tx		-2.226		3.4030
+ty		-12.311		2.5413
+tz		-5.080		5.4081
+
+
+Computing stats for bin_94
+comp		mean		std
+qx		0.736		0.2966
+qy		0.401		0.3527
+qz		-0.099		0.2709
+qw		0.039		0.0023
+tx		-1.441		4.7092
+ty		-3.249		4.6093
+tz		-16.429		3.6488
+
+
+Computing stats for bin_95
+comp		mean		std
+qx		0.727		0.3952
+qy		-0.093		0.2926
+qz		-0.004		0.2381
+qw		0.324		0.2421
+tx		10.854		0.6181
+ty		-10.716		4.6507
+tz		-9.980		1.2061
+
+
+Computing stats for bin_96
+comp		mean		std
+qx		-0.014		0.4741
+qy		0.221		0.6268
+qz		-0.141		0.4487
+qw		-0.077		0.3256
+tx		1.187		1.3578
+ty		-17.581		1.6878
+tz		-0.209		2.4771
+
+
+Computing stats for bin_99
+comp		mean		std
+qx		0.852		0.0642
+qy		0.313		0.2474
+qz		-0.164		0.1828
+qw		0.226		0.0010
+tx		7.528		4.3550
+ty		3.936		1.4742
+tz		-20.812		1.2102
+
+
+Computing stats for bin_100
+comp		mean		std
+qx		0.869		0.1047
+qy		0.077		0.3055
+qz		0.112		0.2666
+qw		0.226		0.0009
+tx		12.194		6.4271
+ty		2.965		5.6009
+tz		-20.950		3.7408
+
+
+Computing stats for bin_102
+comp		mean		std
+qx		-0.617		0.0183
+qy		0.709		0.0139
+qz		-0.285		0.0132
+qw		-0.187		0.0001
+tx		0.611		1.5908
+ty		-16.921		0.4938
+tz		-0.530		1.5264
+
+
+Computing stats for bin_103
+comp		mean		std
+qx		0.613		0.2550
+qy		0.669		0.1759
+qz		-0.202		0.1347
+qw		0.151		0.0014
+tx		-3.160		3.8860
+ty		-1.243		1.9887
+tz		-8.428		2.2147
+
+
+Computing stats for bin_105
+comp		mean		std
+qx		0.717		0.0184
+qy		0.531		0.0218
+qz		-0.349		0.0527
+qw		0.279		0.0003
+tx		-10.096		1.8069
+ty		9.902		1.0049
+tz		-32.035		2.2093
+
+
+Computing stats for bin_106
+comp		mean		std
+qx		0.674		0.0541
+qy		0.548		0.0227
+qz		-0.385		0.0703
+qw		0.296		0.0004
+tx		-12.006		6.2198
+ty		11.311		1.9216
+tz		-32.479		1.8378
+
+
+Computing stats for bin_107
+comp		mean		std
+qx		0.674		0.0457
+qy		0.613		0.0639
+qz		-0.327		0.0344
+qw		0.235		0.0004
+tx		-16.274		4.8900
+ty		13.916		1.4917
+tz		-31.552		1.1123
+
+
+Computing stats for bin_108
+comp		mean		std
+qx		-0.517		0.0025
+qy		0.781		0.0091
+qz		-0.283		0.0278
+qw		-0.204		0.0005
+tx		-5.860		2.0826
+ty		-31.397		2.1826
+tz		10.154		1.2360
+
+
+Computing stats for bin_109
+comp		mean		std
+qx		0.680		0.0067
+qy		-0.664		0.0051
+qz		0.205		0.0046
+qw		0.233		0.0010
+tx		-1.126		4.3856
+ty		-4.436		0.6266
+tz		-5.777		2.3867
+
+
+Computing stats for bin_111
+comp		mean		std
+qx		0.622		0.0647
+qy		0.732		0.0311
+qz		-0.192		0.0906
+qw		0.165		0.0006
+tx		-0.563		3.8018
+ty		-2.158		3.9526
+tz		-7.149		0.2341
+
+
+Computing stats for bin_112
+comp		mean		std
+qx		0.795		0.0115
+qy		0.460		0.0257
+qz		-0.218		0.0143
+qw		0.327		0.0015
+tx		1.682		3.8731
+ty		-1.710		0.3754
+tz		-14.896		2.9890
+
+
+Computing stats for bin_113
+comp		mean		std
+qx		-0.409		0.0389
+qy		0.819		0.0067
+qz		-0.319		0.0387
+qw		-0.240		0.0004
+tx		-8.865		0.4019
+ty		-19.218		3.7874
+tz		5.022		0.9774
+
+
+Computing stats for bin_115
+comp		mean		std
+qx		0.953		0.0031
+qy		-0.098		0.0216
+qz		0.040		0.0209
+qw		0.283		0.0000
+tx		23.729		0.4622
+ty		-3.431		2.2096
+tz		-13.204		4.2691
+
+
+Computing stats for bin_116
+comp		mean		std
+qx		0.734		0.0636
+qy		0.541		0.0716
+qz		-0.243		0.0845
+qw		0.304		0.0006
+tx		-1.470		2.2445
+ty		8.478		2.0982
+tz		-26.641		1.2078
+
+
+Computing stats for bin_117
+comp		mean		std
+qx		0.661		0.2643
+qy		0.609		0.1299
+qz		-0.237		0.0406
+qw		0.218		0.0008
+tx		-10.094		9.8375
+ty		16.386		5.6155
+tz		-25.884		4.0551
+
+
+Computing stats for bin_118
+comp		mean		std
+qx		0.063		0.2809
+qy		0.863		0.0273
+qz		-0.400		0.0461
+qw		-0.093		0.0007
+tx		-30.080		2.5425
+ty		-13.502		6.1053
+tz		8.497		8.5428
+
+
+Computing stats for bin_119
+comp		mean		std
+qx		0.025		0.6156
+qy		0.028		0.6377
+qz		0.010		0.2478
+qw		-0.000		0.3891
+tx		11.949		0.1485
+ty		-28.488		4.2347
+tz		17.991		2.8352
+
+
+Computing stats for bin_120
+comp		mean		std
+qx		-0.592		0.0336
+qy		0.718		0.0224
+qz		-0.118		0.0403
+qw		-0.342		0.0011
+tx		5.205		2.6871
+ty		-33.117		3.1037
+tz		11.028		1.4484
+
+
+Computing stats for bin_121
+comp		mean		std
+qx		0.803		0.0016
+qy		0.554		0.0047
+qz		-0.141		0.0093
+qw		0.168		0.0001
+tx		-0.203		2.6320
+ty		27.887		1.2361
+tz		-26.639		4.7537
+
+
+Computing stats for bin_122
+comp		mean		std
+qx		0.730		0.0713
+qy		0.624		0.0751
+qz		-0.166		0.0223
+qw		0.197		0.0007
+tx		-5.522		5.9364
+ty		27.523		1.2631
+tz		-28.375		1.9145
+
+
+Computing stats for bin_123
+comp		mean		std
+qx		0.238		0.1009
+qy		0.949		0.0225
+qz		-0.167		0.0237
+qw		-0.053		0.0002
+tx		-41.610		3.9540
+ty		-3.250		4.7859
+tz		-6.109		0.6648
+
+
+Computing stats for bin_125
+comp		mean		std
+qx		0.059		0.0796
+qy		0.892		0.0091
+qz		-0.437		0.0275
+qw		-0.061		0.0003
+tx		-39.235		2.4541
+ty		-11.985		1.5319
+tz		4.970		4.3505
+
+
+Computing stats for bin_126
+comp		mean		std
+qx		-0.122		0.0418
+qy		0.863		0.0235
+qz		-0.462		0.0323
+qw		-0.155		0.0001
+tx		-31.464		2.1205
+ty		-22.391		0.2058
+tz		18.721		3.1079
+
+
+Computing stats for bin_127
+comp		mean		std
+qx		-0.164		0.1246
+qy		0.833		0.0118
+qz		-0.450		0.0583
+qw		-0.241		0.0009
+tx		-25.969		2.1890
+ty		-27.113		2.2587
+tz		22.312		2.5407
+
+
+Computing stats for bin_130
+comp		mean		std
+qx		-0.045		0.0158
+qy		0.893		0.0128
+qz		-0.447		0.0238
+qw		-0.014		0.0001
+tx		-0.296		3.7270
+ty		-9.218		0.8941
+tz		-1.590		0.5616
+
+
+Computing stats for bin_131
+comp		mean		std
+qx		0.645		0.0761
+qy		0.609		0.0674
+qz		-0.317		0.0694
+qw		0.311		0.0024
+tx		-0.229		2.9772
+ty		-8.369		1.1115
+tz		-2.299		2.2857
+
+
+Computing stats for bin_132
+comp		mean		std
+qx		0.645		0.0351
+qy		0.726		0.0316
+qz		-0.228		0.0141
+qw		0.052		0.0005
+tx		-9.952		2.1129
+ty		0.346		0.2903
+tz		-10.271		2.6538
+
+
+Computing stats for bin_133
+comp		mean		std
+qx		0.664		0.0243
+qy		0.691		0.0279
+qz		-0.260		0.0116
+qw		0.114		0.0005
+tx		-9.907		2.8216
+ty		0.224		0.1359
+tz		-11.263		3.0982
+
+
+Computing stats for bin_134
+comp		mean		std
+qx		0.245		0.6105
+qy		-0.194		0.6175
+qz		0.049		0.1923
+qw		0.110		0.3114
+tx		1.198		3.4605
+ty		-12.428		1.0673
+tz		-3.526		2.0411
+
+
+Computing stats for bin_136
+comp		mean		std
+qx		-0.188		0.1424
+qy		0.874		0.0303
+qz		-0.417		0.0082
+qw		-0.070		0.0017
+tx		-8.184		3.2340
+ty		-10.842		1.1074
+tz		-5.997		1.0557
+
+
+Computing stats for bin_137
+comp		mean		std
+qx		-0.310		0.0467
+qy		0.810		0.0138
+qz		-0.471		0.0115
+qw		-0.152		0.0002
+tx		-2.289		1.0105
+ty		-16.280		3.2576
+tz		-0.772		0.7709
+
+
+Computing stats for bin_138
+comp		mean		std
+qx		0.780		0.0422
+qy		0.498		0.0661
+qz		-0.223		0.0210
+qw		0.296		0.0003
+tx		0.977		3.4442
+ty		0.576		0.4682
+tz		-19.757		2.5472
+
+
+Computing stats for bin_139
+comp		mean		std
+qx		0.822		0.0248
+qy		0.478		0.0327
+qz		-0.220		0.0230
+qw		0.213		0.0004
+tx		2.108		1.9430
+ty		3.793		0.8825
+tz		-20.116		3.0875
+
+
+Computing stats for bin_141
+comp		mean		std
+qx		0.749		0.1374
+qy		0.610		0.1391
+qz		-0.027		0.1307
+qw		0.104		0.0014
+tx		-4.268		2.3864
+ty		3.567		2.8778
+tz		-8.135		2.1246
+
+
