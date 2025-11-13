@@ -10,15 +10,11 @@ from sweep import make_key, parse_key, get_bottom_neighbor, get_left_neighbor, g
 
 np.set_printoptions(precision=3, suppress=True)
 
-# --- Helper function to convert quaternion to 3x3 matrix ---
 def quat_to_matrix(q):
-    # Normalize the quaternion to ensure it's a unit quaternion
-    # Add a small epsilon for numerical stability
     q = q / (torch.norm(q) + 1e-8) 
     
     w, x, y, z = q[0], q[1], q[2], q[3]
     
-    # Calculate 3x3 rotation matrix elements
     R = torch.zeros((3, 3))
     R[0, 0] = 1 - 2*y*y - 2*z*z
     R[0, 1] = 2*x*y - 2*w*z
@@ -33,76 +29,76 @@ def quat_to_matrix(q):
     R[2, 2] = 1 - 2*x*x - 2*y*y
     return R
 
-def go():
-    # --- 1. Setup Parameters ---
-    # We will optimize these 7 parameters
-    # Translation
-    t = torch.randn(3, requires_grad=True)
-    # Quaternion (w, x, y, z) - init to identity
-    q = torch.tensor([1.0, 0.0, 0.0, 0.0], requires_grad=True)
+# def go():
+#     # --- 1. Setup Parameters ---
+#     # We will optimize these 7 parameters
+#     # Translation
+#     t = torch.randn(3, requires_grad=True)
+#     # Quaternion (w, x, y, z) - init to identity
+#     q = torch.tensor([1.0, 0.0, 0.0, 0.0], requires_grad=True)
 
-    # Optimizer only tracks 't' and 'q' now
-    params = [t, q]
-    optimizer = torch.optim.Adam(params, lr=0.01)
+#     # Optimizer only tracks 't' and 'q' now
+#     params = [t, q]
+#     optimizer = torch.optim.Adam(params, lr=0.01)
 
-    # --- Define a new target matrix ---
-    # 90-deg rotation around Z-axis and translation [0.5, 0, 1.0]
-    target_matrix = torch.eye(4)
-    # Rotation part (cos(90)=0, sin(90)=1)
-    target_matrix[0, 0] = 0.0
-    target_matrix[0, 1] = -1.0
-    target_matrix[1, 0] = 1.0
-    target_matrix[1, 1] = 0.0
-    # Translation part
-    target_matrix[0, 3] = 0.5
-    target_matrix[1, 3] = 0.0
-    target_matrix[2, 3] = 1.0
+#     # --- Define a new target matrix ---
+#     # 90-deg rotation around Z-axis and translation [0.5, 0, 1.0]
+#     target_matrix = torch.eye(4)
+#     # Rotation part (cos(90)=0, sin(90)=1)
+#     target_matrix[0, 0] = 0.0
+#     target_matrix[0, 1] = -1.0
+#     target_matrix[1, 0] = 1.0
+#     target_matrix[1, 1] = 0.0
+#     # Translation part
+#     target_matrix[0, 3] = 0.5
+#     target_matrix[1, 3] = 0.0
+#     target_matrix[2, 3] = 1.0
 
-    print("--- Target Matrix (90-deg Z-rotation + translation) ---")
-    print(target_matrix)
+#     print("--- Target Matrix (90-deg Z-rotation + translation) ---")
+#     print(target_matrix)
 
-    # --- 2. Optimization Loop ---
-    print("\n--- Optimizing 7 parameters (t and q) ---")
-    for step in range(1000):
+#     # --- 2. Optimization Loop ---
+#     print("\n--- Optimizing 7 parameters (t and q) ---")
+#     for step in range(1000):
         
-        # --- Step 2: The Forward Pass (Construct the Matrix) ---
-        # This is the "parameterization" step.
+#         # --- Step 2: The Forward Pass (Construct the Matrix) ---
+#         # This is the "parameterization" step.
         
-        # 1. Enforce constraint
-        R = quat_to_matrix(q)    # R is guaranteed to be a rotation
+#         # 1. Enforce constraint
+#         R = quat_to_matrix(q)    # R is guaranteed to be a rotation
         
-        # 2. Build the 4x4 matrix (Scale is fixed to 1.0)
-        T = torch.eye(4)
-        T[0:3, 0:3] = R  # <-- No 's'
-        T[0:3, 3] = t
+#         # 2. Build the 4x4 matrix (Scale is fixed to 1.0)
+#         T = torch.eye(4)
+#         T[0:3, 0:3] = R  # <-- No 's'
+#         T[0:3, 3] = t
 
-        # 3. Calculate loss
-        loss = torch.sum((T - target_matrix)**2)
+#         # 3. Calculate loss
+#         loss = torch.sum((T - target_matrix)**2)
 
-        # --- Step 3: Backward Pass ---
-        loss.backward()
+#         # --- Step 3: Backward Pass ---
+#         loss.backward()
 
-        # --- Step 4: Optimization Step ---
-        optimizer.step()
-        optimizer.zero_grad()
+#         # --- Step 4: Optimization Step ---
+#         optimizer.step()
+#         optimizer.zero_grad()
         
-        if step % 50 == 0:
-            print(f"Step {step}: Loss = {loss.item():.6f}, tx = {t[0].item():.4f}, tz = {t[2].item():.4f}")
+#         if step % 50 == 0:
+#             print(f"Step {step}: Loss = {loss.item():.6f}, tx = {t[0].item():.4f}, tz = {t[2].item():.4f}")
 
-    # The true 'q' for 90-deg Z-rotation is (cos(45), 0, 0, sin(45))
-    # or (0.707, 0, 0, 0.707)
-    print(f"\nTarget q (approx): [ {math.cos(math.pi/4):.4f}, 0.0, 0.0, {math.sin(math.pi/4):.4f} ]")
-    print(f"Target t (exact):  [ 0.5, 0.0, 1.0 ]\n")
+#     # The true 'q' for 90-deg Z-rotation is (cos(45), 0, 0, sin(45))
+#     # or (0.707, 0, 0, 0.707)
+#     print(f"\nTarget q (approx): [ {math.cos(math.pi/4):.4f}, 0.0, 0.0, {math.sin(math.pi/4):.4f} ]")
+#     print(f"Target t (exact):  [ 0.5, 0.0, 1.0 ]\n")
 
 
-    print("--- Final Optimized Parameters ---")
-    # We normalize the final 'q' for a clean print
-    final_q = q / torch.norm(q)
-    print(f"Translation (t): {t.detach().numpy()}")
-    print(f"Quaternion (q):  {final_q.detach().numpy()}")
+#     print("--- Final Optimized Parameters ---")
+#     # We normalize the final 'q' for a clean print
+#     final_q = q / torch.norm(q)
+#     print(f"Translation (t): {t.detach().numpy()}")
+#     print(f"Quaternion (q):  {final_q.detach().numpy()}")
 
-    print("\n--- Final Constructed Matrix ---")
-    print(T.detach().numpy())
+#     print("\n--- Final Constructed Matrix ---")
+#     print(T.detach().numpy())
 
 def params_to_transforms(params_by_key):
     transforms = {}
@@ -133,7 +129,7 @@ def go2(panels, overlaps):
         params_by_key[key] = (t, q)
         
     optimizer = torch.optim.Adam(params, lr=0.01)
-    for step in range(1000):
+    for step in range(10000):
         transforms = params_to_transforms(params_by_key)
         loss = compute_loss(panels, overlaps, transforms)
         
