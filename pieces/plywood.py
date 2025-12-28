@@ -171,7 +171,7 @@ class PCSplitter():
         print(f"We have {len(self.bins)} bins.")
         return bins
 
-    def write_bins(self, bin_output_dir, img_input_dir, img_output_dir):
+    def write_bins(self, img_input_dir, output_dir):
         lens = np.zeros(len(self.bins))
         for i, key in enumerate(self.bins):
             lens[i] = len(self.bins[key])
@@ -202,19 +202,19 @@ class PCSplitter():
                         image_name = timestamp.replace(".", "").strip()
                         print(f"WE MUST RETRIEVE KEYFRAME {keyframe_id} => {timestamp}")
                         try:
-                            copy_img(f"{img_input_dir}/{image_name}.png", f"{img_output_dir}/{bin_key}/{image_name}.jpg")
+                            copy_img(f"{img_input_dir}/{image_name}.png", f"{output_dir}/{bin_key}/Images/{image_name}.png")
                         except FileNotFoundError:
                             print("There is no keyframe ", {image_name})
                     else:
                         print(f"We are missing a mapping for keyframe id ", keyframe_id)
 
-            write_point_cloud(pcd, f"{bin_output_dir}/{bin_key}.ply")
+            write_point_cloud(pcd, f"{output_dir}/{bin_key}/sparse_cloud_from_svin.ply")
 
 def main():
-    splitter = PCSplitter("/home/luke/Documents/peace/LeftonRigLeft/pointcloud_2025-11-08_20-56-01.ply", "/home/luke/Documents/peace/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
+    splitter = PCSplitter("/mnt/Data3/luke/peace/LeftonRigLeft/pointcloud_2025-11-08_20-56-01.ply", "/mnt/Data3/luke/peace/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
     #splitter = PCSplitter("/home/luke/Documents/peace/LeftonRigLeft/pc_aligned.ply", "/home/luke/Documents/peace/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
     splitter.id_points()
-    splitter.build_timestamp_database("/home/luke/Documents/peace/LeftonRigLeft/keyframes_2025_11_08_20_55_45.txt")
+    splitter.build_timestamp_database("/mnt/Data3/luke/peace/LeftonRigLeft/keyframes_2025_11_08_20_55_45.txt")
     print(len(splitter.keyframes_by_point_id))
 
     # A couple (as in literally two) of the points are missing for some reason
@@ -225,7 +225,7 @@ def main():
             splitter.keyframes_by_point_id[idx] = set()
 
     splitter.bin_points(50, overlap_thresh=0.2)
-    splitter.write_bins("/home/luke/Documents/peace/LeftonRigLeft/bins", "/home/luke/Documents/peace/LeftonRigLeft/keyframes", "/home/luke/Documents/peace/LeftonRigLeft/keyframe_bins")
+    splitter.write_bins("/mnt/Data3/luke/peace/LeftonRigLeft/keyframes", "/mnt/Data3/luke/peace/coob")
 
 if __name__ == "__main__":
     main()
