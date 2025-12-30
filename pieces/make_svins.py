@@ -1,14 +1,23 @@
 import os
 from filter_svin import filter_svin
+from colmap_to_svin import colmap_to_svin
+from invert_svin import invert
 
 def main():
-    svin_path = "/mnt/Data3/luke/peace/LeftonRigLeft/svin_2025_11_08_20_58_23.txt"
-    bins_path = "/mnt/Data3/luke/peace/coob"
+    base_path = "/home/luke/Documents/peace2/peace"
+    svin_path = f"{base_path}/LeftonRigLeft/svin_2025_11_08_20_58_23.txt"
+    bins_path = f"{base_path}/coob"
     bin_dirnames = os.listdir(bins_path)
     for dirname in bin_dirnames:
-        output_path = f"{bins_path}/{dirname}/svin.txt"
-        images_path = f"{bins_path}/{dirname}/Images"
-        filter_svin(svin_path, output_path, images_path)
+        models = os.listdir(f"{bins_path}/{dirname}/sparse")
+        for model in models:
+            model_path = f"{bins_path}/{dirname}/sparse/{model}"
+
+            colmap_output_path = f"{model_path}/svin_from_colmap.txt"
+            colmap_output_path_inv = f"{model_path}/svin_from_colmap_inv.txt"
+            images_set = colmap_to_svin(f"{model_path}/text/images.txt", colmap_output_path)
+            invert(colmap_output_path, colmap_output_path_inv)
+            filter_svin(input_path=svin_path, output_path=f"{model_path}/svin.txt", images_set=images_set)
 
 if __name__ == "__main__":
     main()

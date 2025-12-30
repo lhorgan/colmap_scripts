@@ -1,12 +1,7 @@
 import os
 
-def filter_svin(input_path, output_path, images_path):
-    images_set = set()
+def filter_svin(input_path, output_path, images_set):
     svin_set = set()
-
-    for img_name in os.listdir(images_path):
-        images_set.add(img_name)
-    print(len(images_set))
 
     with open(input_path) as f:
         lines = f.readlines()
@@ -24,7 +19,8 @@ def filter_svin(input_path, output_path, images_path):
                 count += 1
                 f.write(line)
             else:
-                print(f"Did not find {img_name} in the directory. Removing it from SVIN file.")
+                #print(f"Did not find {img_name} in the directory. Removing it from SVIN file.")
+                pass
     
     print("Added", count)
 

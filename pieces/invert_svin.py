@@ -21,10 +21,10 @@ def invert(input_path, output_path):
     with open(input_path) as f:
         lines = f.readlines()
     
-    #comment = lines[0]
+    comment = lines[0]
 
     with open(output_path, "w+") as f:
-        #f.write(comment)
+        f.write(comment)
         
         for line in lines[0:]:
             if line.startswith("#"):
