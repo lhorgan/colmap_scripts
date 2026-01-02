@@ -38,7 +38,7 @@ def convert_model_to_text(model_dir: Path, dry_run: bool = False) -> bool:
     if text_output_dir.exists():
         text_files = ["cameras.txt", "images.txt", "points3D.txt"]
         if all((text_output_dir / f).exists() for f in text_files):
-            print(f"  Skipping {model_dir} - text output already exists")
+            print(f"  Skipping text conversion for {model_dir} - already exists")
             return True
     
     cmd = [
@@ -56,6 +56,54 @@ def convert_model_to_text(model_dir: Path, dry_run: bool = False) -> bool:
     text_output_dir.mkdir(exist_ok=True)
     
     print(f"  Converting {model_dir} -> {text_output_dir}")
+    
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(f"    Success!")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"    Error: {e.stderr}")
+        return False
+    except FileNotFoundError:
+        print("    Error: 'colmap' command not found. Is COLMAP installed and in PATH?")
+        return False
+
+
+def export_model_to_ply(model_dir: Path, dry_run: bool = False) -> bool:
+    """
+    Export a COLMAP model to PLY format.
+    
+    Args:
+        model_dir: Path to the directory containing the binary model
+        dry_run: If True, only print the command without executing
+        
+    Returns:
+        True if export succeeded, False otherwise
+    """
+    ply_output_path = model_dir / "sparse.ply"
+    
+    # Skip if PLY file already exists
+    if ply_output_path.exists():
+        print(f"  Skipping PLY export for {model_dir} - sparse.ply already exists")
+        return True
+    
+    cmd = [
+        "colmap", "model_converter",
+        "--input_path", str(model_dir),
+        "--output_path", str(ply_output_path),
+        "--output_type", "PLY"
+    ]
+    
+    if dry_run:
+        print(f"  [DRY RUN] Would run: {' '.join(cmd)}")
+        return True
+    
+    print(f"  Exporting {model_dir} -> {ply_output_path}")
     
     try:
         result = subprocess.run(
@@ -117,7 +165,10 @@ def find_and_convert_models(parent_dir: Path, dry_run: bool = False) -> tuple[in
             continue
         
         for model_dir in sorted(model_dirs):
-            if convert_model_to_text(model_dir, dry_run):
+            text_ok = convert_model_to_text(model_dir, dry_run)
+            ply_ok = export_model_to_ply(model_dir, dry_run)
+            
+            if text_ok and ply_ok:
                 success_count += 1
             else:
                 fail_count += 1
@@ -165,3 +216,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# python make_text_models.py /home/luke/Documents/peace2/peace/coob

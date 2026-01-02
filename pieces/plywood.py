@@ -211,8 +211,8 @@ class PCSplitter():
             write_point_cloud(pcd, f"{output_dir}/{bin_key}/sparse_cloud_from_svin.ply")
 
 def main():
-    splitter = PCSplitter("/mnt/Data3/luke/peace/LeftonRigLeft/pointcloud_2025-11-08_20-56-01.ply", "/mnt/Data3/luke/peace/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
-    #splitter = PCSplitter("/home/luke/Documents/peace/LeftonRigLeft/pc_aligned.ply", "/home/luke/Documents/peace/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
+    root_path = "/home/luke/Documents/peace2/peace"
+    splitter = PCSplitter(f"{root_path}/LeftonRigLeft/pointcloud_2025-11-08_20-56-01.ply", f"{root_path}/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
     splitter.id_points()
     splitter.build_timestamp_database("/mnt/Data3/luke/peace/LeftonRigLeft/keyframes_2025_11_08_20_55_45.txt")
     print(len(splitter.keyframes_by_point_id))
