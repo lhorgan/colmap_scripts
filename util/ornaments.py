@@ -153,7 +153,6 @@ class Pipeline:
                     n_key = self.inds_to_key(nx, ny, nz)
                     if n_key in bins and not n_key in used_bins:
                         bin_queue.append(n_key)
-
             super_bins.append(super_bin)
             #print(super_bin)
             #print("total images in bin", super_bin_img_count)
