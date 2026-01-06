@@ -59,11 +59,25 @@ class PCSplitter():
 
                 k, idx, dist = pcd_tree.search_knn_vector_3d(coords, 1)
                 #print(f"The point closest is at {idx[0]} with distance {dist[0]}")
+                #print(f"KEYFRAMES FOR {coords}", keyframes)
                 idx = idx[0]
                 
                 if idx not in self.keyframes_by_point_id:
                     self.keyframes_by_point_id[idx] = set()
                 self.keyframes_by_point_id[idx].update(keyframes)
+
+    def get_keyframes_by_point(self, x, y, z):
+        pcd_tree = o3d.geometry.KDTreeFlann(self.pcd)
+        coords = [x, y, z]
+        k, idx, dist = pcd_tree.search_knn_vector_3d(coords, 1)
+        print("DIST IS ", dist)
+        idx = idx[0]
+        keyframes = self.keyframes_by_point_id[idx]
+        print(self.points[idx])
+        print("ASSOCIATED KEYFRAMES ARE ", keyframes)
+        for keyframe_id in keyframes:
+            print(self.keyframe_id_to_timestamp[keyframe_id])
+
 
     # Map keyframe ids to timestamps
     def build_timestamp_database(self, keyframe_path):
@@ -159,7 +173,8 @@ class PCSplitter():
 
         for i, key in enumerate(bins):
             if len(bins[key]) < mean_len / 2:
-                print(f"Bin {key} has {len(bins[key])} points and is GARBAGE")
+                #print(f"Bin {key} has {len(bins[key])} points and is GARBAGE")
+                pass
         
         total_len = 0
         for key in bins:
@@ -172,6 +187,9 @@ class PCSplitter():
         return bins
 
     def write_bins(self, img_input_dir, output_dir):
+        rotated_pcd = self.align_bb()
+        points = np.asarray(rotated_pcd.points)
+
         lens = np.zeros(len(self.bins))
         for i, key in enumerate(self.bins):
             lens[i] = len(self.bins[key])
@@ -180,42 +198,70 @@ class PCSplitter():
         print(f"Mean: {mean_len}, Std Dev: {std_dev}")
 
         for bin_key in self.bins:
-            #print("Writing bin ", bin_key)
-            idxs = self.bins[bin_key]
-            if len(idxs) < mean_len / 4:
+            #print(bin_key)
+            if bin_key != "bin_10_1_0":
                 continue
+
+            idxs = self.bins[bin_key]
+            # if len(idxs) < mean_len / 4:
+            #     continue
+
+            print("Writing bin ", bin_key)
 
             pcd = o3d.geometry.PointCloud()
             pcd.points = o3d.utility.Vector3dVector(np.array(self.points[list(idxs)]))
             
-            keyframes_already_copied = set()
+            keyframes_already_copied = {}
             for idx in idxs:
                 keyframes = self.keyframes_by_point_id[idx]
                 for keyframe_id in keyframes:
-                    if keyframe_id in keyframes_already_copied:
-                        continue
+                    # if keyframe_id in keyframes_already_copied:
+                    #     continue
+                    
+                    if keyframe_id not in keyframes_already_copied:
+                        keyframes_already_copied[keyframe_id] = 0
+                    keyframes_already_copied[keyframe_id] += 1
 
-                    keyframes_already_copied.add(keyframe_id)
-
+                    # if keyframe_id in self.keyframe_id_to_timestamp:
+                    #     timestamp = self.keyframe_id_to_timestamp[keyframe_id]
+                    #     image_name = timestamp.replace(".", "").strip()
+                    #     print(f"WE MUST RETRIEVE KEYFRAME {keyframe_id} => {timestamp} for point {idx} at {self.points[idx]}")
+                    #     try:
+                    #         copy_img(f"{img_input_dir}/{image_name}.png", f"{output_dir}/{bin_key}/Images/{image_name}.png")
+                    #     except FileNotFoundError:
+                    #         pass
+                    #         #print("There is no keyframe ", {image_name})
+                    # else:
+                    #     #print(f"We are missing a mapping for keyframe id ", keyframe_id)
+                    #     pass
+            
+            for keyframe_id in keyframes_already_copied:
+                votes_for_keyframe = keyframes_already_copied[keyframe_id]
+                print(votes_for_keyframe)
+                if votes_for_keyframe > 200:
                     if keyframe_id in self.keyframe_id_to_timestamp:
                         timestamp = self.keyframe_id_to_timestamp[keyframe_id]
                         image_name = timestamp.replace(".", "").strip()
-                        print(f"WE MUST RETRIEVE KEYFRAME {keyframe_id} => {timestamp}")
+                        print(f"WE MUST RETRIEVE KEYFRAME {keyframe_id} => {timestamp} for point {idx} at {self.points[idx]}")
                         try:
                             copy_img(f"{img_input_dir}/{image_name}.png", f"{output_dir}/{bin_key}/Images/{image_name}.png")
                         except FileNotFoundError:
-                            print("There is no keyframe ", {image_name})
+                            pass
+                            #print("There is no keyframe ", {image_name})
                     else:
-                        print(f"We are missing a mapping for keyframe id ", keyframe_id)
+                        #print(f"We are missing a mapping for keyframe id ", keyframe_id)
+                        pass
 
-            write_point_cloud(pcd, f"{output_dir}/{bin_key}/sparse_cloud_from_svin.ply")
+            write_point_cloud(pcd, f"{output_dir}/{bin_key}/svin_{bin_key}.ply")
 
 def main():
     root_path = "/home/luke/Documents/peace2/peace"
     splitter = PCSplitter(f"{root_path}/LeftonRigLeft/pointcloud_2025-11-08_20-56-01.ply", f"{root_path}/LeftonRigLeft/keyframe_observations_2025_11_08_20_55_44.txt")
     splitter.id_points()
-    splitter.build_timestamp_database("/mnt/Data3/luke/peace/LeftonRigLeft/keyframes_2025_11_08_20_55_45.txt")
+    splitter.build_timestamp_database(f"{root_path}/LeftonRigLeft/keyframes_2025_11_08_20_55_45.txt")
     print(len(splitter.keyframes_by_point_id))
+
+    #splitter.get_keyframes_by_point(-9.83456, 2.81985, -5.03363)
 
     # A couple (as in literally two) of the points are missing for some reason
     # Ask Chinmay, probably a bug.
@@ -225,7 +271,9 @@ def main():
             splitter.keyframes_by_point_id[idx] = set()
 
     splitter.bin_points(50, overlap_thresh=0.2)
-    splitter.write_bins("/mnt/Data3/luke/peace/LeftonRigLeft/keyframes", "/mnt/Data3/luke/peace/coob")
+    splitter.write_bins(f"{root_path}/LeftonRigLeft/keyframes", f"{root_path}/coob5")
+
+    #splitter.get_keyframes_by_point(-9.83456, 2.81985, -5.03363)
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,55 @@
+from cluster_points import cluster_points
+import open3d as o3d
+import numpy as np
+
+from plywood import write_point_cloud, copy_img
+
+def make_spheres(svin_path, images_path, dst_path):
+    points = []
+    timestamps = []
+
+    with open(svin_path) as f:
+        for line in f.readlines():
+            if line.startswith("#"):
+                continue
+            timestamp, tx, ty, tz, qx, qy, qz, qw = line.split(" ")
+            
+            tx = float(tx)
+            ty = float(ty)
+            tz = float(tz)
+
+            points.append([tx, ty, tz])
+            timestamps.append(timestamp)
+    
+    num_clusters = 20
+    memberships, centers, radii = cluster_points(
+        points=points,
+        num_clusters=num_clusters,
+        expansion=0.1
+    )
+
+    point_clusters = [[] for i in range(num_clusters)]
+    image_clusters = [[] for i in range(num_clusters)]
+
+    for i, point in enumerate(points):
+        membership = memberships[i]
+        image_name = timestamps[i].replace(".", "")
+
+        for j in membership:
+            point_clusters[j].append(point)
+            image_clusters[j].append(image_name)
+    
+    for i, cluster in enumerate(point_clusters):
+        pcd = o3d.geometry.PointCloud()
+
+        for image_name in image_clusters[i]:
+            copy_img(f"{images_path}/{image_name}.png", dst_path=f"{dst_path}/cluster_{i}/{image_name}.png")
+
+        pcd.points = o3d.utility.Vector3dVector(np.array(cluster))
+
+        write_point_cloud(pcd, f"/home/luke/Documents/peace2/peace/test_clusters/cluster_{i}.ply")
+        
+
+make_spheres(svin_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/svin_filtered.txt",
+             images_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/keyframes",
+             dst_path="/home/luke/Documents/peace2/peace/spheres")
