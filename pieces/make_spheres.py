@@ -21,8 +21,8 @@ def make_spheres(svin_path, images_path, dst_path):
             points.append([tx, ty, tz])
             timestamps.append(timestamp)
 
-    num_clusters = 100
-    memberships, centers, radii = cluster_points(
+    num_clusters = 54
+    memberships, centers = cluster_points(
         points=points,
         num_clusters=num_clusters,
         expansion=0.1
@@ -39,16 +39,24 @@ def make_spheres(svin_path, images_path, dst_path):
             point_clusters[j].append(point)
             image_clusters[j].append(image_name)
     
+    print("SET SIZE", len(set(timestamps)))
+    print("LIST SIZE", len(timestamps))
     for i, cluster in enumerate(point_clusters):
+        print(f"cluster {i} has {len(image_clusters[i])} points")
+    for i, cluster in enumerate(point_clusters):
+        print(f"IMAGES FOR CLUSTER {i}")
         pcd = o3d.geometry.PointCloud()
 
         for image_name in image_clusters[i]:
+            print(image_name)
             copy_img(f"{images_path}/{image_name}.png", dst_path=f"{dst_path}/cluster_{i}/Images/{image_name}.png")
+        
+        print("\n\n")
 
         pcd.points = o3d.utility.Vector3dVector(np.array(cluster))
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
-make_spheres(svin_path="/mnt/Data3/luke/xmas/Combined/svin_orig.txt",
-             images_path="/mnt/Data3/luke/xmas/Combined/Images",
-             dst_path="/home/luke/Documents/titanic/spheres_small")
+make_spheres(svin_path="/home/luke/Documents/titanic/Combined/svin_orig.txt",
+             images_path="/home/luke/Documents/titanic/Combined/Images",
+             dst_path="/home/luke/Documents/titanic/spheres_test")
