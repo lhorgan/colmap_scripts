@@ -43,11 +43,10 @@ def make_spheres(svin_path, images_path, dst_path):
         pcd = o3d.geometry.PointCloud()
 
         for image_name in image_clusters[i]:
-            copy_img(f"{images_path}/{image_name}.png", dst_path=f"{dst_path}/cluster_{i}/{image_name}.png")
+            copy_img(f"{images_path}/{image_name}.png", dst_path=f"{dst_path}/cluster_{i}/Images/{image_name}.png")
 
         pcd.points = o3d.utility.Vector3dVector(np.array(cluster))
-
-        write_point_cloud(pcd, f"/home/luke/Documents/peace2/peace/test_clusters/cluster_{i}.ply")
+        write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
 make_spheres(svin_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/svin_filtered.txt",

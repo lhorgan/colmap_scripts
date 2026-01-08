@@ -6,7 +6,7 @@ from invert_svin import invert
 def main():
     base_path = "/home/luke/Documents/peace2/peace"
     svin_path = f"{base_path}/LeftonRigLeft/svin_2025_11_08_20_58_23.txt"
-    bins_path = f"{base_path}/coob"
+    bins_path = f"{base_path}/spheres_baby"
     bin_dirnames = os.listdir(bins_path)
     for dirname in bin_dirnames:
         models = os.listdir(f"{bins_path}/{dirname}/sparse")

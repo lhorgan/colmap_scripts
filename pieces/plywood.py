@@ -17,6 +17,12 @@ def read_point_cloud(file_path):
 def write_point_cloud(point_cloud, file_path):
     """Write the point cloud to the file path specified"""
     o3d.io.write_point_cloud(file_path, point_cloud)
+# def write_point_cloud(filename, points, colors=None):
+#     cloud = o3d.geometry.PointCloud()
+#     cloud.points = o3d.utility.Vector3dVector(points)
+#     if colors is not None:
+#         cloud.colors = o3d.utility.Vector3dVector(colors)
+#     o3d.io.write_point_cloud(filename, cloud)
 
 def parse_key(key):
     x, y, z = [int(k) for k in key.split("_")[1:]]
