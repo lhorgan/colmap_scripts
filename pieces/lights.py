@@ -14,7 +14,7 @@ def run_colmap(data_path, scene, log_file_path):
         log_file_path (str): The path to the file for logging output.
     """
     # Construct the full command string, exactly as in the terminal
-    command_string = f"./run_colmap.sh {data_path} {scene} > {log_file_path} 2>&1"
+    command_string = f"./run_colmap_sphere.sh {data_path} {scene} > {log_file_path} 2>&1"
     
     print(f"Executing via shell: {command_string}")
     
@@ -36,4 +36,4 @@ def reconstruct_cubes(data_path):
         Path(log_path).touch()
         run_colmap(data_path, scene, log_path)
 
-reconstruct_cubes("/mnt/Data3/luke/peace/sphere")
+reconstruct_cubes("/home/luke/Documents/titanic/spheres_small")

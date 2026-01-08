@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 # https://claude.ai/chat/c689e09f-7623-42d1-833a-d224906bda86
 
 import numpy as np
 from k_means_constrained import KMeansConstrained
-
 
 def cluster_points(
     points: list[tuple[float, float, float]],

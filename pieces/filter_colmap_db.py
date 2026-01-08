@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 #!/usr/bin/env python3
 
 # https://claude.ai/chat/69336946-4a19-40d4-8bbf-7646c2e06fae

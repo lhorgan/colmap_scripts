@@ -3,6 +3,11 @@ SCENE=$2
 
 mkdir -p ${DATA_PATH}/${SCENE}/sparse
 
+python filter_colmap_db.py \
+        /home/luke/Documents/titanic/Combined/database.db \
+        ${DATA_PATH}/${SCENE}/database.db \
+        ${DATA_PATH}/${SCENE}/Images
+
 colmap exhaustive_matcher \
     --database_path ${DATA_PATH}/${SCENE}/database.db
 

@@ -20,8 +20,8 @@ def make_spheres(svin_path, images_path, dst_path):
 
             points.append([tx, ty, tz])
             timestamps.append(timestamp)
-    
-    num_clusters = 20
+
+    num_clusters = 100
     memberships, centers, radii = cluster_points(
         points=points,
         num_clusters=num_clusters,
@@ -49,6 +49,6 @@ def make_spheres(svin_path, images_path, dst_path):
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
-make_spheres(svin_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/svin_filtered.txt",
-             images_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/keyframes",
-             dst_path="/home/luke/Documents/peace2/peace/spheres")
+make_spheres(svin_path="/mnt/Data3/luke/xmas/Combined/svin_orig.txt",
+             images_path="/mnt/Data3/luke/xmas/Combined/Images",
+             dst_path="/home/luke/Documents/titanic/spheres_small")
