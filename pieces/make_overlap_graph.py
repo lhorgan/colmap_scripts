@@ -210,7 +210,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
     #         overlap_points[overlap_key_f][0].add(my_index)
     #         overlap_points[overlap_key_f][1].add(other_index)
 
-def make_plys(point3Ds_by_model, overlap_graph, output_dir):
+def make_plys(point3Ds_by_model, overlap_graph, coob_path):
     for model_key in point3Ds_by_model:
         points = np.array(point3Ds_by_model[model_key])
         colors = np.zeros(points.shape).astype(np.uint8)
@@ -228,13 +228,15 @@ def make_plys(point3Ds_by_model, overlap_graph, output_dir):
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(points)
         pcd.colors = o3d.utility.Vector3dVector(colors)
-        write_point_cloud(pcd, f"{output_dir}/{model_key}.ply")
+        
+        scene, model = parse_model_key(model_key)
+        write_point_cloud(pcd, f"{coob_path}/{scene}/sparse/{model}/{model_key}.ply")
         #write_point_cloud(points, f"{output_dir}/{model_key}.ply", colors)
 
 if __name__ == "__main__":
-    root_path = "/home/luke/Documents/peace2/peace"
-    coob_path = f"{root_path}/spheres_baby"
-    pickle_path = f"{root_path}/pickle_baby"
+    root_path = "/home/luke/Documents/titanic"
+    coob_path = f"{root_path}/spheres"
+    pickle_path = f"{root_path}/pickle"
 
     if not os.path.exists(pickle_path):
         print("Making the pickles.")
@@ -255,10 +257,10 @@ if __name__ == "__main__":
 
     point3Ds_by_model, overlap_graph = read_3D_points(coob_path, point3D_to_point2Ds, point2D_to_point3Ds)
 
-    overlaps_path = f"{root_path}/aligned_spheres_baby_2_overlaps.pkl"
+    overlaps_path = f"{pickle_path}/overlaps.pkl"
 
     with open(overlaps_path, "wb+") as f:
         pickle.dump([point3Ds_by_model, overlap_graph], f)
-    #make_plys(point3Ds_by_model, overlap_graph, f"{root_path}/sphere_plys_test")
+    make_plys(point3Ds_by_model, overlap_graph, coob_path)
 
     

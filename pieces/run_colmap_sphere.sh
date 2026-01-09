@@ -3,7 +3,7 @@ SCENE=$2
 
 mkdir -p ${DATA_PATH}/${SCENE}/sparse
 
-time python filter_colmap_db.py \
+time python filter_colmap_db_fast.py \
         /home/luke/Documents/titanic/Combined/database.db \
         ${DATA_PATH}/${SCENE}/database.db \
         ${DATA_PATH}/${SCENE}/Images

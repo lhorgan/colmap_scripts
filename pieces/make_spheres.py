@@ -21,11 +21,11 @@ def make_spheres(svin_path, images_path, dst_path):
             points.append([tx, ty, tz])
             timestamps.append(timestamp)
 
-    num_clusters = 54
+    num_clusters = 60
     memberships, centers = cluster_points(
         points=points,
         num_clusters=num_clusters,
-        expansion=0.1
+        expansion=0.2
     )
 
     point_clusters = [[] for i in range(num_clusters)]
@@ -59,4 +59,4 @@ def make_spheres(svin_path, images_path, dst_path):
 
 make_spheres(svin_path="/home/luke/Documents/titanic/Combined/svin_orig.txt",
              images_path="/home/luke/Documents/titanic/Combined/Images",
-             dst_path="/home/luke/Documents/titanic/spheres_test")
+             dst_path="/home/luke/Documents/titanic/spheres")
