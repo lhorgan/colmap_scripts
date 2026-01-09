@@ -58,11 +58,19 @@ def go(points3D_by_model, overlaps):
         params_by_key[model_key] = (t, q)
         
     optimizer = torch.optim.Adam(params, lr=0.01)
+    
+    # Claude tip
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=50, verbose=True
+    )
+
     for step in range(2000):
         transforms = params_to_transforms(params_by_key)
         loss = compute_loss(points3D_by_model, overlaps, transforms)
         #print("DAS LOSS: ", loss)
         
+        scheduler.step(loss)
+
         loss.backward()
 
         # for key in params_by_key:
@@ -89,7 +97,7 @@ def go(points3D_by_model, overlaps):
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"/home/luke/Documents/titanic/refined_spheres/{key}.ply")
+        write_point_cloud(pcd, f"/home/luke/Documents/titanic/refined_spheres_2/{key}.ply")
 
 # https://claude.ai/chat/08c4db9b-3f94-4759-a39f-027038330fb9
 # This one function is by Claude
@@ -124,7 +132,9 @@ def compute_loss(points_by_model, overlaps, transforms):
             points0 = transformed_points[model_key0][overlap_inds0]
             points1 = transformed_points[model_key1][overlap_inds1]
 
-            curr_loss = torch.sqrt(torch.sum(torch.square(points0 - points1)))
+            #curr_loss = torch.sqrt(torch.sum(torch.square(points0 - points1)))
+            curr_loss = torch.mean(torch.sum(torch.square(points0 - points1), dim=1)) # Claude tip
+            
             #print(f"CURR LOSS {model_key0}, {model_key1}", curr_loss)
             loss += curr_loss
     
