@@ -4,9 +4,9 @@ from colmap_to_svin import colmap_to_svin
 from invert_svin import invert
 
 def main():
-    base_path = "/home/luke/Documents/peace2/peace"
-    svin_path = f"{base_path}/LeftonRigLeft/svin_2025_11_08_20_58_23.txt"
-    bins_path = f"{base_path}/spheres_baby"
+    base_path = "/home/luke/Documents/titanic"
+    svin_path = f"{base_path}/Combined/svin_orig.txt"
+    bins_path = f"{base_path}/spheres"
     bin_dirnames = os.listdir(bins_path)
     for dirname in bin_dirnames:
         models = os.listdir(f"{bins_path}/{dirname}/sparse")

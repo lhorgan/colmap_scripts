@@ -116,9 +116,9 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     write_point_cloud_np(cam_output_path, trans_colmap_centers)
 
 def hang_models(data_path, scene):
-    aligned_cubes_path = "/home/luke/Documents/peace2/peace/aligned_spheres_baby_2"
-    aligned_cams_path = "/home/luke/Documents/peace2/peace/aligned_cams_baby_2"
-    scaffold_path = f"{model_dir}/svin.txt"
+    aligned_cubes_path = "/home/luke/Documents/titanic/aligned_spheres"
+    aligned_cams_path = "/home/luke/Documents/titanic/aligned_cams"
+    scaffold_path = f"/home/luke/Documents/titanic/svin_scaffold.txt"
 
     sparse_dir = f"{data_path}/{scene}/sparse"
     models = os.listdir(sparse_dir)
@@ -126,12 +126,15 @@ def hang_models(data_path, scene):
         model_dir = f"{sparse_dir}/{model}"
         svin_from_colmap_path = f"{model_dir}/svin_from_colmap_inv.txt" # This one must be inverted!
         svin_centers, colmap_centers = get_corresponding_points(scaffold_path, svin_from_colmap_path)
-        align_point_cloud(svin_centers, colmap_centers, f"{model_dir}/sparse.ply", f"{aligned_cubes_path}/{scene}_{model}.ply", f"{aligned_cams_path}/{scene}_{model}.ply")
+        if len(svin_centers) > 30:
+            align_point_cloud(svin_centers, colmap_centers, f"{model_dir}/{scene}-{model}.ply", f"{aligned_cubes_path}/{scene}-{model}.ply", f"{aligned_cams_path}/{scene}-{model}.ply")
+        else:
+            print("Skipping, not enough points")
 
 import os
 
 def hang_all():
-    data_path = "/home/luke/Documents/peace2/peace/spheres_baby"
+    data_path = "/home/luke/Documents/titanic/spheres"
     scenes = os.listdir(data_path)
     for scene in scenes:
         #try:
