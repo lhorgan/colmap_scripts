@@ -1,3 +1,5 @@
+# https://claude.ai/chat/c689e09f-7623-42d1-833a-d224906bda86
+
 from __future__ import annotations
 
 import numpy as np

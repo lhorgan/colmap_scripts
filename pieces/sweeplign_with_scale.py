@@ -34,12 +34,13 @@ def quat_to_matrix(q):
 def params_to_transforms(params_by_key):
     transforms = {}
     for key in params_by_key:
-        t, q = params_by_key[key]
+        t, q, log_s = params_by_key[key]
 
+        s = 1.0 + torch.exp(log_s) # Don't let scale be less than 1
         R = quat_to_matrix(q)
 
         T = torch.eye(4)
-        T[0:3, 0:3] = R
+        T[0:3, 0:3] = s * R
         T[0:3, 3] = t
 
         transforms[key] = T
@@ -53,11 +54,13 @@ def go(points3D_by_model, overlaps):
         #t = (torch.rand(3) * 0.5 - 0.25).requires_grad_()
         t = torch.tensor([0, 0, 0], requires_grad=True, dtype=torch.float32)
         q = torch.tensor([1.0, 0.0, 0.0, 0.0], requires_grad=True)
+        log_s = torch.tensor(-10.0, requires_grad=True)
 
         params.append(t)
         params.append(q)
+        params.append(log_s)
 
-        params_by_key[model_key] = (t, q)
+        params_by_key[model_key] = (t, q, log_s)
         
     optimizer = torch.optim.Adam(params, lr=0.01)
     
@@ -66,7 +69,7 @@ def go(points3D_by_model, overlaps):
         optimizer, mode='min', factor=0.5, patience=50, verbose=True
     )
 
-    for step in range(2000):
+    for step in range(15000):
         transforms = params_to_transforms(params_by_key)
         loss = compute_loss(points3D_by_model, overlaps, transforms)
         #print("DAS LOSS: ", loss)
@@ -87,7 +90,7 @@ def go(points3D_by_model, overlaps):
         # Re-normalize quaternions, Claude tip
         with torch.no_grad():
             for key in params_by_key:
-                t, q = params_by_key[key]
+                t, q, log_s = params_by_key[key]
                 q.data = q.data / torch.norm(q.data)
         
         if step % 50 == 0:
@@ -99,7 +102,7 @@ def go(points3D_by_model, overlaps):
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"/home/luke/Documents/titanic/refined_spheres_2/{key}.ply")
+        write_point_cloud(pcd, f"/home/luke/Documents/titanic/chaos20k/{key}.ply")
 
 # https://claude.ai/chat/08c4db9b-3f94-4759-a39f-027038330fb9
 # This one function is by Claude
@@ -144,7 +147,7 @@ def compute_loss(points_by_model, overlaps, transforms):
 
 def main():
     root_path = "/home/luke/Documents/titanic"
-    plys_path = f"{root_path}/aligned_spheres"
+    plys_path = f"{root_path}/chaos"
     overlaps_path = f"{root_path}/pickle/overlaps.pkl"
 
     ply_names = os.listdir(plys_path)
