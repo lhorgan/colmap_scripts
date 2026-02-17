@@ -1,10 +1,10 @@
-DATA_PATH="/home/luke/Documents/titanic"
+DATA_PATH="/mnt/Data4/luke/caves"
 SCENE="Combined"
 
 rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 
-DATABASE_PATH="/home/luke/Documents/titanic/database"
+#DATABASE_PATH="/home/luke/Documents/titanic/database"
 
 echo "Creating initial placeholder text model"
 time python3 create_db.py \

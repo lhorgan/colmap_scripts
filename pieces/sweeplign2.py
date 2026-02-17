@@ -134,8 +134,8 @@ def compute_loss(points_by_model, overlaps, transforms):
             points0 = transformed_points[model_key0][overlap_inds0]
             points1 = transformed_points[model_key1][overlap_inds1]
 
-            #curr_loss = torch.sqrt(torch.sum(torch.square(points0 - points1)))
-            curr_loss = torch.mean(torch.sum(torch.square(points0 - points1), dim=1)) # Claude tip
+            curr_loss = torch.sqrt(torch.sum(torch.square(points0 - points1)))
+            #curr_loss = torch.mean(torch.sum(torch.square(points0 - points1), dim=1)) # Claude tip
             
             #print(f"CURR LOSS {model_key0}, {model_key1}", curr_loss)
             loss += curr_loss

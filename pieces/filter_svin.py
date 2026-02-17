@@ -25,6 +25,6 @@ def filter_svin(input_path, output_path, images_set):
     print("Added", count)
 
 if __name__ == "__main__":
-    filter_svin(input_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/svin_2025_11_08_20_58_23.txt", \
-                output_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/svin_filtered.txt", \
-                images_path="/home/luke/Documents/peace2/peace/LeftonRigLeft/keyframes")
+    filter_svin(input_path="/mnt/Data4/luke/caves/svin_raw/center.txt", \
+                output_path="/mnt/Data4/luke/caves/svin_raw/center_small.txt", \
+                images_path="/mnt/Data4/luke/caves/center_small")

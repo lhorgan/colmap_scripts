@@ -36,4 +36,4 @@ def reconstruct_cubes(data_path):
         Path(log_path).touch()
         run_colmap(data_path, scene, log_path)
 
-reconstruct_cubes("/home/luke/Documents/titanic/spheres")
+reconstruct_cubes("/mnt/Data4/luke/caves/spheres")

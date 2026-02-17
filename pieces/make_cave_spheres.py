@@ -20,9 +20,9 @@ def get_closest_timestamp(goal, timestamps):
             return i
     return len(timestamps) - 1
 
-def make_spheres(svin_path, image_path, dst_path):
-    points = []
-    timestamps = []
+def make_spheres(svin_path, images_path, dst_path):
+    svin_points = []
+    svin_timestamps = []
 
     with open(svin_path) as f:
         for line in f.readlines():
@@ -35,16 +35,27 @@ def make_spheres(svin_path, image_path, dst_path):
             ty = float(ty)
             tz = float(tz)
 
-            points.append([tx, ty, tz])
-            timestamps.append(timestamp)
+            svin_points.append([tx, ty, tz])
+            svin_timestamps.append(timestamp)
     
-    image_names = os.listdir(image_path)
+    image_names = os.listdir(images_path)
+    points = []
+    timestamps = []
+
+    print("Finding closest temporal matches")
     for image_name in image_names:
-        timestamp = image_name.split(".")[0]
+        timestamp = int(image_name.split(".")[0])
+        closest_index = get_closest_timestamp(timestamp, svin_timestamps)
+        
+        closest_point = svin_points[closest_index]
+        closest_timestamp = svin_timestamps[closest_index]
 
+        points.append(closest_point)
+        timestamps.append(timestamp)
 
-    num_clusters = 60
-    memberships, centers =+ cluster_points(
+    print("Assigning clusters")
+    num_clusters = 200
+    memberships, centers = cluster_points(
         points=points,
         num_clusters=num_clusters,
         expansion=0.2
@@ -55,7 +66,7 @@ def make_spheres(svin_path, image_path, dst_path):
 
     for i, point in enumerate(points):
         membership = memberships[i]
-        image_name = timestamps[i].replace(".", "")
+        image_name = str(timestamps[i])#.replace(".", "")
 
         for j in membership:
             point_clusters[j].append(point)
@@ -79,6 +90,6 @@ def make_spheres(svin_path, image_path, dst_path):
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
-# make_spheres(svin_path="/home/luke/Documents/titanic/Combined/svin_orig.txt",
-#              images_path="/home/luke/Documents/titanic/Combined/Images",
-#              dst_path="/home/luke/Documents/titanic/spheres")
+make_spheres(svin_path="/mnt/Data4/luke/caves/svin_raw/center.txt",
+             images_path="/mnt/Data4/luke/caves/combined",
+             dst_path="/mnt/Data4/luke/caves/mah")

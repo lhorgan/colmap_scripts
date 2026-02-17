@@ -234,8 +234,8 @@ def make_plys(point3Ds_by_model, overlap_graph, coob_path):
         #write_point_cloud(points, f"{output_dir}/{model_key}.ply", colors)
 
 if __name__ == "__main__":
-    root_path = "/home/luke/Documents/titanic"
-    coob_path = f"{root_path}/spheres"
+    root_path = "/mnt/Data4/luke/caves"
+    coob_path = f"{root_path}/spheres_laptop"
     pickle_path = f"{root_path}/pickle"
 
     if not os.path.exists(pickle_path):
