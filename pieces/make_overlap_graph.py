@@ -103,6 +103,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
 
     point3Ds_by_model = {}
     point3D_ids_by_model = {}
+    colors_by_model = {}
 
     for scene in scenes:
         print(f"Reading scene {scene}.")
@@ -111,6 +112,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
         for model in models:
             points = []
             point_ids = []
+            colors = []
 
             model_dir = f"{scene_dir}/sparse/{model}"
 
@@ -123,14 +125,18 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
                     
                     info = line.split(" ")
                     point3D_id, x, y, z, r, g, b = info[:7]
+                    #print("R G B", r, b, g)
                     point3D_key = get_3D_point_key(scene, model, point3D_id)
 
                     points.append([x, y, z])
                     point_ids.append(point3D_id)
+                    colors.append([max(min(int(c), 255), 0) for c in [r, g, b]])
+                    #colors.append([255, 0, 255])
             
             key = get_model_key(scene, model)
             point3Ds_by_model[key] = points
             point3D_ids_by_model[key] = point_ids
+            colors_by_model[key] = colors
 
     point3D_key_to_index = {}
     for key in point3D_ids_by_model:
@@ -191,7 +197,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
                 overlap_graph[overlap_key][0].add(index0)
                 overlap_graph[overlap_key][1].add(index1)
     
-    return point3Ds_by_model, overlap_graph
+    return point3Ds_by_model, colors_by_model, overlap_graph
 
     # overlap_points = {}
     # for point3D_key in overlaps:
@@ -210,6 +216,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
     #         overlap_points[overlap_key_f][0].add(my_index)
     #         overlap_points[overlap_key_f][1].add(other_index)
 
+# Makes ply files in false color, showing overlapping points
 def make_plys(point3Ds_by_model, overlap_graph, coob_path):
     for model_key in point3Ds_by_model:
         points = np.array(point3Ds_by_model[model_key])
@@ -230,8 +237,21 @@ def make_plys(point3Ds_by_model, overlap_graph, coob_path):
         pcd.colors = o3d.utility.Vector3dVector(colors)
         
         scene, model = parse_model_key(model_key)
-        write_point_cloud(pcd, f"{coob_path}/{scene}/sparse/{model}/{model_key}.ply")
+        write_point_cloud(pcd, f"{coob_path}/{scene}/sparse/{model}/{model_key}_false_color.ply")
         #write_point_cloud(points, f"{output_dir}/{model_key}.ply", colors)
+
+def make_plys_color(point3Ds_by_model, colors_by_model, overlap_graph, coob_path):
+    for model_key in point3Ds_by_model:
+        points = np.array(point3Ds_by_model[model_key])
+        colors = np.array(colors_by_model[model_key]).astype(np.float64) / 255.0 
+        print(colors)             
+
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(points)
+        pcd.colors = o3d.utility.Vector3dVector(colors)
+        
+        scene, model = parse_model_key(model_key)
+        write_point_cloud(pcd, f"{coob_path}/{scene}/sparse/{model}/{model_key}.ply")
 
 if __name__ == "__main__":
     root_path = "/mnt/Data4/luke/caves"
@@ -255,12 +275,12 @@ if __name__ == "__main__":
         with open(f"{pickle_path}/point2D_to_model.pkl", "rb") as f:
             point2D_to_point3Ds = pickle.load(f)
 
-    point3Ds_by_model, overlap_graph = read_3D_points(coob_path, point3D_to_point2Ds, point2D_to_point3Ds)
+    point3Ds_by_model, colors_by_model, overlap_graph = read_3D_points(coob_path, point3D_to_point2Ds, point2D_to_point3Ds)
 
     overlaps_path = f"{pickle_path}/overlaps.pkl"
 
     with open(overlaps_path, "wb+") as f:
         pickle.dump([point3Ds_by_model, overlap_graph], f)
-    make_plys(point3Ds_by_model, overlap_graph, coob_path)
-
     
+    make_plys(point3Ds_by_model, overlap_graph, coob_path)
+    make_plys_color(point3Ds_by_model, colors_by_model, overlap_graph, coob_path)
