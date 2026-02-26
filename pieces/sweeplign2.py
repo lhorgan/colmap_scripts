@@ -63,7 +63,7 @@ def go(points3D_by_model, overlaps):
     
     # Claude tip
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode='min', factor=0.5, patience=50, verbose=True
+        optimizer, mode='min', factor=0.5, patience=50
     )
 
     for step in range(2000):
@@ -99,7 +99,7 @@ def go(points3D_by_model, overlaps):
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"/home/luke/Documents/titanic/refined_spheres_2/{key}.ply")
+        write_point_cloud(pcd, f"/home/luke/Documents/caaves/refined_spheres_2/{key}.ply")
 
 # https://claude.ai/chat/08c4db9b-3f94-4759-a39f-027038330fb9
 # This one function is by Claude
@@ -122,7 +122,7 @@ def compute_loss(points_by_model, overlaps, transforms):
         M = transforms[model_key]
         points_transformed = (M @ points.T).T
         transformed_points[model_key] = points_transformed
-    
+
     for overlap_key in overlaps:
         model_key0, model_key1 = overlap_key.split(":")
 
@@ -130,6 +130,20 @@ def compute_loss(points_by_model, overlaps, transforms):
             #print(f"WALP: {model_key0}, {model_key1}")
             overlap_inds0 = overlaps[overlap_key][0].as_list()
             overlap_inds1 = overlaps[overlap_key][1].as_list()
+            
+            sample_count = max(min(100, len(overlap_inds0)), int(0.1*len(overlap_inds0)))
+            indices = np.random.choice(len(overlap_inds0), size=sample_count, replace=False)
+            overlap_inds0 = np.array(overlap_inds0)[indices].tolist()
+            overlap_inds1 = np.array(overlap_inds1)[indices].tolist()
+
+            #print(len(overlap_inds0), len(overlap_inds1))
+
+            #print(type(overlap_inds0))
+            #print(type(overlap_inds0_rand))
+
+            #print(len(overlap_inds0))
+            #print(len(overlap_inds0_rand))
+            #print("\n\n")
 
             points0 = transformed_points[model_key0][overlap_inds0]
             points1 = transformed_points[model_key1][overlap_inds1]
@@ -143,7 +157,7 @@ def compute_loss(points_by_model, overlaps, transforms):
     return loss
 
 def main():
-    root_path = "/home/luke/Documents/titanic"
+    root_path = "/home/luke/Documents/caves"
     plys_path = f"{root_path}/aligned_spheres"
     overlaps_path = f"{root_path}/pickle/overlaps.pkl"
 

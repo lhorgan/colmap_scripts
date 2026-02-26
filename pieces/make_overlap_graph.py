@@ -75,7 +75,6 @@ def make_overlap_graph(base_path):
                     if line.startswith("#"):
                         continue
                     
-                    
                     if ctr % 2 == 0:
                         image_id, qw, qx, qy, qz, tx, ty, tz, camera_id, name = line.split(" ")
                     else:
@@ -147,7 +146,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
         for i, point3D_id in enumerate(point3D_ids_by_model[key]):
             point3D_key = get_3D_point_key(scene, model, point3D_id)
             evidence_points = point3D_to_point2Ds[point3D_key]
-            #print("EVIDENCE POINTS", evidence_points)
+            print("EVIDENCE POINTS", evidence_points)
             
             for point2D_key in evidence_points:
                 other_point_3D_keys = point2D_to_point3Ds[point2D_key]
@@ -157,7 +156,7 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
                     other_model_key = get_model_key(other_scene, other_model)
                     if other_model_key != key: 
                         dadd(overlaps, point3D_key, other_point_3D_key)
-                        #print(f"I {point3D_key} at index {point3D_key_to_index[point3D_key]} overlap with {other_point_3D_key} at index {point3D_key_to_index[other_point_3D_key]}")
+                        print(f"I {point3D_key} at index {point3D_key_to_index[point3D_key]} overlap with {other_point_3D_key} at index {point3D_key_to_index[other_point_3D_key]}")
         
         #break
     
@@ -224,7 +223,6 @@ def make_plys(point3Ds_by_model, overlap_graph, coob_path):
                 overlap_inds = overlap_graph[overlap_key][1].as_list()
                 colors[overlap_inds] = [255, 0, 0]
                 
-
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(points)
         pcd.colors = o3d.utility.Vector3dVector(colors)
@@ -234,7 +232,7 @@ def make_plys(point3Ds_by_model, overlap_graph, coob_path):
         #write_point_cloud(points, f"{output_dir}/{model_key}.ply", colors)
 
 if __name__ == "__main__":
-    root_path = "/home/luke/Documents/titanic"
+    root_path = "/home/luke/Documents/caaves"
     coob_path = f"{root_path}/spheres"
     pickle_path = f"{root_path}/pickle"
 
