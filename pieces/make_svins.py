@@ -4,7 +4,7 @@ from colmap_to_svin import colmap_to_svin
 from invert_svin import invert
 
 def main():
-    base_path = "/home/luke/Documents/spheres_laptop"
+    base_path = "/home/luke/Documents/caves"
     svin_path = f"{base_path}/Combined/svin_orig.txt"
     bins_path = f"{base_path}/spheres"
     bin_dirnames = os.listdir(bins_path)

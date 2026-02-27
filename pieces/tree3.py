@@ -116,9 +116,9 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     write_point_cloud_np(cam_output_path, trans_colmap_centers)
 
 def hang_models(data_path, scene):
-    aligned_cubes_path = "/home/luke/Documents/titanic/aligned_spheres"
-    aligned_cams_path = "/home/luke/Documents/titanic/aligned_cams"
-    scaffold_path = f"/home/luke/Documents/titanic/svin_scaffold.txt"
+    aligned_cubes_path = "/home/luke/Documents/alts/aligned_spheres"
+    aligned_cams_path = "/home/luke/Documents/alts/aligned_cams"
+    scaffold_path = f"/home/luke/Documents/alts/svin_raw/center.txt"
 
     sparse_dir = f"{data_path}/{scene}/sparse"
     models = os.listdir(sparse_dir)
@@ -134,7 +134,7 @@ def hang_models(data_path, scene):
 import os
 
 def hang_all():
-    data_path = "/home/luke/Documents/titanic/spheres"
+    data_path = "/home/luke/Documents/alts/spheres"
     scenes = os.listdir(data_path)
     for scene in scenes:
         #try:

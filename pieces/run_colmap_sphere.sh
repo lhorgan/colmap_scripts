@@ -15,3 +15,5 @@ time colmap mapper \
     --database_path ${DATA_PATH}/${SCENE}/database.db \
     --image_path ${DATA_PATH}/${SCENE}/Images \
     --output_path ${DATA_PATH}/${SCENE}/sparse
+
+touch ${DATA_PATH}/${SCENE}/complete.txt
