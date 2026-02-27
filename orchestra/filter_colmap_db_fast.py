@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 #!/usr/bin/env python3
 """
 Filter a COLMAP database to a subset of images.
@@ -60,28 +58,17 @@ def filter_database(input_db: Path, output_db: Path, image_names: set[str]) -> N
         if ids_to_keep:
             placeholders = ",".join("?" * len(ids_to_keep))
             
-            # Copy matching rows from images
-            src_cursor.execute(f"SELECT * FROM images WHERE image_id IN ({placeholders})", ids_to_keep)
-            rows = src_cursor.fetchall()
-            if rows:
-                row_placeholders = ",".join("?" * len(rows[0]))
-                dst_cursor.executemany(f"INSERT INTO images VALUES ({row_placeholders})", rows)
+            # Tables that filter by image_id
+            tables_to_filter = ["images", "keypoints", "descriptors", "pose_priors"]
             
-            # Copy matching keypoints
-            src_cursor.execute(f"SELECT * FROM keypoints WHERE image_id IN ({placeholders})", ids_to_keep)
-            rows = src_cursor.fetchall()
-            if rows:
-                row_placeholders = ",".join("?" * len(rows[0]))
-                dst_cursor.executemany(f"INSERT INTO keypoints VALUES ({row_placeholders})", rows)
-            
-            # Copy matching descriptors
-            src_cursor.execute(f"SELECT * FROM descriptors WHERE image_id IN ({placeholders})", ids_to_keep)
-            rows = src_cursor.fetchall()
-            if rows:
-                row_placeholders = ",".join("?" * len(rows[0]))
-                dst_cursor.executemany(f"INSERT INTO descriptors VALUES ({row_placeholders})", rows)
+            for table in tables_to_filter:
+                src_cursor.execute(f"SELECT * FROM {table} WHERE image_id IN ({placeholders})", ids_to_keep)
+                rows = src_cursor.fetchall()
+                if rows:
+                    row_placeholders = ",".join("?" * len(rows[0]))
+                    dst_cursor.executemany(f"INSERT INTO {table} VALUES ({row_placeholders})", rows)
         
-        # matches, pose_priors, two_view_geometries are left empty
+        # matches, two_view_geometries are left empty
         
         dst.commit()
         
