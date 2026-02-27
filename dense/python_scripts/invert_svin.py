@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.spatial.transform import Rotation
 from scipy.linalg import null_space
+import argparse
 
 def create_pose_matrix(tx, ty, tz, qx, qy, qz, qw):
     """Create 4x4 pose matrix from translation and quaternion"""
@@ -49,16 +50,15 @@ def invert(input_path, output_path):
         
             f.write(f"{timestamp} {T[0]:.10f} {T[1]:.10f} {T[2]:.10f} {q[0]:.10f} {q[1]:.10f} {q[2]:.10f} {q[3]:.10f}\n")
 
-# Usage: first arg is the path to the original file
-# Output: first arg is the path where you want the inverted file to  be saved
-#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Center.txt", "/home/luke/Documents/hell/may27/Svin/Center.txt")
-#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Left.txt", "/home/luke/Documents/hell/may27/Svin/Left.txt")
-#invert("/home/luke/Documents/hell/may27/Svin_non_inv/Right.txt", "/home/luke/Documents/hell/may27/Svin/Right.txt")
 
-# invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir0/Pamir0_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir0/svin.txt")
-# invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir1/Pamir1_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir1/svin.txt")
-# invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/Pamir2_transformed.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Pamir/Pamir2/svin.txt")
+def main():
+    parser = argparse.ArgumentParser(description='Filter SVIN data based on available images')
+    parser.add_argument('--input', '-i', dest='input_path', required=True, help='Path to the input SVIN file')
+    parser.add_argument('--output', '-o', dest='output_path', required=True, help='Path where filtered SVIN will be saved')
+    
+    args = parser.parse_args()
+    
+    invert(args.input_path, args.output_path)
 
-# invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin_non_inv.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin.txt")
-#invert("/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/Center.txt", "/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/Center_inv.txt")
-invert("/mnt/disk_1_ssd/luke/caves/aligned_svin_traj/right.txt", "/mnt/disk_1_ssd/luke/caves/aligned_svin_traj_inv/Right.txt")
+if __name__ == "__main__":
+    main()

@@ -36,7 +36,19 @@ Or, better yet, create a log file at /path/to/log/file/log.txt, and then run:
 ./run_423.sh > /path/to/log/file/log.txt 2>&1
 ```
 
-(If you want to be extra safe about it, I highly recommend using screen!)
+If you want to be extra safe about it, I highly recommend using screen!
+
+To create a new screen, type
+
+```
+screen -R <screen name>
+```
+
+To exit the screen (detachs), type ```ctrl+a```and then hit ```d```.
+
+To see a list of available screens, type ```screen -ls```.
+
+To join a running screen, type ```screen -r <screen_name>```.
 
 Once that's done, you'll have a sparse model.
 

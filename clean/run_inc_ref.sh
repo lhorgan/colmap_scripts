@@ -1,42 +1,45 @@
 #!/bin/bash
 
-DATA_PATH=/home/luke/Documents/hell/jun4
-SCENE=First100
+# DATA_PATH=/mnt/disk_1_ssd/luke/caves/toy_set_300
+# SCENE=toy_ex
 
-rm -rf "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
-mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
+DATA_PATH=/mnt/disk_1_ssd/luke/caves/full_run
+SCENE=full_run_colmap
 
-rm -rf "${DATA_PATH}/${SCENE}/output/sparse/text"
-mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text"
+# rm -rf "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
+# mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text_placeholder"
 
-rm -rf "${DATA_PATH}/${SCENE}/Svin"
-mkdir -p "${DATA_PATH}/${SCENE}/Svin"
+# rm -rf "${DATA_PATH}/${SCENE}/output/sparse/text"
+# mkdir -p "${DATA_PATH}/${SCENE}/output/sparse/text"
 
-rm "${DATA_PATH}/${SCENE}/database.db"
+# rm -rf "${DATA_PATH}/${SCENE}/Svin"
+# mkdir -p "${DATA_PATH}/${SCENE}/Svin"
 
-positions=("Left" "Center" "Right")
-for position in "${positions[@]}"; do
-    python3 python_scripts/filter_svin.py \
-        --input "${DATA_PATH}/Svin/${position}.txt" \
-        --output "${DATA_PATH}/${SCENE}/Svin/${position}.txt" \
-        --images "${DATA_PATH}/${SCENE}/Images/${position}"
-done
+# rm "${DATA_PATH}/${SCENE}/database.db"
 
-python3 python_scripts/create_db_with_known_poses.py \
-    --cam_poses ${DATA_PATH}/${SCENE}/Svin \
-    --images_path ${DATA_PATH}/${SCENE}/Images \
-    --out_path $DATA_PATH/$SCENE/ \
-    --cam_poses_type svin \
-    --text_model ${DATA_PATH}/${SCENE}/output/sparse/text_placeholder
+# positions=("Left" "Center" "Right")
+# for position in "${positions[@]}"; do
+#     python3 python_scripts/filter_svin.py \
+#         --input "${DATA_PATH}/Svin/${position}.txt" \
+#         --output "${DATA_PATH}/${SCENE}/Svin/${position}.txt" \
+#         --images "${DATA_PATH}/${SCENE}/Images/${position}"
+# done
 
-echo "Running feature extractor"
-time colmap feature_extractor \
-    --database_path ${DATA_PATH}/${SCENE}/database.db \
-    --image_path ${DATA_PATH}/${SCENE}/Images
+# python3 python_scripts/create_db_with_known_poses.py \
+#     --cam_poses ${DATA_PATH}/${SCENE}/Svin \
+#     --images_path ${DATA_PATH}/${SCENE}/Images \
+#     --out_path $DATA_PATH/$SCENE/ \
+#     --cam_poses_type svin \
+#     --text_model ${DATA_PATH}/${SCENE}/output/sparse/text_placeholder
 
-echo "Running exhaustive"
-time colmap exhaustive_matcher \
-    --database_path ${DATA_PATH}/${SCENE}/database.db
+# echo "Running feature extractor"
+# time colmap feature_extractor \
+#     --database_path ${DATA_PATH}/${SCENE}/database.db \
+#     --image_path ${DATA_PATH}/${SCENE}/Images
+
+# echo "Running exhaustive"
+# time colmap exhaustive_matcher \
+#     --database_path ${DATA_PATH}/${SCENE}/database.db
 
 echo "Running point triangulator"
 time colmap point_triangulator \
@@ -52,6 +55,9 @@ time python python_scripts/read_write_model.py \
     --output_model ${DATA_PATH}/${SCENE}/output/sparse/text \
     --output_format ".txt"
 
+echo "Copying original data for backup"
+cp -r ${DATA_PATH}/${SCENE} ${DATA_PATH}/${SCENE}_backup
+
 echo "Running incremental model refiner"
 time colmap incremental_model_refiner \
     --database_path ${DATA_PATH}/${SCENE}/database.db \
@@ -59,34 +65,34 @@ time colmap incremental_model_refiner \
     --output_path ${DATA_PATH}/${SCENE}/output/sparse \
     --input_path ${DATA_PATH}/${SCENE}/output/sparse/text
 
-rm -rf ${DATA_PATH}/${SCENE}/output/dense
+# rm -rf ${DATA_PATH}/${SCENE}/output/dense
 
-echo "Running image undistorter"
+# echo "Running image undistorter"
 
-time colmap image_undistorter \
-    --image_path $DATA_PATH/$SCENE/Images \
-    --input_path $DATA_PATH/$SCENE/output/sparse \
-    --output_path $DATA_PATH/$SCENE/output/dense \
-    --output_type COLMAP \
-    --max_image_size 960
+# time colmap image_undistorter \
+#     --image_path $DATA_PATH/$SCENE/Images \
+#     --input_path $DATA_PATH/$SCENE/output/sparse \
+#     --output_path $DATA_PATH/$SCENE/output/dense \
+#     --output_type COLMAP \
+#     --max_image_size 960
 
-echo "Running patch match stereo"
+# echo "Running patch match stereo"
 
-time colmap patch_match_stereo \
-    --workspace_path $DATA_PATH/$SCENE/output/dense \
-    --workspace_format COLMAP \
-    --PatchMatchStereo.geom_consistency true
+# time colmap patch_match_stereo \
+#     --workspace_path $DATA_PATH/$SCENE/output/dense \
+#     --workspace_format COLMAP \
+#     --PatchMatchStereo.geom_consistency true
 
-echo "Running stereo fusion"
+# echo "Running stereo fusion"
 
-time colmap stereo_fusion \
-    --workspace_path $DATA_PATH/$SCENE/output/dense \
-    --workspace_format COLMAP \
-    --input_type geometric \
-    --output_path $DATA_PATH/$SCENE/output/dense/fused.ply
+# time colmap stereo_fusion \
+#     --workspace_path $DATA_PATH/$SCENE/output/dense \
+#     --workspace_format COLMAP \
+#     --input_type geometric \
+#     --output_path $DATA_PATH/$SCENE/output/dense/fused.ply
 
-echo "Running poisson mesher"
+# echo "Running poisson mesher"
 
-time colmap poisson_mesher \
-    --input_path $DATA_PATH/$SCENE/output/dense/fused.ply \
-    --output_path $DATA_PATH/$SCENE/output/dense/meshed-poisson.ply
+# time colmap poisson_mesher \
+#     --input_path $DATA_PATH/$SCENE/output/dense/fused.ply \
+#     --output_path $DATA_PATH/$SCENE/output/dense/meshed-poisson.ply

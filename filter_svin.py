@@ -44,7 +44,8 @@ def filter_svin(input_path, output_path, images_path):
 #             output_path="/home/luke/pamir/Combined_exhaustive/matched/svin_2.txt", \
 #             images_path="/home/luke/pamir/Combined_exhaustive/matched/2")
 
-if __name__ == "main":
-    filter_svin(input_path="/home/luke/pamir/Combined_exhaustive/svin.txt", \
-                output_path="/home/luke/Documents/Ship/Back/combo/svin.txt", \
-                images_path="/home/luke/Documents/Ship/Back/combo/Images")
+# if __name__ == "main":
+
+filter_svin(input_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center.txt", \
+            output_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center_filtered.txt", \
+            images_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/toy_ex/Images/Center")
