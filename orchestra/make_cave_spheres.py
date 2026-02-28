@@ -3,6 +3,7 @@ import open3d as o3d
 import numpy as np
 import math
 import os
+import pickle
 
 from util import write_point_cloud, copy_img
 
@@ -20,7 +21,7 @@ def get_closest_timestamp(goal, timestamps):
             return i
     return len(timestamps) - 1
 
-def make_spheres(svin_path, images_path, dst_path):
+def make_spheres(svin_path, images_path, dst_path, unexpanded_clusters_path):
     svin_points = []
     svin_timestamps = []
 
@@ -55,7 +56,7 @@ def make_spheres(svin_path, images_path, dst_path):
 
     print("Assigning clusters")
     num_clusters = 70
-    memberships, centers = cluster_points(
+    memberships, centers, original_memberships = cluster_points(
         points=points,
         num_clusters=num_clusters,
         expansion=0.3
@@ -71,6 +72,14 @@ def make_spheres(svin_path, images_path, dst_path):
         for j in membership:
             point_clusters[j].append(point)
             image_clusters[j].append(image_name)
+
+    unexpanded_clusters = [[] for i in range(num_clusters)]
+    for i, point in enumerate(points):
+        membership = original_memberships[i] # They initially belonged to only one cluster before expansion
+        image_name = str(timestamps[i])
+        unexpanded_clusters[membership].append(image_name)
+    with open(unexpanded_clusters_path, "wb+") as f:
+        pickle.dump(unexpanded_clusters, f)
     
     print("SET SIZE", len(set(timestamps)))
     print("LIST SIZE", len(timestamps))
@@ -90,6 +99,7 @@ def make_spheres(svin_path, images_path, dst_path):
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
-make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/center.txt",
+make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt",
              images_path="/mnt/disk_1_ssd/luke/blub/Combined/Images",
-             dst_path="/mnt/disk_1_ssd/luke/blub/spheres")
+             dst_path="/mnt/disk_1_ssd/luke/blub/spheres_dup",
+             unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters.pkl")

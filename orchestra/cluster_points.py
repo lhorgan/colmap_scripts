@@ -47,6 +47,7 @@ def cluster_points(
     
     # Initialize memberships with original assignments
     cluster_memberships = [[labels[i]] for i in range(n_points)]
+    original_memberships = [labels[i] for i in range(n_points)]
     
     # For each cluster, add the n closest external points
     for cluster_idx in range(num_clusters):
@@ -73,7 +74,7 @@ def cluster_points(
         size = sum(1 for m in cluster_memberships if cluster_idx in m)
         print(f"  Cluster {cluster_idx}: {size} points")
     
-    return cluster_memberships, centers
+    return cluster_memberships, centers, original_memberships
 
 
 if __name__ == "__main__":
@@ -87,7 +88,7 @@ if __name__ == "__main__":
         for t_i in t
     ]
     
-    memberships, centers = cluster_points(
+    memberships, centers, = cluster_points(
         points=trajectory_points,
         num_clusters=8,
         expansion=0.20
