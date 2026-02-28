@@ -9,6 +9,8 @@ import open3d as o3d
 from util import write_point_cloud, read_point_cloud
 from make_overlap_graph import FancyList
 
+BASE_PATH = "/mnt/disk_1_ssd/luke/blub"
+
 np.set_printoptions(precision=3, suppress=True)
 
 def make_overlap_key(my_model_key, other_model_key):
@@ -70,14 +72,14 @@ def go(points3D_by_model, overlaps):
         optimizer, mode='min', factor=0.5, patience=50
     )
 
-    for step in range(20):
+    for step in range(1000):
         transforms = params_to_transforms(params_by_key)
         transformed_points = get_transformed_points(points3D_by_model, transforms)
         nn_overlaps = build_kd_tree(points3D_by_model)
 
         loss1 = compute_overlap_loss(overlaps, transformed_points)
         loss2 = compute_overlap_loss(nn_overlaps, transformed_points)
-        print("LOSS 2: ", loss2)
+        #print("LOSS 2: ", loss2)
 
         loss = loss1 + 0.3 * loss2
         #print("DAS LOSS: ", loss)
@@ -101,16 +103,21 @@ def go(points3D_by_model, overlaps):
                 t, q = params_by_key[key]
                 q.data = q.data / torch.norm(q.data)
         
-        if step % 1 == 0:
-            print(f"Step {step}: Loss = {loss.item():.6f}")
+        if step % 10 == 0:
+            print(f"Step {step}: Loss = {loss1.item():.6f} + 0.3*{loss2.item()} => {loss.item()}")
+            #print(f"Step {step}: Loss = {loss.item():.6f}")
     
+    transforms_path = f"{BASE_PATH}/torch_transforms.pkl"
+    with open(transforms_path, "wb+") as f:
+        pickle.dump(transforms, f)
+
     for key in points3D_by_model:
         panel = points3D_by_model[key]
         T = transforms[key]
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"/home/luke/Documents/caaves/refined_spheres_bw/{key}.ply")
+        write_point_cloud(pcd, f"{BASE_PATH}/refined_spheres_bw/{key}.ply")
 
 def add_to_overlap_graph(my_model_key, my_index, other_model_key, other_index, overlap_graph):
     indexes = {}
@@ -282,7 +289,7 @@ def compute_overlap_loss(overlaps, transformed_points):
     return loss
 
 def main():
-    root_path = "/mnt/disk_1_ssd/luke/blub"
+    root_path = f"{BASE_PATH}"
     plys_path = f"{root_path}/aligned_spheres"
     overlaps_path = f"{root_path}/pickle/overlaps.pkl"
 

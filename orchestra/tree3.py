@@ -1,6 +1,7 @@
 import numpy as np
 
 from homograph_pc import *
+from rotate_svin_traj import *
 
 def get_corresponding_points(svin_path, svin_from_colmap_path):
         image_name_to_colmap_center = {}
@@ -116,8 +117,8 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     write_point_cloud_np(cam_output_path, trans_colmap_centers)
 
 def hang_models(data_path, scene):
-    aligned_cubes_path = "/mnt/disk_1_ssd/luke/blub/aligned_spheres"
-    aligned_cams_path = "/mnt/disk_1_ssd/luke/blub/aligned_cams"
+    aligned_cubes_path = "/mnt/disk_1_ssd/luke/blub/math/aligned_spheres"
+    aligned_cams_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_cams"
     scaffold_path = f"/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt"
 
     sparse_dir = f"{data_path}/{scene}/sparse"

@@ -2,10 +2,10 @@ import os
 from util import *
 
 def crayons():
-    root_path = "/home/luke/Documents/caves"
+    root_path = "/mnt/disk_1_ssd/luke/blub"
     spheres_path = f"{root_path}/spheres"
-    refined_path = f"{root_path}/spheres_refined_with_nloss"
-    output_path = f"{root_path}/spheres_refined_with_nloss_color"
+    refined_path = f"{root_path}/refined_spheres_bw_test"
+    output_path = f"{root_path}/refined_spheres_color_test"
 
     for scene in os.listdir(spheres_path):
         scene_path = f"{spheres_path}/{scene}"
