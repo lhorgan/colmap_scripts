@@ -72,7 +72,7 @@ def cluster_points(
 
 if __name__ == "__main__":
     # Example usage
-    np.random.seed(42)
+    #np.random.seed(42)
     
     # Generate some test points
     test_points = [

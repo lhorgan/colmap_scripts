@@ -104,13 +104,17 @@ def go(points3D_by_model, overlaps):
         if step % 1 == 0:
             print(f"Step {step}: Loss = {loss.item():.6f}")
     
+    transforms_path = "/home/luke/Documents/caves/adjusted_spheres.pkl"
+    with open(transforms_path, "wb+") as f:
+        pickle.dump(transforms, f)
+
     for key in points3D_by_model:
         panel = points3D_by_model[key]
         T = transforms[key]
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"/home/luke/Documents/caaves/refined_spheres_2/{key}.ply")
+        write_point_cloud(pcd, f"/home/luke/Documents/caves/adjusted_spheres/{key}.ply")
 
 def add_to_overlap_graph(my_model_key, my_index, other_model_key, other_index, overlap_graph):
     indexes = {}

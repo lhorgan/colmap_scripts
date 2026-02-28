@@ -81,7 +81,7 @@ if __name__ == "__main__":
     np.random.seed(42)
     
     # Simulate a camera trajectory (winding path)
-    t = np.linspace(0, 4 * np.pi, 200)
+    t = np.linspace(0, 4 * np.pi, 1000)
     trajectory_points = [
         (10 * np.cos(t_i), 10 * np.sin(t_i), t_i)
         for t_i in t
@@ -92,6 +92,8 @@ if __name__ == "__main__":
         num_clusters=8,
         expansion=0.20
     )
+
+    print(centers)
     
     print(f"Points: {len(trajectory_points)}")
     print(f"Clusters: {len(centers)}")
