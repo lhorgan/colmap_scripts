@@ -19,4 +19,7 @@
 + Run make_svins.py to create svin files for each model, one by filtering the real SVIn file, and one from COLMAP. These will be used as input to the coarse alignment step.
  - You will need to combine the *real* svin files into one monolithic svin file, and update the path in tree3.py to point to it.
 + Run tree3.py to do a coarse alignment using the camera trajectories.
-+ 
++ Run sweeplign3.py to optimize the alignment.
++ Run crayons.py to produce true color versions of the aligned point clouds.
++ Run get_aligned_cams.py to apply the refined transformations from sweeplign3.py to the camera poses.
++ Run plot_camps.py to visualize the camera poses, if you want.

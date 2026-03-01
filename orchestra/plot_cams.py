@@ -178,6 +178,6 @@ def build_cam_pyr(cam_scale, fx, fy, cx, cy):
     cam_top    = cam_top.reshape((4, 1))
     return [cam_center, cam_ul, cam_ur, cam_dr, cam_dl, cam_top]
 
-plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/aligned_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/aligned_poses_merged.ply")
-plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/refined_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/refined_poses_merged.ply")
-plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_dual_loss/refined_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_dual_loss/refined_poses_merged.ply")
+# plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/aligned_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/aligned_poses_merged.ply")
+# plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/refined_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_smpl_loss/refined_poses_merged.ply")
+# plot_cameras("/mnt/disk_1_ssd/luke/blub/traj_dual_loss/refined_poses_merged.txt", 0.00008, "/mnt/disk_1_ssd/luke/blub/traj_dual_loss/refined_poses_merged.ply")
