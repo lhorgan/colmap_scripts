@@ -2,6 +2,7 @@ import numpy as np
 
 from homograph_pc import *
 from rotate_svin_traj import *
+from plot_cams import *
 
 def get_corresponding_points(svin_path, svin_from_colmap_path):
         image_name_to_colmap_center = {}
@@ -115,10 +116,14 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     trans_colmap_centers = apply_homography(B, M)
     write_point_cloud_np(ship_output_path, trans_ship_points, ship_colors)
     write_point_cloud_np(cam_output_path, trans_colmap_centers)
+    return M
 
 def hang_models(data_path, scene):
-    aligned_cubes_path = "/mnt/disk_1_ssd/luke/blub/math/aligned_spheres"
+    aligned_cubes_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_spheres"
     aligned_cams_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_cams"
+    aligned_poses_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_poses"
+    aligned_poses_plys_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_poses_plys"
+
     scaffold_path = f"/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt"
 
     sparse_dir = f"{data_path}/{scene}/sparse"
@@ -128,7 +133,10 @@ def hang_models(data_path, scene):
         svin_from_colmap_path = f"{model_dir}/svin_from_colmap_inv.txt" # This one must be inverted!
         svin_centers, colmap_centers = get_corresponding_points(scaffold_path, svin_from_colmap_path)
         if len(svin_centers) > 30:
-            align_point_cloud(svin_centers, colmap_centers, f"{model_dir}/{scene}-{model}.ply", f"{aligned_cubes_path}/{scene}-{model}.ply", f"{aligned_cams_path}/{scene}-{model}.ply")
+            M = align_point_cloud(svin_centers, colmap_centers, f"{model_dir}/{scene}-{model}.ply", f"{aligned_cubes_path}/{scene}-{model}.ply", f"{aligned_cams_path}/{scene}-{model}.ply")
+            #rotate_svin_traj(svin_from_colmap_path, f"{aligned_cams_path}/{scene}-{model}_traj.ply", M)
+            rotate_svin_traj(svin_from_colmap_path, f"{aligned_poses_path}/{scene}-{model}.txt", M)
+            plot_cameras(f"{aligned_poses_path}/{scene}-{model}.txt", 0.00008, f"{aligned_poses_plys_path}/{scene}-{model}.ply")
         else:
             print("Skipping, not enough points")
 

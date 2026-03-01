@@ -4,8 +4,8 @@ from util import *
 def crayons():
     root_path = "/mnt/disk_1_ssd/luke/blub"
     spheres_path = f"{root_path}/spheres"
-    refined_path = f"{root_path}/refined_spheres_bw_test"
-    output_path = f"{root_path}/refined_spheres_color_test"
+    refined_path = f"{root_path}/refined_spheres_bw"
+    output_path = f"{root_path}/refined_spheres_color"
 
     for scene in os.listdir(spheres_path):
         scene_path = f"{spheres_path}/{scene}"

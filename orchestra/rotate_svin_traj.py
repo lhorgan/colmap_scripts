@@ -17,7 +17,7 @@ def create_pose_matrix(tx, ty, tz, qx, qy, qz, qw):
     
     return P
 
-def rotate(input_path, output_path, M):
+def rotate_svin_traj(input_path, output_path, M):
     angle = np.radians(30)
 
     # M = np.array([
@@ -50,9 +50,9 @@ def rotate(input_path, output_path, M):
             q = Rotation.from_matrix(R).as_quat()
 
             C = pose_null_space[:3] / pose_null_space[3]
-            print(C)
-            print(T)
-            print("\n\n")
+            #print(C)
+            #print(T)
+            #print("\n\n")
         
             f.write(f"{timestamp} {T[0]:.10f} {T[1]:.10f} {T[2]:.10f} {q[0]:.10f} {q[1]:.10f} {q[2]:.10f} {q[3]:.10f}\n")
 
