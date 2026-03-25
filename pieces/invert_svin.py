@@ -19,7 +19,8 @@ def create_pose_matrix(tx, ty, tz, qx, qy, qz, qw):
 
 def invert(input_path, output_path):
     with open(input_path) as f:
-        lines = f.readlines()
+        lin
+        es = f.readlines()
     
     comment = lines[0]
 

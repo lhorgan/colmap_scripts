@@ -8,7 +8,7 @@
 ```
 
 = Running the pipeline
-+ Run make_spheres.py to make segmented image sequences.
++ Run make_cave_spheres.py to make segmented image sequences.
 + Run make_fake_svins.py to make the fake svin files that will be used as pose priors.
 + Take the fake svins and combine them into one monolithtic svin file.
 + Run make_db.sh to create the database and populate it with pose priors and features.
