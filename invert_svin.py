@@ -61,4 +61,5 @@ def invert(input_path, output_path):
 
 # invert("/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin_non_inv.txt", "/mnt/Data2/luke/pamir/reconstructions/oneframe/Filtered/Pamir1_and_Pamir2/svin.txt")
 #invert("/home/luke/pamir/Pamir2/Pamir2_in_Pamir1_miraculously.txt", "/home/luke/pamir/Pamir2/Pamir2_in_Pamir1_miraculously_inv.txt")
-invert("/home/luke/Documents/caves/svin_from_colmap.txt", "/home/luke/Documents/caves/svin_from_colmap_inv.txt")
+#invert("/home/luke/Documents/caves/svin_from_colmap.txt", "/home/luke/Documents/caves/svin_from_colmap_inv.txt")
+invert("/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames/GX010353_with_extra_poses/svin_trans.txt", "/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames/GX010353_with_extra_poses/svin_cam_centers.txt")

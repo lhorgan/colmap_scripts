@@ -46,6 +46,10 @@ def filter_svin(input_path, output_path, images_path):
 
 # if __name__ == "main":
 
-filter_svin(input_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center.txt", \
-            output_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center_filtered.txt", \
-            images_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/toy_ex/Images/Center")
+# filter_svin(input_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center.txt", \
+#             output_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/Svin/center_filtered.txt", \
+#             images_path="/mnt/disk_1_ssd/luke/caves/toy_set_300/toy_ex/Images/Center")
+
+filter_svin(input_path="/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames/GX010353_with_extra_poses/svin_cam_centers.txt", \
+            output_path="/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames/GX010353_with_extra_poses/svin_cam_centers_filt.txt", \
+            images_path="/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames/GX010353_with_extra_poses/Images")

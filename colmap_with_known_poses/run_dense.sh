@@ -1,10 +1,10 @@
-DATA_PATH=/home/luke/Documents/hell/apr29
-SCENE=Right
+DATA_PATH=/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target
+SCENE=GX010353_color_compressed_no_target
 
 echo "Running image undistorter"
 
 colmap image_undistorter \
-    --image_path $DATA_PATH/$SCENE/Images \
+    --image_path $DATA_PATH/$SCENE/images \
     --input_path $DATA_PATH/$SCENE/sparse \
     --output_path $DATA_PATH/$SCENE/dense \
     --output_type COLMAP \

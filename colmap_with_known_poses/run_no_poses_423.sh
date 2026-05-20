@@ -4,8 +4,8 @@
 # echo $DATA_PATH
 # echo $SCENE
 
-DATA_PATH="/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target/with_extra_frames"
-SCENE="GX010353_with_extra_poses"
+DATA_PATH="/mnt/hdd8tb/harish_stuff/nimporio_data/harish_colmap/no_target"
+SCENE="all_no_poses"
 
 rm -rf "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
 mkdir -p "${DATA_PATH}/${SCENE}/sparse/text_placeholder"
@@ -27,12 +27,11 @@ echo "Running exhaustive matcher"
 time colmap exhaustive_matcher \
     --database_path ${DATA_PATH}/${SCENE}/database.db
 
-echo "Running point triangulator"
-time colmap point_triangulator \
+echo "Running mapper"
+colmap mapper \
     --database_path ${DATA_PATH}/${SCENE}/database.db \
     --image_path ${DATA_PATH}/${SCENE}/Images \
-    --output_path ${DATA_PATH}/${SCENE}/sparse \
-    --input_path ${DATA_PATH}/${SCENE}/sparse/text_placeholder
+    --output_path ${DATA_PATH}/${SCENE}/sparse
 
 echo "Running conversion to text"
 time python read_write_model.py \
