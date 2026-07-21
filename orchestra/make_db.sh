@@ -1,4 +1,4 @@
-DATA_PATH="/mnt/disk_1_ssd/luke/blub"
+DATA_PATH="/mnt/disk_1_ssd/luke/blub_t"
 SCENE="Combined"
 
 rm -rf "${DATA_PATH}/${SCENE}/output"

@@ -117,7 +117,7 @@ def go(points3D_by_model, overlaps):
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        write_point_cloud(pcd, f"{BASE_PATH}/refined_spheres_bw/{key}.ply")
+        #write_point_cloud(pcd, f"{BASE_PATH}/refined_spheres_bw/{key}.ply")
 
 def add_to_overlap_graph(my_model_key, my_index, other_model_key, other_index, overlap_graph):
     indexes = {}

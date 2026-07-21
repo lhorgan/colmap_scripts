@@ -99,7 +99,12 @@ def make_spheres(svin_path, images_path, dst_path, unexpanded_clusters_path):
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
         
 
+# make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt",
+#              images_path="/mnt/disk_1_ssd/luke/blub/Combined/Images",
+#              dst_path="/mnt/disk_1_ssd/luke/blub/spheres_dup",
+#              unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters.pkl")
+
 make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt",
              images_path="/mnt/disk_1_ssd/luke/blub/Combined/Images",
-             dst_path="/mnt/disk_1_ssd/luke/blub/spheres_dup",
-             unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters.pkl")
+             dst_path="/mnt/disk_1_ssd/luke/blub/spheres_redux",
+             unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters_redux.pkl")
