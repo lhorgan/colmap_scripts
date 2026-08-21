@@ -3,6 +3,8 @@ import pickle
 import open3d as o3d
 import numpy as np
 
+import argparse
+
 from util import write_point_cloud
 
 class FancyList:
@@ -252,9 +254,17 @@ def make_plys_color(point3Ds_by_model, colors_by_model, overlap_graph, coob_path
         write_point_cloud(pcd, f"{coob_path}/{scene}/sparse/{model}/{model_key}.ply")
 
 if __name__ == "__main__":
-    root_path = "/mnt/disk_1_ssd/luke/blub"
-    coob_path = f"{root_path}/spheres"
-    pickle_path = f"{root_path}/pickle"
+    BASE_PATH = os.getenv("BASE_PATH", "/mnt/disk_1_ssd/luke/blub")
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--spheres_path", type="str", default=f"{BASE_PATH}/spheres")
+    parser.add_argument("--pickle_path", type="str", default=f"{BASE_PATH}/pickle")
+
+    args = parser.parse_args()
+
+    coob_path = args.spheres_path
+    pickle_path = args.pickle_path
 
     if not os.path.exists(pickle_path):
         print("Making the pickles.")

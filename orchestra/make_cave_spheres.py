@@ -5,6 +5,8 @@ import math
 import os
 import pickle
 
+import argparse
+
 from util import write_point_cloud, copy_img
 
 # arr must be sorted lowest to highest
@@ -97,14 +99,20 @@ def make_spheres(svin_path, images_path, dst_path, unexpanded_clusters_path):
 
         pcd.points = o3d.utility.Vector3dVector(np.array(cluster))
         write_point_cloud(pcd, f"{dst_path}/cluster_{i}/cluster_{i}.ply")
-        
 
-# make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt",
-#              images_path="/mnt/disk_1_ssd/luke/blub/Combined/Images",
-#              dst_path="/mnt/disk_1_ssd/luke/blub/spheres_dup",
-#              unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters.pkl")
+if __name__ == "__main__":
+    BASE_PATH = os.getenv("BASE_PATH", "/mnt/disk_1_ssd/luke/blub")
 
-make_spheres(svin_path="/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt",
-             images_path="/mnt/disk_1_ssd/luke/blub/Combined/Images",
-             dst_path="/mnt/disk_1_ssd/luke/blub/spheres_redux",
-             unexpanded_clusters_path="/mnt/disk_1_ssd/luke/blub/unexpanded_clusters_redux.pkl")
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--svin_path", type=str, default=f"{BASE_PATH}/svin_raw/Center.txt", required=True)
+    parser.add_argument("--images_path", type=str, default=f"{BASE_PATH}/Combined/Images", required=True)
+    parser.add_argument("--dst_path", type=str, default=f"{BASE_PATH}/spheres", required=True)
+    parser.add_argument("--unexpanded_clusters_path", type=str, default=f"{BASE_PATH}/unexpanded_clusters.pkl", required=True)
+
+    args = parser.parse_args()
+
+    make_spheres(svin_path=args.svin_path,
+                images_path=args.images_path,
+                dst_path=args.dst_path,
+                unexpanded_clusters_path=args.unexpanded_clusters_path)

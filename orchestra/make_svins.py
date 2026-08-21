@@ -3,10 +3,21 @@ from filter_svin import filter_svin
 from colmap_to_svin import colmap_to_svin
 from invert_svin import invert
 
+import argparse
+
 def main():
-    base_path = "/mnt/disk_1_ssd/luke/blub"
-    svin_path = f"{base_path}/svin_raw/Combined.txt"
-    bins_path = f"{base_path}/spheres"
+    BASE_PATH = os.getenv("BASE_PATH", "/mnt/disk_1_ssd/luke/blub")
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--svin_path", type=str, default=f"{BASE_PATH}/svin_raw/Combined.txt")
+    parser.add_argument("--bins_path", type=str, default=f"{BASE_PATH}/spheres")
+
+    args = parser.parse_args()
+
+    svin_path = args.svin_path
+    bins_path = args.bins_path
+
     bin_dirnames = os.listdir(bins_path)
     for dirname in bin_dirnames:
         models = os.listdir(f"{bins_path}/{dirname}/sparse")

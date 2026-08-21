@@ -5,6 +5,7 @@
 - pip install numpy
 - pip install torch
 - pip install opencv-python
+- pip install pycolmap
 ```
 
 = Running the pipeline
@@ -22,4 +23,4 @@
 + Run sweeplign3.py to optimize the alignment.
 + Run crayons.py to produce true color versions of the aligned point clouds.
 + Run get_aligned_cams.py to apply the refined transformations from sweeplign3.py to the camera poses.
-+ Run plot_camps.py to visualize the camera poses, if you want.reset
++ Run plot_cams.py to visualize the camera poses, if you want.

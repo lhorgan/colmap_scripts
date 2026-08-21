@@ -1,5 +1,10 @@
-DATA_PATH="/mnt/disk_1_ssd/luke/blub_t"
-SCENE="Combined"
+# DATA_PATH="/mnt/disk_1_ssd/luke/blub_t"
+# SCENE="Combined"
+DATA_PATH=$1
+SCENE=$2
+
+echo $DATA_PATH
+echo $SCENE
 
 rm -rf "${DATA_PATH}/${SCENE}/output"
 mkdir -p "${DATA_PATH}/${SCENE}/output"
@@ -26,7 +31,7 @@ python3 python_scripts/write_pose_priors_to_database.py \
     --prior_position_std_y 1 \
     --prior_position_std_z 1
 
-echo "Running feature extractor"
-time colmap feature_extractor \
-    --database_path ${DATA_PATH}/${SCENE}/database.db \
-    --image_path ${DATA_PATH}/${SCENE}/Images
+# echo "Running feature extractor"
+# time colmap feature_extractor \
+#     --database_path ${DATA_PATH}/${SCENE}/database.db \
+#     --image_path ${DATA_PATH}/${SCENE}/Images
