@@ -24,9 +24,9 @@ BASE_PATH="/media/luke/Data2/luke/blub_r"
 
 # ./make_db.sh $BASE_PATH "Combined"
 
-python lights.py \
-    --spheres_path="$BASE_PATH/spheres" \
-    --database_path="$BASE_PATH/Combined/database.db"
+# python lights.py \
+#     --spheres_path="$BASE_PATH/spheres" \
+#     --database_path="$BASE_PATH/Combined/database.db"
 
 # python make_text_models.py "$BASE_PATH/spheres"
 
@@ -34,6 +34,6 @@ python lights.py \
 #     --spheres_path="$BASE_PATH/spheres" \
 #     --pickle_path="$BASE_PATH/pickle"
 
-# python make_svins.py \
-#     --svin_path="$BASE_PATH/svin_raw/Combined.txt" \
-#     --bins_path="$BASE_PATH/spheres"
+python make_svins.py \
+    --svin_path="$BASE_PATH/svin_raw/Combined.txt" \
+    --bins_path="$BASE_PATH/spheres"

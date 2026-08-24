@@ -258,8 +258,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--spheres_path", type="str", default=f"{BASE_PATH}/spheres")
-    parser.add_argument("--pickle_path", type="str", default=f"{BASE_PATH}/pickle")
+    parser.add_argument("--spheres_path", type=str, default=f"{BASE_PATH}/spheres")
+    parser.add_argument("--pickle_path", type=str, default=f"{BASE_PATH}/pickle")
 
     args = parser.parse_args()
 
