@@ -4,6 +4,7 @@ import argparse
 
 from pathlib import Path
 
+# This method, small though it may be, was written by Claude
 def run_colmap(data_path, scene, database_path, log_file_path):
     command_string = f"./run_colmap_sphere.sh {data_path} {scene} {database_path} > {log_file_path} 2>&1"
     print(f"Executing via shell: {command_string}")
