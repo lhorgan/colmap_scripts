@@ -6,6 +6,7 @@ Usage:
     python filter_colmap_db.py input.db output.db /path/to/image/subset/
 """
 
+# This script is written by Claude.
 # https://claude.ai/chat/69336946-4a19-40d4-8bbf-7646c2e06fae
 
 import argparse

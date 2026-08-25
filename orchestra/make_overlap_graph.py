@@ -150,7 +150,6 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
     for key in point3D_ids_by_model:
         scene, model = parse_model_key(key)
 
-        print("Hi there")
         for i, point3D_id in enumerate(point3D_ids_by_model[key]):
             point3D_key = get_3D_point_key(scene, model, point3D_id)
             evidence_points = point3D_to_point2Ds[point3D_key]
@@ -158,7 +157,6 @@ def read_3D_points(base_path, point3D_to_point2Ds, point2D_to_point3Ds):
             
             for point2D_key in evidence_points:
                 other_point_3D_keys = point2D_to_point3Ds[point2D_key]
-                #print("THE OTHER 3D POINTS", other_point_3D_keys)
                 for other_point_3D_key in other_point_3D_keys:
                     other_scene, other_model, other_point3D_id = parse_3D_point_key(other_point_3D_key)
                     other_model_key = get_model_key(other_scene, other_model)

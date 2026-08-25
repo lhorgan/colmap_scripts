@@ -1,4 +1,5 @@
-# With thanks to Claude: https://claude.ai/chat/23a6e096-ae2c-48c6-a500-9fa165330d41
+# This script is written by Claude.
+# https://claude.ai/chat/23a6e096-ae2c-48c6-a500-9fa165330d41
 
 #!/usr/bin/env python3
 """

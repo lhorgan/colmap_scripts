@@ -1,5 +1,3 @@
-# https://gemini.google.com/app/b39829f92f89df2f
-
 import torch
 import numpy as np
 import os
@@ -23,6 +21,8 @@ def make_overlap_key(my_model_key, other_model_key):
     overlap_key = ":".join(ordered_model_keys)
     return overlap_key
 
+# This function (quat_to_matrix) is by Gemini.
+# https://gemini.google.com/app/b39829f92f89df2f
 def quat_to_matrix(q):
     q = q / (torch.norm(q) + 1e-8) 
     
@@ -61,7 +61,6 @@ def go(points3D_by_model, overlaps):
     params = []
     params_by_key = {}
     for model_key in points3D_by_model:
-        #t = (torch.rand(3) * 0.5 - 0.25).requires_grad_()
         t = torch.tensor([0, 0, 0], requires_grad=True, dtype=torch.float32)
         q = torch.tensor([1.0, 0.0, 0.0, 0.0], requires_grad=True)
 
@@ -84,20 +83,12 @@ def go(points3D_by_model, overlaps):
 
         loss1 = compute_overlap_loss(overlaps, transformed_points)
         loss2 = compute_overlap_loss(nn_overlaps, transformed_points)
-        #print("LOSS 2: ", loss2)
 
         loss = loss1 + 0.3 * loss2
-        #print("DAS LOSS: ", loss)
         
         scheduler.step(loss.detach()) # detach prevents a warning
 
         loss.backward()
-
-        # for key in params_by_key:
-        #     t_static, q_static = params_by_key[key]
-        #     print(f"{key}, Gradient for t_static: {t_static.grad}")
-        #     print(f"{key}, Gradient for q_static: {q_static.grad}")
-        #     print("\n")
 
         optimizer.step()
         optimizer.zero_grad()
@@ -143,8 +134,8 @@ def add_to_overlap_graph(my_model_key, my_index, other_model_key, other_index, o
         overlap_graph[overlap_key][0].add(index0)
         overlap_graph[overlap_key][1].add(index1)
 
+# This function (homogeneous_to_pointcloud) is by Claude
 # https://claude.ai/chat/08c4db9b-3f94-4759-a39f-027038330fb9
-# This one function is by Claude
 def homogeneous_to_pointcloud(vectors):
     pcd = o3d.geometry.PointCloud()
     
@@ -242,7 +233,7 @@ def build_kd_tree(points_by_model):
     #     points0 = points_by_model[model_key0][overlap_inds0]
     #     points1 = points_by_model[model_key1][overlap_inds1]
 
-    #     print("wtah ", torch.mean(torch.sum(torch.square(points0 - points1), dim=1)))
+    #     print("overlap info ", torch.mean(torch.sum(torch.square(points0 - points1), dim=1)))
 
     #     print(points0[0])
     #     print(points1[0])
