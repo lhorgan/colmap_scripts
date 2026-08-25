@@ -4,6 +4,14 @@ from homograph_pc import *
 from rotate_svin_traj import *
 from plot_cams import *
 
+import argparse
+
+aligned_cubes_path = None
+aligned_cams_path = None
+aligned_poses_path = None
+aligned_poses_plys_path = None
+scaffold_path = None
+
 def get_corresponding_points(svin_path, svin_from_colmap_path):
         image_name_to_colmap_center = {}
         image_name_to_svin_center = {}
@@ -77,6 +85,7 @@ def plot_trajectory(input_file_path, output_file_path):
             tx, ty, tz = [float(t) for t in line.split(" ")[1:4]]
             f.write(f"{tx} {ty} {tz} 255 0 0\n")
 
+# https://zpl.fi/aligning-point-patterns-with-kabsch-umeyama-algorithm/
 def kabsch_umeyama(A, B):
     assert A.shape == B.shape
     n, m = A.shape
@@ -119,13 +128,6 @@ def align_point_cloud(svin_centers, colmap_centers, ship_point_cloud_file_path, 
     return M
 
 def hang_models(data_path, scene):
-    aligned_cubes_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_spheres"
-    aligned_cams_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_cams"
-    aligned_poses_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_poses"
-    aligned_poses_plys_path = "/mnt/disk_1_ssd/luke/blub/mah/aligned_poses_plys"
-
-    scaffold_path = f"/mnt/disk_1_ssd/luke/blub/svin_raw/Center.txt"
-
     sparse_dir = f"{data_path}/{scene}/sparse"
     models = os.listdir(sparse_dir)
     for model in models:
@@ -143,7 +145,33 @@ def hang_models(data_path, scene):
 import os
 
 def hang_all():
-    data_path = "/mnt/disk_1_ssd/luke/blub/spheres"
+    global aligned_cubes_path
+    global aligned_cams_path
+    global aligned_poses_path
+    global aligned_poses_plys_path
+    global scaffold_path
+
+    BASE_PATH = os.getenv("BASE_PATH", "/mnt/disk_1_ssd/luke/blub")
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--base_path", type=str, default=BASE_PATH)
+
+    args = parser.parse_args()
+
+    base_path = args.base_path
+    data_path = f"{base_path}/spheres"
+
+    aligned_cubes_path = f"{base_path}/aligned_spheres"
+    aligned_cams_path = f"{base_path}/aligned_cams"
+    aligned_poses_path = f"{base_path}/aligned_poses"
+    aligned_poses_plys_path = f"{base_path}/aligned_poses_plys"
+    scaffold_path = f"{base_path}/svin_raw/Center.txt"
+
+    os.makedirs(aligned_cubes_path, exist_ok=True)
+    os.makedirs(aligned_cams_path, exist_ok=True)
+    os.makedirs(aligned_poses_path, exist_ok=True)
+    os.makedirs(aligned_poses_plys_path, exist_ok=True)
+
     scenes = os.listdir(data_path)
     for scene in scenes:
         #try:
@@ -151,6 +179,5 @@ def hang_all():
             hang_models(data_path, scene)
         # except:
         #     print("Could not hang ", scene)
-        # break
 
 hang_all()

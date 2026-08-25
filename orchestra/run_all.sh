@@ -34,6 +34,18 @@ BASE_PATH="/media/luke/Data2/luke/blub_r"
 #     --spheres_path="$BASE_PATH/spheres" \
 #     --pickle_path="$BASE_PATH/pickle"
 
-python make_svins.py \
-    --svin_path="$BASE_PATH/svin_raw/Combined.txt" \
-    --bins_path="$BASE_PATH/spheres"
+# python combine_svins.py \
+#     --svin_files "$BASE_PATH/svin_raw/Center.txt" "$BASE_PATH/svin_raw/Left.txt" "$BASE_PATH/svin_raw/Right.txt" \
+#     --output "$BASE_PATH/svin_raw/Combined.txt"
+
+# python make_svins.py \
+#     --svin_path="$BASE_PATH/svin_raw/Combined.txt" \
+#     --bins_path="$BASE_PATH/spheres"
+
+# python tree3.py \
+#     --base_path=$BASE_PATH
+
+mkdir -p $BASE_PATH/refined_spheres_bw
+
+python sweeplign3.py \
+    --base_path=$BASE_PATH

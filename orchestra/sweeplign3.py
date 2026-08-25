@@ -5,11 +5,16 @@ import numpy as np
 import os
 import pickle
 import open3d as o3d
+import argparse
+
 
 from util import write_point_cloud, read_point_cloud
 from make_overlap_graph import FancyList
 
-BASE_PATH = "/mnt/disk_1_ssd/luke/blub"
+parser = argparse.ArgumentParser()
+parser.add_argument("--base_path", type=str, default="/mnt/disk_1_ssd/luke/blub")
+args = parser.parse_args()
+BASE_PATH = args.base_path
 
 np.set_printoptions(precision=3, suppress=True)
 
@@ -117,7 +122,7 @@ def go(points3D_by_model, overlaps):
         #print(T)
         panel_transformed = (T @ panel.T).T
         pcd = homogeneous_to_pointcloud(panel_transformed)
-        #write_point_cloud(pcd, f"{BASE_PATH}/refined_spheres_bw/{key}.ply")
+        write_point_cloud(pcd, f"{BASE_PATH}/refined_spheres_bw/{key}.ply")
 
 def add_to_overlap_graph(my_model_key, my_index, other_model_key, other_index, overlap_graph):
     indexes = {}
@@ -182,9 +187,9 @@ def build_kd_tree(points_by_model):
         sublist = points[indices]
         indices_for_sublist = np.ones(len(sublist)) * i
 
-        all_points = np.concat((all_points, sublist))
-        point_idx_to_submap_idx = np.concat((point_idx_to_submap_idx, indices_for_sublist))
-        global_idx_to_local_idx = np.concat((global_idx_to_local_idx, indices))
+        all_points = np.concatenate((all_points, sublist))
+        point_idx_to_submap_idx = np.concatenate((point_idx_to_submap_idx, indices_for_sublist))
+        global_idx_to_local_idx = np.concatenate((global_idx_to_local_idx, indices))
 
     #print("Making the KD tree")
     pcd = o3d.geometry.PointCloud()
